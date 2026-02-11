@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
             source,
             subscribed_at: new Date().toISOString(),
             unsubscribed_at: null,
-          })
+          } as any)
           .eq("id", existing.id)
 
         if (updateError) {
