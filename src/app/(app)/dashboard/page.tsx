@@ -26,6 +26,9 @@ export default async function DashboardPage() {
     .eq("id", user.id)
     .single()
 
+  // Extract user's name safely
+  const userName = (profile as any)?.full_name || user.email?.split('@')[0] || 'there'
+
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
@@ -35,7 +38,7 @@ export default async function DashboardPage() {
           {/* Welcome Section */}
           <div className="mb-12">
             <h1 className="text-4xl font-bold tracking-tight mb-2">
-              Welcome back, {profile?.full_name || user.email}!
+              Welcome back, {userName}!
             </h1>
             <p className="text-lg text-muted-foreground">
               Here&apos;s what&apos;s happening with your learning journey
