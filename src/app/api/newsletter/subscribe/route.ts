@@ -21,11 +21,11 @@ export async function POST(request: NextRequest) {
       .from("subscribers")
       .select("id, status")
       .eq("email", email.toLowerCase())
-      .single()
+      .maybeSingle()
 
     if (existing) {
       // If they were previously unsubscribed, reactivate them
-      if (existing.status === "unsubscribed") {
+      if ((existing as any).status === "unsubscribed") {
         const { error: updateError } = await supabase
           .from("subscribers")
           .update({
