@@ -27,7 +27,7 @@ export default async function DashboardPage() {
     .single()
 
   // Extract user's name safely
-  const userName = (profile as any)?.full_name || user.email?.split('@')[0] || 'there'
+  const userName = profile?.full_name || user.email?.split('@')[0] || 'there'
 
   return (
     <div className="flex min-h-screen flex-col">

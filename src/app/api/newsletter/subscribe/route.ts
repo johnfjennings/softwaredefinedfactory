@@ -25,9 +25,9 @@ export async function POST(request: NextRequest) {
 
     if (existing) {
       // If they were previously unsubscribed, reactivate them
-      if ((existing as any).status === "unsubscribed") {
-        const { error: updateError } = await (supabase
-          .from("subscribers") as any)
+      if (existing.status === "unsubscribed") {
+        const { error: updateError } = await supabase
+          .from("subscribers")
           .update({
             status: "active",
             full_name: full_name || null,
@@ -35,7 +35,7 @@ export async function POST(request: NextRequest) {
             subscribed_at: new Date().toISOString(),
             unsubscribed_at: null,
           })
-          .eq("id", (existing as any).id)
+          .eq("id", existing.id)
 
         if (updateError) {
           console.error("Error reactivating subscriber:", updateError)
@@ -59,7 +59,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Create new subscriber
-    const { error: insertError } = await (supabase.from("subscribers") as any).insert({
+    const { error: insertError } = await supabase.from("subscribers").insert({
       email: email.toLowerCase(),
       full_name: full_name || null,
       status: "active",
