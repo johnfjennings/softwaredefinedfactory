@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation"
 import Link from "next/link"
 import { MDXRemote } from "next-mdx-remote/rsc"
+import remarkGfm from "remark-gfm"
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
 import { PostCard } from "@/components/blog/post-card"
@@ -113,7 +114,7 @@ export default async function BlogPostPage({ params }: PageProps) {
 
           {/* Post Content */}
           <div className="prose prose-lg dark:prose-invert max-w-none mb-16">
-            <MDXRemote source={post.content} />
+            <MDXRemote source={post.content} options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }} />
           </div>
 
           {/* Share Buttons */}
