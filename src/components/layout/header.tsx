@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Menu, Moon, Sun } from "lucide-react"
@@ -17,6 +18,13 @@ export function Header() {
       <div className="container flex h-16 items-center px-4 mx-auto max-w-7xl">
         {/* Logo */}
         <Link href="/" className="mr-6 flex items-center space-x-2">
+          <Image
+            src="/images/logo.png"
+            alt={SITE_CONFIG.name}
+            width={32}
+            height={32}
+            className="dark:invert"
+          />
           <span className="font-bold text-xl bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
             {SITE_CONFIG.name}
           </span>
