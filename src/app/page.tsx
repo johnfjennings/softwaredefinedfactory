@@ -1,8 +1,8 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
+import { NewsletterForm } from "@/components/marketing/newsletter-form"
 import { ArrowRight, Factory, Cpu, TrendingUp, Zap, BookOpen, Wrench } from "lucide-react"
 
 export default function Home() {
@@ -39,17 +39,7 @@ export default function Home() {
 
             {/* Email Signup */}
             <div className="w-full max-w-md pt-8">
-              <form className="flex flex-col sm:flex-row gap-2">
-                <Input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="flex-1"
-                />
-                <Button type="submit">Get Updates</Button>
-              </form>
-              <p className="text-xs text-muted-foreground mt-2">
-                Join 1,000+ manufacturers learning smart factory technologies
-              </p>
+              <NewsletterForm source="homepage" />
             </div>
           </div>
         </section>
