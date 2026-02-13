@@ -24,6 +24,10 @@ export const NAV_LINKS = [
     href: "/tools",
   },
   {
+    title: "Conferences",
+    href: "/conferences",
+  },
+  {
     title: "About",
     href: "/about",
   },
