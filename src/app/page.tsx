@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
@@ -14,6 +15,14 @@ export default function Home() {
         {/* Hero Section */}
         <section className="container mx-auto max-w-7xl px-4 py-24 md:py-32">
           <div className="flex flex-col items-center text-center space-y-8">
+            <Image
+              src="/images/logo.png"
+              alt="Software Defined Factory"
+              width={160}
+              height={160}
+              className="dark:invert"
+              priority
+            />
             <div className="space-y-4 max-w-3xl">
               <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl">
                 Transform Your Factory with{" "}
