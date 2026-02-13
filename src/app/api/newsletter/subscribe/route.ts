@@ -102,7 +102,8 @@ export async function POST(request: NextRequest) {
               </ul>
               <p style="font-size: 14px; color: #999; margin-top: 32px; border-top: 1px solid #eee; padding-top: 16px;">
                 Software Defined Factory — Learn smart manufacturing, Industry 4.0, and IIoT.<br>
-                <a href="https://www.softwaredefinedfactory.com" style="color: #999;">www.softwaredefinedfactory.com</a>
+                <a href="https://www.softwaredefinedfactory.com" style="color: #999;">www.softwaredefinedfactory.com</a><br>
+                <a href="https://www.softwaredefinedfactory.com/unsubscribe" style="color: #999;">Unsubscribe</a>
               </p>
             </div>
           `,

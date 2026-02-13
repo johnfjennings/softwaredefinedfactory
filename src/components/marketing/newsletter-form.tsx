@@ -76,7 +76,10 @@ export function NewsletterForm({ source = "homepage" }: NewsletterFormProps) {
       )}
       {!error && (
         <p className="text-xs text-muted-foreground mt-2">
-          Join 1,000+ manufacturers learning smart factory technologies
+          Join 1,000+ manufacturers learning smart factory technologies.{" "}
+          <a href="/unsubscribe" className="underline hover:text-foreground transition-colors">
+            Unsubscribe anytime
+          </a>.
         </p>
       )}
     </div>
