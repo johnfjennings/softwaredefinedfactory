@@ -63,6 +63,14 @@ export function Footer() {
                   Free Tools
                 </Link>
               </li>
+              <li>
+                <Link
+                  href="/glossary"
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Glossary
+                </Link>
+              </li>
             </ul>
           </div>
 
