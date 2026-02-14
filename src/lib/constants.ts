@@ -47,6 +47,12 @@ export const DIFFICULTY_LEVELS = [
   { value: "advanced", label: "Advanced" },
 ]
 
+export const LESSON_TYPES = [
+  { value: "article", label: "Article" },
+  { value: "slides", label: "Slides" },
+  { value: "video", label: "Video" },
+]
+
 export const BLOG_CATEGORIES = [
   "Smart Manufacturing",
   "IIoT",

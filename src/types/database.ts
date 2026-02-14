@@ -9,6 +9,73 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
+      course_enrollments: {
+        Row: {
+          id: string
+          user_id: string
+          course_slug: string
+          enrolled_at: string
+          completed_at: string | null
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          course_slug: string
+          enrolled_at?: string
+          completed_at?: string | null
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          course_slug?: string
+          enrolled_at?: string
+          completed_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "course_enrollments_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      course_lesson_progress: {
+        Row: {
+          id: string
+          user_id: string
+          course_slug: string
+          lesson_slug: string
+          completed: boolean
+          completed_at: string | null
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          course_slug: string
+          lesson_slug: string
+          completed?: boolean
+          completed_at?: string | null
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          course_slug?: string
+          lesson_slug?: string
+          completed?: boolean
+          completed_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "course_lesson_progress_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       courses: {
         Row: {
           id: string

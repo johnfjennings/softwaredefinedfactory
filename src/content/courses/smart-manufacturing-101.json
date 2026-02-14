@@ -1,0 +1,74 @@
+{
+  "title": "Smart Manufacturing 101",
+  "slug": "smart-manufacturing-101",
+  "description": "A comprehensive introduction to smart manufacturing, covering Industry 4.0 fundamentals, IIoT technologies, digital twins, and practical implementation strategies for modernizing your factory floor.",
+  "instructor": "John Jennings",
+  "difficulty": "beginner",
+  "category": "smart-manufacturing",
+  "thumbnail": "/images/courses/smart-manufacturing-101.jpg",
+  "priceCents": 0,
+  "isPublished": true,
+  "tags": ["Smart Manufacturing", "Industry 4.0", "IIoT", "Beginner"],
+  "modules": [
+    {
+      "title": "Introduction to Smart Manufacturing",
+      "description": "Understand what smart manufacturing is and why it matters for modern factories.",
+      "lessons": [
+        {
+          "slug": "01-what-is-smart-manufacturing",
+          "title": "What is Smart Manufacturing?",
+          "type": "article",
+          "durationMinutes": 15,
+          "isPreview": true
+        },
+        {
+          "slug": "02-industry-4-0-overview",
+          "title": "Industry 4.0 Overview",
+          "type": "slides",
+          "durationMinutes": 20,
+          "isPreview": true
+        }
+      ]
+    },
+    {
+      "title": "Core Technologies",
+      "description": "Explore the key technologies that power smart factories.",
+      "lessons": [
+        {
+          "slug": "03-iiot-fundamentals",
+          "title": "IIoT Fundamentals",
+          "type": "article",
+          "durationMinutes": 20,
+          "isPreview": false
+        },
+        {
+          "slug": "04-sensors-and-connectivity",
+          "title": "Sensors and Connectivity",
+          "type": "slides",
+          "durationMinutes": 25,
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "title": "Implementation",
+      "description": "Learn how to plan and execute a smart manufacturing transformation.",
+      "lessons": [
+        {
+          "slug": "05-building-a-business-case",
+          "title": "Building a Business Case",
+          "type": "article",
+          "durationMinutes": 15,
+          "isPreview": false
+        },
+        {
+          "slug": "06-implementation-roadmap",
+          "title": "Implementation Roadmap",
+          "type": "slides",
+          "durationMinutes": 20,
+          "isPreview": false
+        }
+      ]
+    }
+  ]
+}

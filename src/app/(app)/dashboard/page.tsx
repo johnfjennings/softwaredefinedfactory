@@ -4,9 +4,11 @@ import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Progress } from "@/components/ui/progress"
 import Link from "next/link"
-import { BookOpen, Wrench, TrendingUp, Settings } from "lucide-react"
+import { BookOpen, Wrench, TrendingUp, Settings, Play } from "lucide-react"
 import { LogoutButton } from "@/components/auth/logout-button"
+import { getCourseBySlug, getCourseLessons } from "@/lib/courses"
 
 export default async function DashboardPage() {
   const supabase = await createClient()
@@ -26,8 +28,51 @@ export default async function DashboardPage() {
     .eq("id", user.id)
     .single()
 
-  // Extract user's name safely
-  const userName = profile?.full_name || user.email?.split('@')[0] || 'there'
+  const userName = profile?.full_name || user.email?.split("@")[0] || "there"
+
+  // Fetch enrollments
+  const { data: enrollments } = await (supabase as any)
+    .from("course_enrollments")
+    .select("course_slug, enrolled_at")
+    .eq("user_id", user.id)
+
+  const enrollmentCount = enrollments?.length || 0
+
+  // Fetch progress for all enrolled courses
+  const { data: allProgress } = await (supabase as any)
+    .from("course_lesson_progress")
+    .select("course_slug, lesson_slug")
+    .eq("user_id", user.id)
+    .eq("completed", true)
+
+  // Build enrolled courses with progress
+  const enrolledCourses = (enrollments || []).map((enrollment: any) => {
+    const course = getCourseBySlug(enrollment.course_slug)
+    const courseLessons = getCourseLessons(enrollment.course_slug)
+    const completedCount = (allProgress || []).filter(
+      (p: any) => p.course_slug === enrollment.course_slug
+    ).length
+    const totalCount = courseLessons.length
+    const progressPercent = totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0
+
+    return {
+      slug: enrollment.course_slug,
+      title: course?.title || enrollment.course_slug,
+      enrolledAt: enrollment.enrolled_at,
+      completedCount,
+      totalCount,
+      progressPercent,
+    }
+  })
+
+  // Overall progress
+  const totalLessonsAll = enrolledCourses.reduce((sum: number, c: any) => sum + c.totalCount, 0)
+  const completedLessonsAll = enrolledCourses.reduce(
+    (sum: number, c: any) => sum + c.completedCount,
+    0
+  )
+  const overallProgress =
+    totalLessonsAll > 0 ? Math.round((completedLessonsAll / totalLessonsAll) * 100) : 0
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -49,58 +94,48 @@ export default async function DashboardPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  Enrolled Courses
-                </CardTitle>
+                <CardTitle className="text-sm font-medium">Enrolled Courses</CardTitle>
                 <BookOpen className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">0</div>
+                <div className="text-2xl font-bold">{enrollmentCount}</div>
                 <p className="text-xs text-muted-foreground">
-                  Start learning today
+                  {enrollmentCount === 0 ? "Start learning today" : "Keep it up!"}
                 </p>
               </CardContent>
             </Card>
 
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  Tools Used
-                </CardTitle>
-                <Wrench className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">0</div>
-                <p className="text-xs text-muted-foreground">
-                  Try our free calculators
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  Learning Progress
-                </CardTitle>
+                <CardTitle className="text-sm font-medium">Lessons Completed</CardTitle>
                 <TrendingUp className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">0%</div>
+                <div className="text-2xl font-bold">{completedLessonsAll}</div>
                 <p className="text-xs text-muted-foreground">
-                  Complete your first course
+                  of {totalLessonsAll} total lessons
                 </p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Overall Progress</CardTitle>
+                <Wrench className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">{overallProgress}%</div>
+                <Progress value={overallProgress} className="h-2 mt-2" />
               </CardContent>
             </Card>
           </div>
 
-          {/* Quick Actions */}
+          {/* Quick Actions + Account */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
             <Card>
               <CardHeader>
                 <CardTitle>Get Started</CardTitle>
-                <CardDescription>
-                  Begin your smart manufacturing journey
-                </CardDescription>
+                <CardDescription>Begin your smart manufacturing journey</CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
                 <Button asChild className="w-full">
@@ -118,9 +153,7 @@ export default async function DashboardPage() {
             <Card>
               <CardHeader>
                 <CardTitle>Account Settings</CardTitle>
-                <CardDescription>
-                  Manage your profile and preferences
-                </CardDescription>
+                <CardDescription>Manage your profile and preferences</CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
                 <div className="space-y-2 text-sm">
@@ -148,25 +181,56 @@ export default async function DashboardPage() {
             </Card>
           </div>
 
-          {/* My Courses (Empty State) */}
+          {/* My Courses */}
           <Card>
             <CardHeader>
               <CardTitle>My Courses</CardTitle>
-              <CardDescription>
-                Courses you&apos;re currently enrolled in
-              </CardDescription>
+              <CardDescription>Courses you&apos;re currently enrolled in</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="flex flex-col items-center justify-center py-12 text-center">
-                <BookOpen className="h-12 w-12 text-muted-foreground mb-4" />
-                <h3 className="text-lg font-semibold mb-2">No courses yet</h3>
-                <p className="text-muted-foreground mb-6 max-w-sm">
-                  Start learning about smart manufacturing, IIoT, and Industry 4.0 by enrolling in your first course.
-                </p>
-                <Button asChild>
-                  <Link href="/courses">Explore Courses</Link>
-                </Button>
-              </div>
+              {enrolledCourses.length > 0 ? (
+                <div className="space-y-4">
+                  {enrolledCourses.map((course: any) => (
+                    <div
+                      key={course.slug}
+                      className="flex items-center gap-4 p-4 rounded-lg border"
+                    >
+                      <div className="flex-1 min-w-0">
+                        <Link
+                          href={`/courses/${course.slug}`}
+                          className="font-medium hover:text-primary transition-colors"
+                        >
+                          {course.title}
+                        </Link>
+                        <div className="flex items-center gap-3 mt-2">
+                          <Progress value={course.progressPercent} className="h-2 flex-1" />
+                          <span className="text-xs text-muted-foreground flex-shrink-0">
+                            {course.completedCount}/{course.totalCount} lessons
+                          </span>
+                        </div>
+                      </div>
+                      <Button size="sm" asChild>
+                        <Link href={`/courses/${course.slug}/learn`}>
+                          <Play className="mr-1 h-3 w-3" />
+                          Continue
+                        </Link>
+                      </Button>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="flex flex-col items-center justify-center py-12 text-center">
+                  <BookOpen className="h-12 w-12 text-muted-foreground mb-4" />
+                  <h3 className="text-lg font-semibold mb-2">No courses yet</h3>
+                  <p className="text-muted-foreground mb-6 max-w-sm">
+                    Start learning about smart manufacturing, IIoT, and Industry 4.0 by enrolling
+                    in your first course.
+                  </p>
+                  <Button asChild>
+                    <Link href="/courses">Explore Courses</Link>
+                  </Button>
+                </div>
+              )}
             </CardContent>
           </Card>
         </div>
