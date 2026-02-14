@@ -1,5 +1,4 @@
 import { notFound, redirect } from "next/navigation"
-import Link from "next/link"
 import { createClient } from "@/lib/supabase/server"
 import {
   getCourseBySlug,
@@ -8,11 +7,7 @@ import {
   getLessonContentPath,
   getAdjacentLessons,
 } from "@/lib/courses"
-import { LessonPlayer } from "@/components/course/lesson-player"
-import { CourseSidebar } from "@/components/course/course-sidebar"
-import { MarkCompleteButton } from "@/components/course/mark-complete-button"
-import { Button } from "@/components/ui/button"
-import { ArrowLeft, ArrowRight, ChevronLeft, Menu } from "lucide-react"
+import { LessonLayout } from "@/components/course/lesson-layout"
 
 interface PageProps {
   params: Promise<{ slug: string; lessonSlug: string }>
@@ -71,90 +66,20 @@ export default async function LessonPage({ params }: PageProps) {
     completedLessons = (progress || []).map((p: any) => p.lesson_slug)
   }
 
-  const isCurrentCompleted = completedLessons.includes(lessonSlug)
   const { prev, next } = getAdjacentLessons(slug, lessonSlug)
   const contentPath = getLessonContentPath(slug, lessonSlug)
 
   return (
-    <div className="flex h-screen">
-      {/* Sidebar */}
-      <aside className="hidden lg:flex lg:flex-col w-80 border-r bg-background">
-        <div className="p-4 border-b">
-          <Link
-            href={`/courses/${slug}`}
-            className="flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors"
-          >
-            <ChevronLeft className="h-4 w-4 mr-1" />
-            Back to course
-          </Link>
-          <h2 className="font-semibold mt-2 truncate text-sm">{course.title}</h2>
-        </div>
-        <CourseSidebar
-          lessons={allLessons}
-          currentLessonSlug={lessonSlug}
-          completedLessons={completedLessons}
-          courseSlug={slug}
-          isEnrolled={isEnrolled}
-        />
-      </aside>
-
-      {/* Main content */}
-      <main className="flex-1 flex flex-col overflow-hidden">
-        {/* Top bar */}
-        <div className="flex items-center justify-between px-4 py-3 border-b bg-background">
-          <div className="flex items-center gap-3 min-w-0">
-            <Link
-              href={`/courses/${slug}`}
-              className="lg:hidden flex items-center text-sm text-muted-foreground hover:text-foreground"
-            >
-              <ChevronLeft className="h-4 w-4" />
-            </Link>
-            <h1 className="font-medium text-sm truncate">{lesson.title}</h1>
-          </div>
-          <div className="flex items-center gap-2 flex-shrink-0">
-            {user && (
-              <MarkCompleteButton
-                courseSlug={slug}
-                lessonSlug={lessonSlug}
-                isCompleted={isCurrentCompleted}
-              />
-            )}
-          </div>
-        </div>
-
-        {/* Lesson content */}
-        <div className="flex-1 overflow-auto p-4">
-          <LessonPlayer contentPath={contentPath} title={lesson.title} type={lesson.type} />
-        </div>
-
-        {/* Bottom navigation */}
-        <div className="flex items-center justify-between px-4 py-3 border-t bg-background">
-          {prev ? (
-            <Button variant="outline" size="sm" asChild>
-              <Link href={`/courses/${slug}/learn/${prev.slug}`}>
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                <span className="hidden sm:inline">{prev.title}</span>
-                <span className="sm:hidden">Previous</span>
-              </Link>
-            </Button>
-          ) : (
-            <div />
-          )}
-          {next ? (
-            <Button size="sm" asChild>
-              <Link href={`/courses/${slug}/learn/${next.slug}`}>
-                <span className="hidden sm:inline">{next.title}</span>
-                <span className="sm:hidden">Next</span>
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
-          ) : (
-            <Button size="sm" asChild>
-              <Link href={`/courses/${slug}`}>Complete Course</Link>
-            </Button>
-          )}
-        </div>
-      </main>
-    </div>
+    <LessonLayout
+      course={{ title: course.title, slug: course.slug }}
+      lesson={{ title: lesson.title, slug: lessonSlug, type: lesson.type }}
+      allLessons={allLessons}
+      completedLessons={completedLessons}
+      contentPath={contentPath}
+      isEnrolled={isEnrolled}
+      isAuthenticated={!!user}
+      prev={prev}
+      next={next}
+    />
   )
 }

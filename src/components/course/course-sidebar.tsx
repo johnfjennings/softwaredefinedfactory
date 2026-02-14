@@ -5,11 +5,11 @@ import { cn } from "@/lib/utils"
 import { Progress } from "@/components/ui/progress"
 import { CheckCircle2, Circle, Lock, FileText, Presentation, Video } from "lucide-react"
 import type { LessonNavItem } from "@/types/course"
+import { useProgress } from "./progress-provider"
 
 interface CourseSidebarProps {
   lessons: LessonNavItem[]
   currentLessonSlug: string
-  completedLessons: string[]
   courseSlug: string
   isEnrolled: boolean
 }
@@ -23,13 +23,11 @@ const typeIcons = {
 export function CourseSidebar({
   lessons,
   currentLessonSlug,
-  completedLessons,
   courseSlug,
   isEnrolled,
 }: CourseSidebarProps) {
-  const completedCount = completedLessons.length
+  const { completedLessons, completedCount, progressPercent } = useProgress()
   const totalCount = lessons.length
-  const progressPercent = totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0
 
   // Group lessons by module
   const modules: { title: string; lessons: LessonNavItem[] }[] = []

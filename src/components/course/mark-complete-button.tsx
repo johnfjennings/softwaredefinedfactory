@@ -3,38 +3,22 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { CheckCircle2, Circle, Loader2 } from "lucide-react"
+import { useProgress } from "./progress-provider"
 
 interface MarkCompleteButtonProps {
   courseSlug: string
   lessonSlug: string
-  isCompleted: boolean
 }
 
-export function MarkCompleteButton({
-  courseSlug,
-  lessonSlug,
-  isCompleted: initialCompleted,
-}: MarkCompleteButtonProps) {
-  const [completed, setCompleted] = useState(initialCompleted)
+export function MarkCompleteButton({ courseSlug, lessonSlug }: MarkCompleteButtonProps) {
+  const { isLessonCompleted, toggleLessonComplete } = useProgress()
+  const completed = isLessonCompleted(lessonSlug)
   const [loading, setLoading] = useState(false)
 
   const handleToggle = async () => {
     setLoading(true)
-    try {
-      const response = await fetch("/api/courses/progress", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ courseSlug, lessonSlug, completed: !completed }),
-      })
-
-      if (response.ok) {
-        setCompleted(!completed)
-      }
-    } catch (err) {
-      console.error("Progress update error:", err)
-    } finally {
-      setLoading(false)
-    }
+    await toggleLessonComplete(courseSlug, lessonSlug)
+    setLoading(false)
   }
 
   return (
