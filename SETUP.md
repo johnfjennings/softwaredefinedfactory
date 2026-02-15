@@ -110,7 +110,7 @@ Based on your plan, here's what's next:
 ### Phase 1 Remaining:
 - [ ] Blog system with MDX
 - [ ] First blog posts (Smart Manufacturing 101)
-- [ ] Newsletter signup integration (ConvertKit)
+- [x] Newsletter signup integration (Resend)
 
 ### Phase 2 (Weeks 5-8):
 - [ ] ROI Calculator tool

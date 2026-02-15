@@ -110,18 +110,9 @@ export default function PrivacyPolicyPage() {
               </a>.
             </p>
 
-            <h3>ConvertKit (Email Newsletter)</h3>
+            <h3>Resend (Email)</h3>
             <p>
-              If you subscribe to our newsletter, your email address is shared with ConvertKit for email
-              delivery. ConvertKit&apos;s privacy policy is available at{" "}
-              <a href="https://convertkit.com/privacy" target="_blank" rel="noopener noreferrer">
-                convertkit.com/privacy
-              </a>.
-            </p>
-
-            <h3>Resend (Transactional Email)</h3>
-            <p>
-              We use Resend to send transactional emails such as password resets, purchase confirmations, and
+              We use Resend to send emails including newsletters, password resets, purchase confirmations, and
               account notifications. Resend&apos;s privacy policy is available at{" "}
               <a href="https://resend.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer">
                 resend.com/legal/privacy-policy
