@@ -127,59 +127,103 @@ export default function ROICalculatorPage() {
     const doc = new jsPDF()
     const pageWidth = doc.internal.pageSize.getWidth()
     const pageHeight = doc.internal.pageSize.getHeight()
+    const margin = 20
+    const contentWidth = pageWidth - margin * 2
+    const footerHeight = 18
+    const headerHeight = 32
+    const safeBottom = pageHeight - footerHeight - 8
+    let y = 0
+    let pageNum = 1
 
-    // Branded header
-    doc.setFillColor(24, 24, 27)
-    doc.rect(0, 0, pageWidth, 28, "F")
-    doc.setFontSize(14)
-    doc.setFont("helvetica", "bold")
-    doc.setTextColor(255, 255, 255)
-    doc.text("Software Defined Factory", 20, 14)
-    doc.setFontSize(9)
-    doc.setFont("helvetica", "normal")
-    doc.text("www.softwaredefinedfactory.com", 20, 22)
-    doc.setTextColor(200, 200, 200)
-    doc.text(`Generated ${new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}`, pageWidth - 20, 22, { align: "right" })
-    doc.setTextColor(0, 0, 0)
+    const addBrandedHeader = () => {
+      doc.setFillColor(24, 24, 27)
+      doc.rect(0, 0, pageWidth, headerHeight, "F")
+      doc.setFontSize(15)
+      doc.setFont("helvetica", "bold")
+      doc.setTextColor(255, 255, 255)
+      doc.text("Software Defined Factory", margin, 15)
+      doc.setFontSize(9)
+      doc.setFont("helvetica", "normal")
+      doc.setTextColor(180, 180, 180)
+      doc.text("www.softwaredefinedfactory.com", margin, 24)
+      doc.text(
+        `Generated ${new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}`,
+        pageWidth - margin, 24, { align: "right" }
+      )
+      doc.setTextColor(0, 0, 0)
+    }
 
-    let y = 40
+    const addBrandedFooter = () => {
+      doc.setFillColor(240, 240, 240)
+      doc.rect(0, pageHeight - footerHeight, pageWidth, footerHeight, "F")
+      doc.setDrawColor(200, 200, 200)
+      doc.line(0, pageHeight - footerHeight, pageWidth, pageHeight - footerHeight)
+      doc.setFontSize(8)
+      doc.setTextColor(100, 100, 100)
+      doc.text("Software Defined Factory | www.softwaredefinedfactory.com", margin, pageHeight - 7)
+      doc.text(`Page ${pageNum}`, pageWidth - margin, pageHeight - 7, { align: "right" })
+      doc.setTextColor(0, 0, 0)
+      doc.setDrawColor(200, 200, 200)
+    }
+
+    const checkPageBreak = (needed: number) => {
+      if (y + needed > safeBottom) {
+        addBrandedFooter()
+        doc.addPage()
+        pageNum++
+        addBrandedHeader()
+        y = headerHeight + 10
+      }
+    }
+
+    // === PAGE 1 ===
+    addBrandedHeader()
+    y = headerHeight + 12
 
     // Title
-    doc.setFontSize(20)
+    doc.setFontSize(22)
     doc.setFont("helvetica", "bold")
-    doc.text("Automation ROI Report", 20, y)
-    y += 10
-
+    doc.text("Automation ROI Report", margin, y)
+    y += 6
+    doc.setFontSize(10)
+    doc.setFont("helvetica", "normal")
+    doc.setTextColor(120, 120, 120)
+    doc.text("Return on investment analysis for smart manufacturing", margin, y)
+    doc.setTextColor(0, 0, 0)
+    y += 6
     doc.setDrawColor(200, 200, 200)
-    doc.line(20, y, pageWidth - 20, y)
+    doc.line(margin, y, pageWidth - margin, y)
     y += 10
 
     // Investment Details Section
-    doc.setFontSize(14)
+    doc.setFontSize(13)
     doc.setFont("helvetica", "bold")
-    doc.text("Investment Details", 20, y)
+    doc.text("Investment Details", margin, y)
     y += 8
 
-    doc.setFontSize(11)
+    doc.setFontSize(10)
     doc.setFont("helvetica", "normal")
-    doc.text(`Initial Investment:`, 25, y)
+    doc.setTextColor(80, 80, 80)
+    doc.text("Initial Investment:", margin + 4, y)
     doc.setFont("helvetica", "bold")
+    doc.setTextColor(0, 0, 0)
     doc.text(formatCurrency(inputs.initialInvestment), 90, y)
     y += 7
     doc.setFont("helvetica", "normal")
-    doc.text(`Current Annual Operating Costs:`, 25, y)
+    doc.setTextColor(80, 80, 80)
+    doc.text("Current Annual Operating Costs:", margin + 4, y)
     doc.setFont("helvetica", "bold")
+    doc.setTextColor(0, 0, 0)
     doc.text(formatCurrency(inputs.currentAnnualCosts), 90, y)
     y += 12
 
     // Expected Savings Section
-    doc.setFontSize(14)
+    doc.setFontSize(13)
     doc.setFont("helvetica", "bold")
-    doc.text("Expected Savings", 20, y)
+    doc.text("Expected Savings", margin, y)
     y += 8
 
-    doc.setFontSize(11)
-    doc.setFont("helvetica", "normal")
+    doc.setFontSize(10)
     const savingsItems = [
       ["Annual Labor Savings:", formatCurrency(inputs.laborSavings)],
       ["Productivity Improvement:", `${inputs.productivityGain}%`],
@@ -188,109 +232,124 @@ export default function ROICalculatorPage() {
       ["Maintenance Cost Reduction:", `${inputs.maintenanceReduction}%`],
     ]
     for (const [label, value] of savingsItems) {
-      doc.text(label, 25, y)
-      doc.setFont("helvetica", "bold")
-      doc.text(value, 90, y)
       doc.setFont("helvetica", "normal")
+      doc.setTextColor(80, 80, 80)
+      doc.text(label, margin + 4, y)
+      doc.setFont("helvetica", "bold")
+      doc.setTextColor(0, 0, 0)
+      doc.text(value, 90, y)
       y += 7
     }
     y += 5
 
     // Key Results Section
-    doc.setFontSize(14)
+    checkPageBreak(70)
+    doc.setFontSize(13)
     doc.setFont("helvetica", "bold")
-    doc.text("Key Results", 20, y)
+    doc.text("Key Results", margin, y)
     y += 8
 
     // Highlight box for annual savings
     doc.setFillColor(240, 249, 255)
     doc.setDrawColor(59, 130, 246)
-    doc.roundedRect(20, y - 4, pageWidth - 40, 22, 3, 3, "FD")
-    doc.setFontSize(11)
+    doc.roundedRect(margin, y - 4, contentWidth, 22, 3, 3, "FD")
+    doc.setFontSize(10)
     doc.setFont("helvetica", "normal")
-    doc.text("Total Annual Savings:", 28, y + 4)
+    doc.text("Total Annual Savings:", margin + 8, y + 4)
     doc.setFontSize(16)
     doc.setFont("helvetica", "bold")
     doc.setTextColor(37, 99, 235)
-    doc.text(formatCurrency(results.totalAnnualSavings), 28, y + 14)
+    doc.text(formatCurrency(results.totalAnnualSavings), margin + 8, y + 14)
     doc.setTextColor(0, 0, 0)
+    doc.setDrawColor(200, 200, 200)
     y += 28
 
-    doc.setFontSize(11)
+    doc.setFontSize(10)
     doc.setFont("helvetica", "normal")
-    doc.text(`Payback Period:`, 25, y)
+    doc.setTextColor(80, 80, 80)
+    doc.text("Payback Period:", margin + 4, y)
     doc.setFont("helvetica", "bold")
+    doc.setTextColor(0, 0, 0)
     doc.text(`${results.paybackMonths.toFixed(1)} months`, 90, y)
     y += 10
 
     // ROI metrics in a grid-like format
+    checkPageBreak(34)
     doc.setFillColor(240, 253, 244)
     doc.setDrawColor(34, 197, 94)
-    const boxWidth = (pageWidth - 50) / 2
-    doc.roundedRect(20, y - 4, boxWidth, 24, 3, 3, "FD")
-    doc.roundedRect(25 + boxWidth, y - 4, boxWidth, 24, 3, 3, "FD")
+    const boxWidth = (contentWidth - 10) / 2
+    doc.roundedRect(margin, y - 4, boxWidth, 24, 3, 3, "FD")
+    doc.roundedRect(margin + boxWidth + 10, y - 4, boxWidth, 24, 3, 3, "FD")
 
     doc.setFontSize(10)
     doc.setFont("helvetica", "normal")
-    doc.text("3-Year ROI", 28, y + 3)
+    doc.setTextColor(0, 0, 0)
+    doc.text("3-Year ROI", margin + 8, y + 3)
     doc.setFontSize(14)
     doc.setFont("helvetica", "bold")
     doc.setTextColor(22, 163, 74)
-    doc.text(formatPercent(results.roi3Year), 28, y + 12)
+    doc.text(formatPercent(results.roi3Year), margin + 8, y + 12)
     doc.setFontSize(9)
     doc.setFont("helvetica", "normal")
-    doc.text(`Net: ${formatCurrency(results.netSavings3Year)}`, 28, y + 18)
+    doc.text(`Net: ${formatCurrency(results.netSavings3Year)}`, margin + 8, y + 18)
 
     doc.setFontSize(10)
     doc.setTextColor(0, 0, 0)
-    doc.text("5-Year ROI", 33 + boxWidth, y + 3)
+    doc.text("5-Year ROI", margin + boxWidth + 18, y + 3)
     doc.setFontSize(14)
     doc.setFont("helvetica", "bold")
     doc.setTextColor(22, 163, 74)
-    doc.text(formatPercent(results.roi5Year), 33 + boxWidth, y + 12)
+    doc.text(formatPercent(results.roi5Year), margin + boxWidth + 18, y + 12)
     doc.setFontSize(9)
     doc.setFont("helvetica", "normal")
-    doc.text(`Net: ${formatCurrency(results.netSavings5Year)}`, 33 + boxWidth, y + 18)
+    doc.text(`Net: ${formatCurrency(results.netSavings5Year)}`, margin + boxWidth + 18, y + 18)
     doc.setTextColor(0, 0, 0)
+    doc.setDrawColor(200, 200, 200)
     y += 34
 
     // 5-Year Projection Table
-    doc.setFontSize(14)
+    checkPageBreak(60)
+    doc.setFontSize(13)
     doc.setFont("helvetica", "bold")
-    doc.text("5-Year Financial Projection", 20, y)
+    doc.text("5-Year Financial Projection", margin, y)
     y += 8
 
     // Table header
-    doc.setFillColor(243, 244, 246)
-    doc.rect(20, y - 4, pageWidth - 40, 8, "F")
+    doc.setFillColor(240, 240, 240)
+    doc.rect(margin, y - 4, contentWidth, 8, "F")
     doc.setFontSize(10)
     doc.setFont("helvetica", "bold")
-    doc.text("Year", 28, y + 1)
-    doc.text("Cumulative Savings", 70, y + 1)
-    doc.text("Net Position", 130, y + 1)
+    doc.setTextColor(60, 60, 60)
+    doc.text("Year", margin + 8, y + 1)
+    doc.text("Cumulative Savings", margin + 50, y + 1)
+    doc.text("Net Position", margin + 115, y + 1)
+    doc.setTextColor(0, 0, 0)
     y += 8
 
     doc.setFont("helvetica", "normal")
-    for (const row of results.yearlyBreakdown) {
-      doc.text(`Year ${row.year}`, 28, y + 1)
-      doc.text(formatCurrency(row.cumulativeSavings), 70, y + 1)
+    for (let i = 0; i < results.yearlyBreakdown.length; i++) {
+      const row = results.yearlyBreakdown[i]
+      checkPageBreak(8)
+      if (i % 2 === 1) {
+        doc.setFillColor(250, 250, 250)
+        doc.rect(margin, y - 3, contentWidth, 7, "F")
+      }
+      doc.text(`Year ${row.year}`, margin + 8, y + 1)
+      doc.text(formatCurrency(row.cumulativeSavings), margin + 50, y + 1)
       if (row.netPosition >= 0) {
         doc.setTextColor(22, 163, 74)
       } else {
         doc.setTextColor(234, 88, 12)
       }
-      doc.text(formatCurrency(row.netPosition), 130, y + 1)
+      doc.setFont("helvetica", "bold")
+      doc.text(formatCurrency(row.netPosition), margin + 115, y + 1)
+      doc.setFont("helvetica", "normal")
       doc.setTextColor(0, 0, 0)
       y += 7
     }
 
-    // Branded footer
-    doc.setFillColor(243, 244, 246)
-    doc.rect(0, pageHeight - 16, pageWidth, 16, "F")
-    doc.setFontSize(8)
-    doc.setTextColor(120, 120, 120)
-    doc.text("Software Defined Factory | www.softwaredefinedfactory.com", 20, pageHeight - 7)
-    doc.text("Free tools for smart manufacturing professionals", pageWidth - 20, pageHeight - 7, { align: "right" })
+    // Footer on final page
+    addBrandedFooter()
 
     doc.save(`roi-report-${new Date().toISOString().split("T")[0]}.pdf`)
   }

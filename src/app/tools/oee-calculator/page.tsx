@@ -201,209 +201,275 @@ export default function OEECalculatorPage() {
     const doc = new jsPDF()
     const pageWidth = doc.internal.pageSize.getWidth()
     const pageHeight = doc.internal.pageSize.getHeight()
-    let y = 40
+    const margin = 20
+    const contentWidth = pageWidth - margin * 2
+    const footerHeight = 18
+    const headerHeight = 32
+    const safeBottom = pageHeight - footerHeight - 8
+    let y = 0
+    let pageNum = 1
+
+    const addBrandedHeader = () => {
+      doc.setFillColor(24, 24, 27)
+      doc.rect(0, 0, pageWidth, headerHeight, "F")
+      doc.setFontSize(15)
+      doc.setFont("helvetica", "bold")
+      doc.setTextColor(255, 255, 255)
+      doc.text("Software Defined Factory", margin, 15)
+      doc.setFontSize(9)
+      doc.setFont("helvetica", "normal")
+      doc.setTextColor(180, 180, 180)
+      doc.text("www.softwaredefinedfactory.com", margin, 24)
+      doc.text(
+        `Generated ${new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}`,
+        pageWidth - margin, 24, { align: "right" }
+      )
+      doc.setTextColor(0, 0, 0)
+    }
 
     const addBrandedFooter = () => {
-      doc.setFillColor(243, 244, 246)
-      doc.rect(0, pageHeight - 16, pageWidth, 16, "F")
+      doc.setFillColor(240, 240, 240)
+      doc.rect(0, pageHeight - footerHeight, pageWidth, footerHeight, "F")
+      doc.setDrawColor(200, 200, 200)
+      doc.line(0, pageHeight - footerHeight, pageWidth, pageHeight - footerHeight)
       doc.setFontSize(8)
-      doc.setTextColor(120, 120, 120)
-      doc.text("Software Defined Factory | www.softwaredefinedfactory.com", 20, pageHeight - 7)
-      doc.text("Free tools for smart manufacturing professionals", pageWidth - 20, pageHeight - 7, { align: "right" })
+      doc.setTextColor(100, 100, 100)
+      doc.text("Software Defined Factory | www.softwaredefinedfactory.com", margin, pageHeight - 7)
+      doc.text(`Page ${pageNum}`, pageWidth - margin, pageHeight - 7, { align: "right" })
       doc.setTextColor(0, 0, 0)
+      doc.setDrawColor(200, 200, 200)
     }
 
     const checkPageBreak = (needed: number) => {
-      if (y + needed > pageHeight - 24) {
+      if (y + needed > safeBottom) {
         addBrandedFooter()
         doc.addPage()
-        y = 20
+        pageNum++
+        addBrandedHeader()
+        y = headerHeight + 10
       }
     }
 
-    // Branded header
-    doc.setFillColor(24, 24, 27)
-    doc.rect(0, 0, pageWidth, 28, "F")
-    doc.setFontSize(14)
-    doc.setFont("helvetica", "bold")
-    doc.setTextColor(255, 255, 255)
-    doc.text("Software Defined Factory", 20, 14)
-    doc.setFontSize(9)
-    doc.setFont("helvetica", "normal")
-    doc.text("www.softwaredefinedfactory.com", 20, 22)
-    doc.setTextColor(200, 200, 200)
-    doc.text(`Generated ${new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}`, pageWidth - 20, 22, { align: "right" })
-    doc.setTextColor(0, 0, 0)
+    // === PAGE 1 ===
+    addBrandedHeader()
+    y = headerHeight + 12
 
     // Title
-    doc.setFontSize(20)
+    doc.setFontSize(22)
     doc.setFont("helvetica", "bold")
-    doc.text("OEE Analysis Report", 20, y)
+    doc.text("OEE Analysis Report", margin, y)
+    y += 6
+    doc.setFontSize(10)
+    doc.setFont("helvetica", "normal")
+    doc.setTextColor(120, 120, 120)
+    doc.text("Overall Equipment Effectiveness breakdown and improvement analysis", margin, y)
+    doc.setTextColor(0, 0, 0)
+    y += 6
+    doc.setDrawColor(200, 200, 200)
+    doc.line(margin, y, pageWidth - margin, y)
     y += 10
 
-    doc.setDrawColor(200, 200, 200)
-    doc.line(20, y, pageWidth - 20, y)
-    y += 8
-
-    // Production Data + OEE Score side by side
-    doc.setFontSize(12)
-    doc.setFont("helvetica", "bold")
-    doc.text("Production Data", 20, y)
-    doc.text("OEE Score", 120, y)
-    y += 6
-
-    doc.setFontSize(9)
-    doc.setFont("helvetica", "normal")
-    const inputSummary = [
-      ["Planned Time:", `${inputs.plannedProductionTime} hrs`],
-      ["Planned Stops:", `${inputs.plannedStops} min`],
-      ["Unplanned Down:", `${inputs.unplannedDowntime} min`],
-      ["Cycle Time:", `${inputs.idealCycleTime} sec/part`],
-      ["Total Parts:", `${inputs.totalPartsProduced}`],
-      ["Defective:", `${inputs.defectiveParts}`],
-      ["Good Parts:", `${results.goodParts}`],
-      ["Run Time:", `${(results.runTimeMinutes / 60).toFixed(1)} hrs`],
-    ]
-
-    // OEE score box on the right
+    // === OEE SCORE - Prominent display ===
     const oeePercent = results.oee * 100
     const [r, g, b] = oeePercent >= 85 ? [34, 197, 94] : oeePercent >= 60 ? [234, 179, 8] : [239, 68, 68]
+
     doc.setFillColor(r, g, b)
-    doc.setTextColor(255, 255, 255)
-    doc.roundedRect(120, y - 2, 50, 18, 3, 3, "F")
-    doc.setFontSize(18)
+    doc.roundedRect(margin, y, contentWidth, 28, 4, 4, "F")
+    doc.setFontSize(28)
     doc.setFont("helvetica", "bold")
-    doc.text(`${oeePercent.toFixed(1)}%`, 145, y + 11, { align: "center" })
-    doc.setTextColor(0, 0, 0)
-    doc.setFontSize(9)
+    doc.setTextColor(255, 255, 255)
+    doc.text(`OEE: ${oeePercent.toFixed(1)}%`, margin + 12, y + 18)
+    doc.setFontSize(12)
     doc.setFont("helvetica", "normal")
-    doc.text(getBenchmarkLabel(results.benchmark), 175, y + 8)
+    doc.text(getBenchmarkLabel(results.benchmark), pageWidth - margin - 12, y + 18, { align: "right" })
+    doc.setTextColor(0, 0, 0)
+    y += 36
 
-    // Sub-metrics below OEE box
-    const metricsStartY = y + 22
-    const metricItems = [
-      ["Availability:", formatPercent(results.availability), "90%+"],
-      ["Performance:", formatPercent(results.performance), "95%+"],
-      ["Quality:", formatPercent(results.quality), "99%+"],
+    // === Sub-metrics row ===
+    const colW = contentWidth / 3
+    const metricData = [
+      { label: "Availability", value: results.availability, target: "90%+" },
+      { label: "Performance", value: results.performance, target: "95%+" },
+      { label: "Quality", value: results.quality, target: "99%+" },
     ]
-    doc.setFontSize(9)
-    let my = metricsStartY
-    for (const [label, value, target] of metricItems) {
+    for (let i = 0; i < 3; i++) {
+      const mx = margin + i * colW
+      const m = metricData[i]
+      doc.setFillColor(248, 248, 248)
+      doc.roundedRect(mx + 2, y, colW - 4, 22, 3, 3, "F")
+      doc.setFontSize(9)
       doc.setFont("helvetica", "normal")
-      doc.text(label, 122, my)
+      doc.setTextColor(100, 100, 100)
+      doc.text(m.label, mx + 8, y + 7)
+      doc.setFontSize(16)
       doc.setFont("helvetica", "bold")
-      doc.text(value, 152, my)
-      doc.setFont("helvetica", "normal")
-      doc.setTextColor(120, 120, 120)
-      doc.text(`(${target})`, 172, my)
       doc.setTextColor(0, 0, 0)
-      my += 6
-    }
-
-    // Production data on the left
-    doc.setFontSize(9)
-    for (const [label, value] of inputSummary) {
+      doc.text(formatPercent(m.value), mx + 8, y + 17)
+      doc.setFontSize(8)
       doc.setFont("helvetica", "normal")
-      doc.text(label, 22, y)
-      doc.setFont("helvetica", "bold")
-      doc.text(value, 70, y)
-      doc.setFont("helvetica", "normal")
-      y += 6
+      doc.setTextColor(140, 140, 140)
+      doc.text(`Target: ${m.target}`, mx + colW - 10, y + 17, { align: "right" })
     }
-    y = Math.max(y, my) + 6
+    doc.setTextColor(0, 0, 0)
+    y += 30
 
-    doc.setDrawColor(200, 200, 200)
-    doc.line(20, y, pageWidth - 20, y)
+    // === Production Data ===
+    doc.setFontSize(13)
+    doc.setFont("helvetica", "bold")
+    doc.text("Production Data", margin, y)
     y += 8
 
-    // Six Big Losses
-    checkPageBreak(70)
-    doc.setFontSize(12)
-    doc.setFont("helvetica", "bold")
-    doc.text("Six Big Losses Analysis", 20, y)
-    y += 7
+    doc.setFontSize(9)
+    const leftCol = [
+      ["Planned Production Time", `${inputs.plannedProductionTime} hours`],
+      ["Planned Stops / Changeover", `${inputs.plannedStops} min`],
+      ["Unplanned Downtime", `${inputs.unplannedDowntime} min`],
+      ["Run Time", `${(results.runTimeMinutes / 60).toFixed(2)} hrs (${results.runTimeMinutes.toFixed(0)} min)`],
+    ]
+    const rightCol = [
+      ["Ideal Cycle Time", `${inputs.idealCycleTime} sec/part`],
+      ["Total Parts Produced", `${inputs.totalPartsProduced}`],
+      ["Defective Parts", `${inputs.defectiveParts}`],
+      ["Good Parts", `${results.goodParts} (Yield: ${(results.quality * 100).toFixed(1)}%)`],
+    ]
 
-    doc.setFillColor(243, 244, 246)
-    doc.rect(20, y - 3, pageWidth - 40, 7, "F")
+    const dataStartY = y
+    for (const [label, value] of leftCol) {
+      doc.setFont("helvetica", "normal")
+      doc.setTextColor(80, 80, 80)
+      doc.text(label, margin + 4, y)
+      doc.setFont("helvetica", "bold")
+      doc.setTextColor(0, 0, 0)
+      doc.text(value, margin + 70, y)
+      y += 6
+    }
+    let ry = dataStartY
+    for (const [label, value] of rightCol) {
+      doc.setFont("helvetica", "normal")
+      doc.setTextColor(80, 80, 80)
+      doc.text(label, pageWidth / 2 + 4, ry)
+      doc.setFont("helvetica", "bold")
+      doc.setTextColor(0, 0, 0)
+      doc.text(value, pageWidth / 2 + 52, ry)
+      ry += 6
+    }
+    y = Math.max(y, ry) + 4
+    doc.setDrawColor(220, 220, 220)
+    doc.line(margin, y, pageWidth - margin, y)
+    y += 10
+
+    // === Six Big Losses ===
+    checkPageBreak(80)
+    doc.setFontSize(13)
+    doc.setFont("helvetica", "bold")
+    doc.text("Six Big Losses Analysis", margin, y)
+    y += 8
+
+    // Table header
+    doc.setFillColor(240, 240, 240)
+    doc.rect(margin, y - 4, contentWidth, 8, "F")
     doc.setFontSize(9)
     doc.setFont("helvetica", "bold")
-    doc.text("Loss Category", 25, y + 1)
-    doc.text("Type", 85, y + 1)
-    doc.text("Time Lost", 125, y + 1)
-    doc.text("% of Total", 160, y + 1)
+    doc.setTextColor(60, 60, 60)
+    doc.text("Loss Category", margin + 5, y)
+    doc.text("Type", margin + 70, y)
+    doc.text("Time Lost", margin + 105, y)
+    doc.text("% of Total", margin + 140, y)
+    doc.setTextColor(0, 0, 0)
     y += 7
 
     doc.setFont("helvetica", "normal")
-    for (const loss of lossItems) {
+    for (let i = 0; i < lossItems.length; i++) {
+      const loss = lossItems[i]
       checkPageBreak(7)
-      doc.text(loss.label, 25, y + 1)
-      doc.text(loss.category, 85, y + 1)
-      doc.text(formatMinutes(loss.value), 125, y + 1)
+      if (i % 2 === 1) {
+        doc.setFillColor(250, 250, 250)
+        doc.rect(margin, y - 4, contentWidth, 6, "F")
+      }
+      if (i === 0 && loss.value > 0) {
+        doc.setFont("helvetica", "bold")
+        doc.setTextColor(180, 80, 0)
+      }
+      doc.text(loss.label, margin + 5, y)
+      doc.text(loss.category, margin + 70, y)
+      doc.text(formatMinutes(loss.value), margin + 105, y)
       const pct = totalLoss > 0 ? ((loss.value / totalLoss) * 100).toFixed(1) : "0.0"
-      doc.text(`${pct}%`, 160, y + 1)
+      doc.text(`${pct}%`, margin + 140, y)
+      doc.setFont("helvetica", "normal")
+      doc.setTextColor(0, 0, 0)
       y += 6
     }
 
+    // Total row
+    doc.setDrawColor(180, 180, 180)
+    doc.line(margin, y - 2, pageWidth - margin, y - 2)
     doc.setFont("helvetica", "bold")
-    doc.text("Total Loss:", 25, y + 1)
-    doc.text(formatMinutes(results.totalLossMinutes), 125, y + 1)
-    y += 10
+    doc.text("Total Loss:", margin + 5, y + 2)
+    doc.text(formatMinutes(results.totalLossMinutes), margin + 105, y + 2)
+    y += 12
 
-    // Recommendations
-    checkPageBreak(50)
-    doc.setFontSize(12)
+    // === Recommendations ===
+    checkPageBreak(40)
+    doc.setFontSize(13)
     doc.setFont("helvetica", "bold")
-    doc.text("Improvement Recommendations", 20, y)
-    y += 7
+    doc.text("Improvement Recommendations", margin, y)
+    y += 8
+
+    if (largestLoss && largestLoss.value > 0) {
+      checkPageBreak(20)
+      doc.setFillColor(255, 251, 235)
+      doc.setDrawColor(245, 158, 11)
+      doc.roundedRect(margin, y - 3, contentWidth, 16, 3, 3, "FD")
+      doc.setFontSize(10)
+      doc.setFont("helvetica", "bold")
+      doc.setTextColor(160, 100, 0)
+      doc.text(`Priority: Address ${largestLoss.label}`, margin + 6, y + 3)
+      doc.setFontSize(9)
+      doc.setFont("helvetica", "normal")
+      doc.setTextColor(80, 60, 0)
+      const recLines = doc.splitTextToSize(largestLoss.recommendation, contentWidth - 16)
+      doc.text(recLines[0], margin + 6, y + 10)
+      doc.setTextColor(0, 0, 0)
+      doc.setDrawColor(200, 200, 200)
+      y += 20
+    }
 
     doc.setFontSize(9)
     doc.setFont("helvetica", "normal")
-
-    if (largestLoss) {
-      checkPageBreak(18)
-      doc.setFillColor(255, 251, 235)
-      doc.setDrawColor(245, 158, 11)
-      doc.roundedRect(20, y - 3, pageWidth - 40, 14, 3, 3, "FD")
-      doc.setFont("helvetica", "bold")
-      doc.text(`Priority: Address ${largestLoss.label}`, 25, y + 2)
-      doc.setFont("helvetica", "normal")
-      doc.text(largestLoss.recommendation, 25, y + 8)
-      doc.setDrawColor(200, 200, 200)
-      y += 18
-    }
-
     if (results.availability < 0.90) {
-      checkPageBreak(6)
-      doc.text("- Availability below 90%: Focus on reducing breakdowns and setup times.", 22, y)
+      checkPageBreak(7)
+      doc.text("\u2022  Availability below 90%: Focus on reducing breakdowns and setup times.", margin + 4, y)
       y += 6
     }
     if (results.performance < 0.95) {
-      checkPageBreak(6)
-      doc.text("- Performance below 95%: Investigate speed losses and minor stops.", 22, y)
+      checkPageBreak(7)
+      doc.text("\u2022  Performance below 95%: Investigate speed losses and minor stops.", margin + 4, y)
       y += 6
     }
     if (results.quality < 0.99) {
-      checkPageBreak(6)
-      doc.text("- Quality below 99%: Implement SPC and error-proofing measures.", 22, y)
+      checkPageBreak(7)
+      doc.text("\u2022  Quality below 99%: Implement SPC and error-proofing measures.", margin + 4, y)
       y += 6
     }
-    y += 6
+    y += 8
 
-    // Benchmark Comparison
-    checkPageBreak(50)
-    doc.setFontSize(12)
+    // === Benchmark Comparison ===
+    checkPageBreak(55)
+    doc.setFontSize(13)
     doc.setFont("helvetica", "bold")
-    doc.text("Benchmark Comparison", 20, y)
-    y += 7
+    doc.text("Benchmark Comparison", margin, y)
+    y += 8
 
-    doc.setFillColor(243, 244, 246)
-    doc.rect(20, y - 3, pageWidth - 40, 7, "F")
+    doc.setFillColor(240, 240, 240)
+    doc.rect(margin, y - 4, contentWidth, 8, "F")
     doc.setFontSize(9)
     doc.setFont("helvetica", "bold")
-    doc.text("Metric", 25, y + 1)
-    doc.text("Your Score", 65, y + 1)
-    doc.text("World Class", 110, y + 1)
-    doc.text("Typical", 155, y + 1)
+    doc.setTextColor(60, 60, 60)
+    doc.text("Metric", margin + 5, y)
+    doc.text("Your Score", margin + 50, y)
+    doc.text("World Class", margin + 95, y)
+    doc.text("Typical", margin + 140, y)
+    doc.setTextColor(0, 0, 0)
     y += 7
 
     doc.setFont("helvetica", "normal")
@@ -413,16 +479,22 @@ export default function OEECalculatorPage() {
       ["Performance", formatPercent(results.performance), "95%+", "~85%"],
       ["Quality", formatPercent(results.quality), "99%+", "~95%"],
     ]
-    for (const [metric, yours, wc, typ] of benchmarks) {
-      doc.text(metric, 25, y + 1)
-      doc.text(yours, 65, y + 1)
-      doc.text(wc, 110, y + 1)
-      doc.text(typ, 155, y + 1)
+    for (let i = 0; i < benchmarks.length; i++) {
+      const [metric, yours, wc, typ] = benchmarks[i]
+      if (i % 2 === 1) {
+        doc.setFillColor(250, 250, 250)
+        doc.rect(margin, y - 4, contentWidth, 6, "F")
+      }
+      doc.setFont("helvetica", "bold")
+      doc.text(metric, margin + 5, y)
+      doc.setFont("helvetica", "normal")
+      doc.text(yours, margin + 50, y)
+      doc.text(wc, margin + 95, y)
+      doc.text(typ, margin + 140, y)
       y += 6
     }
-    y += 8
 
-    // Branded footer on final page
+    // Footer on final page
     addBrandedFooter()
 
     doc.save(`oee-report-${new Date().toISOString().split("T")[0]}.pdf`)
