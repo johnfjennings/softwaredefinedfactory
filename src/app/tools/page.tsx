@@ -63,11 +63,14 @@ export default function ToolsPage() {
               </CardContent>
             </Card>
 
-            {/* OEE Calculator - Coming Soon */}
-            <Card className="opacity-75">
+            {/* OEE Calculator */}
+            <Card className="relative overflow-hidden">
+              <div className="absolute top-4 right-4 px-2 py-1 bg-green-600 text-white text-xs font-semibold rounded">
+                NEW
+              </div>
               <CardHeader>
-                <div className="h-12 w-12 rounded-full bg-muted flex items-center justify-center mb-4">
-                  <Gauge className="h-6 w-6 text-muted-foreground" />
+                <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+                  <Gauge className="h-6 w-6 text-primary" />
                 </div>
                 <CardTitle>OEE Calculator</CardTitle>
                 <CardDescription>
@@ -77,20 +80,26 @@ export default function ToolsPage() {
               <CardContent className="space-y-4">
                 <ul className="space-y-2 text-sm text-muted-foreground">
                   <li className="flex items-start gap-2">
-                    <span className="text-muted-foreground/50 mt-0.5">✓</span>
+                    <span className="text-primary mt-0.5">✓</span>
                     <span>Availability, Performance, Quality metrics</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-muted-foreground/50 mt-0.5">✓</span>
+                    <span className="text-primary mt-0.5">✓</span>
                     <span>Six Big Losses analysis</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-muted-foreground/50 mt-0.5">✓</span>
+                    <span className="text-primary mt-0.5">✓</span>
                     <span>Improvement recommendations</span>
                   </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-0.5">✓</span>
+                    <span>Downloadable PDF report</span>
+                  </li>
                 </ul>
-                <Button variant="outline" className="w-full" disabled>
-                  Coming Soon
+                <Button asChild className="w-full">
+                  <Link href="/tools/oee-calculator">
+                    Launch Calculator <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
                 </Button>
               </CardContent>
             </Card>
