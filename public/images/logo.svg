@@ -1,0 +1,77 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Main hexagon representing manufacturing/engineering -->
+  <path d="M100 20L170 60V140L100 180L30 140V60L100 20Z" 
+        stroke="url(#gradient1)" 
+        stroke-width="3" 
+        fill="none"/>
+  
+  <!-- Inner geometric factory structure -->
+  <!-- Top level - roof/code bracket suggestion -->
+  <path d="M70 60L100 40L130 60" 
+        stroke="url(#gradient2)" 
+        stroke-width="2.5" 
+        stroke-linecap="round" 
+        stroke-linejoin="round"/>
+  
+  <!-- Middle levels - factory floors with digital nodes -->
+  <circle cx="70" cy="85" r="4" fill="url(#gradient2)"/>
+  <circle cx="100" cy="85" r="4" fill="url(#gradient2)"/>
+  <circle cx="130" cy="85" r="4" fill="url(#gradient2)"/>
+  
+  <!-- Connecting lines suggesting both assembly line and circuit -->
+  <line x1="70" y1="85" x2="100" y2="85" stroke="url(#gradient2)" stroke-width="2" opacity="0.6"/>
+  <line x1="100" y1="85" x2="130" y2="85" stroke="url(#gradient2)" stroke-width="2" opacity="0.6"/>
+  
+  <!-- Second level -->
+  <circle cx="85" cy="110" r="4" fill="url(#gradient3)"/>
+  <circle cx="115" cy="110" r="4" fill="url(#gradient3)"/>
+  
+  <!-- Vertical flow lines -->
+  <line x1="70" y1="89" x2="85" y2="106" stroke="url(#gradient2)" stroke-width="2" opacity="0.4"/>
+  <line x1="100" y1="89" x2="85" y2="106" stroke="url(#gradient2)" stroke-width="2" opacity="0.4"/>
+  <line x1="100" y1="89" x2="115" y2="106" stroke="url(#gradient3)" stroke-width="2" opacity="0.4"/>
+  <line x1="130" y1="89" x2="115" y2="106" stroke="url(#gradient3)" stroke-width="2" opacity="0.4"/>
+  
+  <!-- Connection between second level -->
+  <line x1="85" y1="110" x2="115" y2="110" stroke="url(#gradient3)" stroke-width="2" opacity="0.6"/>
+  
+  <!-- Bottom level - output/foundation -->
+  <circle cx="100" cy="135" r="5" fill="url(#gradient3)"/>
+  
+  <!-- Converging lines to bottom -->
+  <line x1="85" y1="114" x2="100" y2="130" stroke="url(#gradient3)" stroke-width="2" opacity="0.4"/>
+  <line x1="115" y1="114" x2="100" y2="130" stroke="url(#gradient3)" stroke-width="2" opacity="0.4"/>
+  
+  <!-- Code bracket accents on sides -->
+  <path d="M50 90L45 100L50 110" 
+        stroke="url(#gradient1)" 
+        stroke-width="2.5" 
+        stroke-linecap="round" 
+        stroke-linejoin="round"
+        opacity="0.7"/>
+  
+  <path d="M150 90L155 100L150 110" 
+        stroke="url(#gradient1)" 
+        stroke-width="2.5" 
+        stroke-linecap="round" 
+        stroke-linejoin="round"
+        opacity="0.7"/>
+  
+  <!-- Gradients for modern tech aesthetic -->
+  <defs>
+    <linearGradient id="gradient1" x1="30" y1="20" x2="170" y2="180" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#00D9FF"/>
+      <stop offset="100%" stop-color="#7B61FF"/>
+    </linearGradient>
+    
+    <linearGradient id="gradient2" x1="70" y1="40" x2="130" y2="110" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#00D9FF"/>
+      <stop offset="100%" stop-color="#0099FF"/>
+    </linearGradient>
+    
+    <linearGradient id="gradient3" x1="85" y1="110" x2="115" y2="135" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0099FF"/>
+      <stop offset="100%" stop-color="#7B61FF"/>
+    </linearGradient>
+  </defs>
+</svg>
