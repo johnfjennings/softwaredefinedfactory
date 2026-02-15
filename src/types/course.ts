@@ -21,6 +21,7 @@ export interface CourseMetadata {
   category: string
   thumbnail: string
   priceCents: number
+  stripePriceId?: string
   isPublished: boolean
   tags: string[]
   modules: CourseModule[]

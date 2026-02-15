@@ -225,6 +225,7 @@ export default async function CourseDetailPage({ params }: PageProps) {
                     isEnrolled={isEnrolled}
                     isAuthenticated={!!user}
                     firstLessonSlug={firstLesson?.slug || ""}
+                    priceCents={course.priceCents}
                   />
 
                   <Separator />

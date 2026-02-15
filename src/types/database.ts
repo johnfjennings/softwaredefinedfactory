@@ -311,6 +311,7 @@ export interface Database {
           currency: string
           status: string
           course_id: string | null
+          course_slug: string | null
           created_at: string
         }
         Insert: {
@@ -322,6 +323,7 @@ export interface Database {
           currency?: string
           status: string
           course_id?: string | null
+          course_slug?: string | null
           created_at?: string
         }
         Update: {
@@ -333,6 +335,7 @@ export interface Database {
           currency?: string
           status?: string
           course_id?: string | null
+          course_slug?: string | null
           created_at?: string
         }
         Relationships: [
