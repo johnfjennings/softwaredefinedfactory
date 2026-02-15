@@ -4,9 +4,9 @@ export const SITE_CONFIG = {
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://softwaredefinedfactory.com",
   ogImage: "/images/og-image.png",
   links: {
-    twitter: "https://twitter.com/softwarefactory",
-    github: "https://github.com/softwaredefinedfactory",
-    linkedin: "https://linkedin.com/company/software-defined-factory",
+    twitter: "https://twitter.com/#",
+    github: "https://github.com/#",
+    linkedin: "https://linkedin.com/company/#",
   },
 }
 

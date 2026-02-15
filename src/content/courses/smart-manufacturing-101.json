@@ -6,7 +6,8 @@
   "difficulty": "beginner",
   "category": "smart-manufacturing",
   "thumbnail": "/images/courses/smart-manufacturing-101.jpg",
-  "priceCents": 0,
+  "priceCents": 1000,
+  "stripePriceId": "price_1T1B7jRtJS0uqwcUlJ29COzh",
   "isPublished": true,
   "tags": ["Smart Manufacturing", "Industry 4.0", "IIoT", "Beginner"],
   "modules": [
