@@ -5,14 +5,165 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>IIoT Fundamentals</title>
   <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 800px; margin: 0 auto; padding: 40px 20px; line-height: 1.7; color: #1a1a1a; background: #fff; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      line-height: 1.7;
+      color: #1a1a1a;
+      background: #fff;
+    }
     h1 { font-size: 2em; margin-bottom: 0.5em; }
     h2 { font-size: 1.5em; margin-top: 1.5em; color: #333; }
+    h3 { font-size: 1.2em; margin-top: 1.2em; color: #444; }
     p { margin-bottom: 1em; }
+    ul, ol { margin-bottom: 1em; padding-left: 1.5em; }
+    li { margin-bottom: 0.5em; }
+    .callout {
+      background: #f0f9ff;
+      border-left: 4px solid #3b82f6;
+      padding: 16px 20px;
+      margin: 24px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .callout p { margin: 0; }
+    .warning {
+      background: #fff7ed;
+      border-left: 4px solid #f97316;
+      padding: 16px 20px;
+      margin: 24px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .warning p { margin: 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 24px 0;
+    }
+    th, td {
+      border: 1px solid #e5e7eb;
+      padding: 10px 14px;
+      text-align: left;
+      font-size: 0.95em;
+    }
+    th { background: #f9fafb; font-weight: 600; }
+    code {
+      background: #f3f4f6;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+    }
   </style>
 </head>
 <body>
   <h1>IIoT Fundamentals</h1>
-  <p>Placeholder content for this lesson. Replace with Quarto-rendered output.</p>
+
+  <p>The Industrial Internet of Things (IIoT) is the backbone of smart manufacturing. It refers to the network of sensors, instruments, machines, and devices connected via the internet within industrial environments. Unlike consumer IoT (smart thermostats, fitness trackers), IIoT operates in harsh conditions and demands high reliability, low latency, and industrial-grade security.</p>
+
+  <div class="callout">
+    <p><strong>Key Takeaway:</strong> IIoT is not just "putting sensors on things." It's about creating a connected ecosystem where data flows from the shop floor to decision-makers in real time.</p>
+  </div>
+
+  <h2>IIoT vs. Consumer IoT</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Characteristic</th>
+        <th>Consumer IoT</th>
+        <th>Industrial IoT</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Environment</td><td>Home, office</td><td>Factory floor, harsh conditions</td></tr>
+      <tr><td>Reliability</td><td>Nice to have</td><td>Mission-critical</td></tr>
+      <tr><td>Data volume</td><td>Low (KB/s)</td><td>High (MB/s per device)</td></tr>
+      <tr><td>Latency tolerance</td><td>Seconds OK</td><td>Milliseconds required</td></tr>
+      <tr><td>Security</td><td>Important</td><td>Critical (safety implications)</td></tr>
+      <tr><td>Lifespan</td><td>2-5 years</td><td>10-20+ years</td></tr>
+    </tbody>
+  </table>
+
+  <h2>The IIoT Architecture Stack</h2>
+
+  <p>A typical IIoT system has four layers:</p>
+
+  <h3>1. Device Layer (Edge)</h3>
+  <p>This is where physical data is generated:</p>
+  <ul>
+    <li><strong>Sensors</strong> &mdash; temperature, vibration, pressure, humidity, current, flow rate</li>
+    <li><strong>Actuators</strong> &mdash; motors, valves, relays that take physical action</li>
+    <li><strong>PLCs and RTUs</strong> &mdash; programmable logic controllers that run equipment</li>
+    <li><strong>Edge gateways</strong> &mdash; devices that aggregate and pre-process data before sending it upstream</li>
+  </ul>
+
+  <h3>2. Communication Layer</h3>
+  <p>Data must travel from devices to systems. Common protocols include:</p>
+  <ul>
+    <li><strong>MQTT</strong> &mdash; Lightweight publish/subscribe messaging. Ideal for low-bandwidth environments. Used by most cloud IoT platforms.</li>
+    <li><strong>OPC UA</strong> &mdash; The industrial standard for machine-to-machine communication. Vendor-neutral, secure, and designed for interoperability.</li>
+    <li><strong>Modbus</strong> &mdash; Legacy protocol still common in older equipment. Simple but limited (no built-in security).</li>
+    <li><strong>HTTP/REST</strong> &mdash; Familiar to web developers. Higher overhead but easy to integrate with cloud services.</li>
+  </ul>
+
+  <div class="callout">
+    <p><strong>Pro Tip:</strong> OPC UA is becoming the de facto standard for new installations. If you're starting fresh, choose OPC UA. If retrofitting older equipment, you'll likely need Modbus-to-MQTT gateways.</p>
+  </div>
+
+  <h3>3. Platform Layer (Cloud/On-Premise)</h3>
+  <p>Where data is stored, processed, and turned into insights:</p>
+  <ul>
+    <li><strong>Time-series databases</strong> &mdash; InfluxDB, TimescaleDB, or AWS Timestream for storing sensor readings</li>
+    <li><strong>Stream processing</strong> &mdash; Apache Kafka, AWS Kinesis for real-time data pipelines</li>
+    <li><strong>Analytics engines</strong> &mdash; Machine learning models for anomaly detection and predictive maintenance</li>
+    <li><strong>Integration middleware</strong> &mdash; Connecting IIoT data to ERP, MES, and CMMS systems</li>
+  </ul>
+
+  <h3>4. Application Layer</h3>
+  <p>The user-facing tools that turn data into action:</p>
+  <ul>
+    <li><strong>Dashboards</strong> &mdash; Real-time KPIs like OEE, cycle time, energy usage</li>
+    <li><strong>Alert systems</strong> &mdash; Notifications when thresholds are breached</li>
+    <li><strong>Digital twins</strong> &mdash; Virtual models of physical assets for simulation</li>
+    <li><strong>Mobile apps</strong> &mdash; Floor-level data accessible on phones and tablets</li>
+  </ul>
+
+  <h2>Common IIoT Use Cases</h2>
+
+  <ol>
+    <li><strong>Predictive Maintenance</strong> &mdash; Vibration sensors on motors detect bearing wear weeks before failure. Reduces unplanned downtime by 30-50%.</li>
+    <li><strong>Quality Monitoring</strong> &mdash; In-line sensors measure dimensions, surface finish, or chemical composition in real time. Catches defects before they become scrap.</li>
+    <li><strong>Energy Management</strong> &mdash; Sub-metering each machine reveals which processes consume the most energy. Typical savings: 10-20%.</li>
+    <li><strong>Asset Tracking</strong> &mdash; RFID or BLE tags track work-in-progress, tools, and raw materials through the factory.</li>
+    <li><strong>Environmental Monitoring</strong> &mdash; Temperature, humidity, and air quality sensors ensure compliance with food safety, pharmaceutical GMP, or cleanroom requirements.</li>
+  </ol>
+
+  <h2>Getting Started with IIoT</h2>
+
+  <ol>
+    <li><strong>Identify one pain point</strong> &mdash; What costs you the most? Unplanned downtime? Scrap? Energy waste?</li>
+    <li><strong>Start with 3-5 sensors</strong> &mdash; Pick one machine or line. Install vibration, temperature, or current sensors.</li>
+    <li><strong>Choose a platform</strong> &mdash; AWS IoT, Azure IoT Hub, or an industrial platform like Siemens MindSphere or PTC ThingWorx.</li>
+    <li><strong>Build a dashboard</strong> &mdash; Visualize the data. Look for patterns. Share with operators and maintenance teams.</li>
+    <li><strong>Measure ROI</strong> &mdash; Track metrics before and after. Use results to justify expanding.</li>
+  </ol>
+
+  <div class="warning">
+    <p><strong>Common Mistake:</strong> Don't try to collect every data point from every machine at once. Start small, prove value, then expand. "Boil the ocean" projects fail 80% of the time.</p>
+  </div>
+
+  <h2>Security Considerations</h2>
+
+  <p>IIoT security is non-negotiable. A compromised sensor can shut down a production line or create safety hazards. Key principles:</p>
+  <ul>
+    <li><strong>Network segmentation</strong> &mdash; Keep OT (operational technology) networks separate from IT networks</li>
+    <li><strong>Encryption in transit</strong> &mdash; TLS for all data communication</li>
+    <li><strong>Device authentication</strong> &mdash; Certificates or secure tokens for every connected device</li>
+    <li><strong>Regular patching</strong> &mdash; Establish a firmware update process for industrial devices</li>
+    <li><strong>Zero trust architecture</strong> &mdash; Verify every device and user, every time</li>
+  </ul>
+
+  <p>In the next lesson, we'll dive deeper into specific sensor types and connectivity options for different manufacturing environments.</p>
 </body>
 </html>

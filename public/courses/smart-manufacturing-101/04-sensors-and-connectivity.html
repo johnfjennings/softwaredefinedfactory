@@ -6,12 +6,138 @@
   <title>Sensors and Connectivity</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
+  <style>
+    .reveal h1 { font-size: 2em; color: #1a1a1a; }
+    .reveal h2 { font-size: 1.5em; color: #333; }
+    .reveal h3 { font-size: 1.2em; color: #444; }
+    .reveal p { font-size: 0.9em; }
+    .reveal li { font-size: 0.85em; margin-bottom: 0.3em; }
+    .reveal .highlight { color: #3b82f6; font-weight: bold; }
+    .reveal table { font-size: 0.75em; margin: 0 auto; }
+    .reveal th, .reveal td { padding: 8px 12px; border: 1px solid #ddd; text-align: left; }
+    .reveal th { background: #f5f5f5; }
+    .reveal .stat { font-size: 2em; color: #3b82f6; font-weight: bold; }
+  </style>
 </head>
 <body>
-  <div class="reveal"><div class="slides">
-    <section><h1>Sensors and Connectivity</h1><p>Software Defined Factory</p></section>
-    <section><h2>Coming Soon</h2><p>This lesson content is being developed. Replace with Quarto-rendered RevealJS output.</p></section>
-  </div></div>
+  <div class="reveal">
+    <div class="slides">
+
+      <section>
+        <h1>Sensors and Connectivity</h1>
+        <p>Choosing the Right Tools for Your Smart Factory</p>
+        <p><small>Software Defined Factory</small></p>
+      </section>
+
+      <section>
+        <h2>Why Sensors Matter</h2>
+        <p>Sensors are the <span class="highlight">eyes and ears</span> of your smart factory.</p>
+        <p>Without reliable data collection, analytics and AI are useless.</p>
+        <p class="stat">80%</p>
+        <p>of a smart manufacturing project's success depends on data quality</p>
+      </section>
+
+      <section>
+        <h2>Sensor Categories</h2>
+        <table>
+          <tr><th>Category</th><th>Examples</th><th>Use Case</th></tr>
+          <tr><td>Vibration</td><td>Accelerometers, velocity sensors</td><td>Bearing wear, imbalance detection</td></tr>
+          <tr><td>Temperature</td><td>Thermocouples, RTDs, IR sensors</td><td>Overheating, process control</td></tr>
+          <tr><td>Pressure</td><td>Piezoelectric, capacitive</td><td>Hydraulic systems, leak detection</td></tr>
+          <tr><td>Current/Power</td><td>CT clamps, hall effect</td><td>Energy monitoring, motor health</td></tr>
+          <tr><td>Flow</td><td>Ultrasonic, magnetic</td><td>Coolant, compressed air monitoring</td></tr>
+          <tr><td>Vision</td><td>Cameras, LiDAR</td><td>Quality inspection, safety zones</td></tr>
+        </table>
+      </section>
+
+      <section>
+        <h2>Vibration Monitoring</h2>
+        <p>The #1 starting point for predictive maintenance</p>
+        <ul>
+          <li><strong>What it detects:</strong> Bearing wear, shaft misalignment, imbalance, looseness</li>
+          <li><strong>Sensor type:</strong> MEMS accelerometers (low cost) or piezoelectric (high precision)</li>
+          <li><strong>Sampling rate:</strong> 1-25 kHz typical for rotating equipment</li>
+          <li><strong>ROI:</strong> One prevented bearing failure can save $10,000-$50,000 in downtime</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Temperature Monitoring</h2>
+        <p>Critical for process control and equipment health</p>
+        <ul>
+          <li><strong>Thermocouples</strong> &mdash; Wide range (-200 to 2300&deg;C), rugged, inexpensive</li>
+          <li><strong>RTDs</strong> &mdash; Higher accuracy, narrower range, more expensive</li>
+          <li><strong>Infrared (IR)</strong> &mdash; Non-contact measurement, great for moving parts</li>
+          <li><strong>Thermal cameras</strong> &mdash; Full thermal imaging for electrical panels, machinery</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Current and Power Monitoring</h2>
+        <p>The easiest and cheapest way to start monitoring equipment</p>
+        <ul>
+          <li><strong>CT clamps</strong> &mdash; Non-invasive, clip around power cables</li>
+          <li><strong>No machine modification needed</strong> &mdash; Install in minutes</li>
+          <li>Detects: overloading, idle time, cycle patterns, anomalies</li>
+          <li>A motor drawing 15% more current than normal is a warning sign</li>
+        </ul>
+        <p><span class="highlight">Best first sensor</span> for brownfield factories</p>
+      </section>
+
+      <section>
+        <h2>Wired vs. Wireless</h2>
+        <table>
+          <tr><th>Factor</th><th>Wired</th><th>Wireless</th></tr>
+          <tr><td>Reliability</td><td>Highest</td><td>Good (with mesh)</td></tr>
+          <tr><td>Latency</td><td>Lowest</td><td>Higher</td></tr>
+          <tr><td>Install cost</td><td>High (cabling)</td><td>Low</td></tr>
+          <tr><td>Flexibility</td><td>Fixed</td><td>Easy to relocate</td></tr>
+          <tr><td>Power</td><td>PoE available</td><td>Battery (1-10 yr)</td></tr>
+          <tr><td>Best for</td><td>Critical, high-speed</td><td>Retrofits, remote</td></tr>
+        </table>
+      </section>
+
+      <section>
+        <h2>Wireless Protocols</h2>
+        <ul>
+          <li><strong>Wi-Fi</strong> &mdash; High bandwidth, high power consumption, existing infrastructure</li>
+          <li><strong>Bluetooth/BLE</strong> &mdash; Short range (30m), low power, good for asset tracking</li>
+          <li><strong>LoRaWAN</strong> &mdash; Long range (5-15km), very low power, low data rate. Great for environmental sensors</li>
+          <li><strong>5G/Private LTE</strong> &mdash; High bandwidth + low latency. The future of industrial wireless</li>
+          <li><strong>Zigbee/Thread</strong> &mdash; Mesh networking, good for dense sensor deployments</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Edge Computing</h2>
+        <p>Not all data needs to go to the cloud</p>
+        <ul>
+          <li><strong>Edge gateway</strong> &mdash; Processes data locally, sends summaries to cloud</li>
+          <li>Reduces bandwidth costs by <span class="highlight">90%+</span></li>
+          <li>Enables real-time alerts without internet dependency</li>
+          <li>Popular options: Raspberry Pi, Siemens IOT2050, AWS Greengrass</li>
+        </ul>
+        <p>Rule of thumb: <em>Process at the edge, analyze in the cloud</em></p>
+      </section>
+
+      <section>
+        <h2>Choosing Your First Sensors</h2>
+        <p>A practical decision framework:</p>
+        <ol>
+          <li><strong>What's your biggest cost?</strong> Downtime &rarr; vibration. Energy &rarr; CT clamps. Quality &rarr; vision.</li>
+          <li><strong>New or existing equipment?</strong> New &rarr; wired + OPC UA. Existing &rarr; wireless retrofits.</li>
+          <li><strong>Budget?</strong> Start with &lt;$1,000 in sensors. Prove value before scaling.</li>
+          <li><strong>IT support?</strong> Cloud platform if yes. Standalone edge device if limited IT.</li>
+        </ol>
+      </section>
+
+      <section>
+        <h1>Next Up</h1>
+        <p>Building a Business Case &mdash; turning sensor data into dollars and executive buy-in.</p>
+      </section>
+
+    </div>
+  </div>
   <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
   <script>Reveal.initialize({ hash: true });</script>
 </body>

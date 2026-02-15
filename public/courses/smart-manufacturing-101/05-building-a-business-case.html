@@ -5,14 +5,223 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Building a Business Case</title>
   <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 800px; margin: 0 auto; padding: 40px 20px; line-height: 1.7; color: #1a1a1a; background: #fff; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      line-height: 1.7;
+      color: #1a1a1a;
+      background: #fff;
+    }
     h1 { font-size: 2em; margin-bottom: 0.5em; }
     h2 { font-size: 1.5em; margin-top: 1.5em; color: #333; }
+    h3 { font-size: 1.2em; margin-top: 1.2em; color: #444; }
     p { margin-bottom: 1em; }
+    ul, ol { margin-bottom: 1em; padding-left: 1.5em; }
+    li { margin-bottom: 0.5em; }
+    .callout {
+      background: #f0f9ff;
+      border-left: 4px solid #3b82f6;
+      padding: 16px 20px;
+      margin: 24px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .callout p { margin: 0; }
+    .success {
+      background: #f0fdf4;
+      border-left: 4px solid #22c55e;
+      padding: 16px 20px;
+      margin: 24px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .success p { margin: 0; }
+    .warning {
+      background: #fff7ed;
+      border-left: 4px solid #f97316;
+      padding: 16px 20px;
+      margin: 24px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .warning p { margin: 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 24px 0;
+    }
+    th, td {
+      border: 1px solid #e5e7eb;
+      padding: 10px 14px;
+      text-align: left;
+      font-size: 0.95em;
+    }
+    th { background: #f9fafb; font-weight: 600; }
+    .formula {
+      background: #f3f4f6;
+      padding: 16px 20px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-family: monospace;
+      font-size: 1.1em;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
-  <h1>Building a Business Case</h1>
-  <p>Placeholder content for this lesson. Replace with Quarto-rendered output.</p>
+  <h1>Building a Business Case for Smart Manufacturing</h1>
+
+  <p>You're convinced that smart manufacturing can improve your operations. Now you need to convince everyone else. Whether you're presenting to a plant manager, a CFO, or a board of directors, a strong business case is the difference between getting funded and getting ignored.</p>
+
+  <div class="callout">
+    <p><strong>Key Takeaway:</strong> Executives don't care about technology. They care about revenue, cost reduction, risk mitigation, and competitive advantage. Frame everything in those terms.</p>
+  </div>
+
+  <h2>The ROI Framework</h2>
+
+  <p>Every smart manufacturing business case should answer four questions:</p>
+  <ol>
+    <li><strong>What's the problem?</strong> &mdash; Quantify the current cost of the issue</li>
+    <li><strong>What's the solution?</strong> &mdash; Describe the technology at a high level</li>
+    <li><strong>What will it cost?</strong> &mdash; Total investment including hidden costs</li>
+    <li><strong>What's the return?</strong> &mdash; Projected savings with a realistic timeline</li>
+  </ol>
+
+  <h2>Step 1: Quantify the Problem</h2>
+
+  <p>Before proposing a solution, you need hard numbers on the current situation. Here are common cost categories:</p>
+
+  <h3>Unplanned Downtime</h3>
+  <p>The most expensive problem in manufacturing. To calculate the true cost:</p>
+  <div class="formula">
+    Downtime Cost = (Hours Down) &times; (Revenue per Hour + Labor Cost per Hour + Scrap Cost)
+  </div>
+  <p>A single production line in automotive manufacturing can lose <strong>$20,000-$50,000 per hour</strong> of unplanned downtime. Even a small machine shop might lose $500-$2,000 per hour.</p>
+
+  <h3>Quality Defects</h3>
+  <p>The cost of poor quality includes:</p>
+  <ul>
+    <li><strong>Scrap and rework</strong> &mdash; Materials and labor wasted</li>
+    <li><strong>Customer returns</strong> &mdash; Shipping, replacement, and relationship damage</li>
+    <li><strong>Warranty claims</strong> &mdash; Often 10x the cost of catching the defect in-house</li>
+    <li><strong>Regulatory penalties</strong> &mdash; In industries like food, pharma, aerospace</li>
+  </ul>
+
+  <h3>Energy Waste</h3>
+  <p>Manufacturing typically spends 5-15% of operating costs on energy. Common waste sources:</p>
+  <ul>
+    <li>Machines running during breaks and weekends</li>
+    <li>Compressed air leaks (30% of compressed air is wasted in a typical plant)</li>
+    <li>Inefficient heating/cooling cycles</li>
+    <li>Oversized motors running at partial load</li>
+  </ul>
+
+  <div class="success">
+    <p><strong>Example:</strong> A mid-size plastics manufacturer tracked $180,000/year in energy waste simply by sub-metering 12 injection molding machines. They reduced consumption by 18% ($32,400/year saved) with scheduling changes alone &mdash; no equipment upgrades needed.</p>
+  </div>
+
+  <h2>Step 2: Estimate the Investment</h2>
+
+  <p>Be honest about total costs. Underestimating kills credibility.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Cost Category</th>
+        <th>Small Pilot</th>
+        <th>Department-Wide</th>
+        <th>Plant-Wide</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Sensors &amp; hardware</td><td>$2,000-$10,000</td><td>$20,000-$75,000</td><td>$100,000-$500,000</td></tr>
+      <tr><td>Software/platform</td><td>$0-$5,000/yr</td><td>$10,000-$50,000/yr</td><td>$50,000-$200,000/yr</td></tr>
+      <tr><td>Installation</td><td>$1,000-$5,000</td><td>$10,000-$30,000</td><td>$50,000-$150,000</td></tr>
+      <tr><td>Integration (ERP, MES)</td><td>$0</td><td>$10,000-$50,000</td><td>$50,000-$200,000</td></tr>
+      <tr><td>Training</td><td>$1,000-$3,000</td><td>$5,000-$15,000</td><td>$20,000-$50,000</td></tr>
+      <tr><td><strong>Total</strong></td><td><strong>$5,000-$25,000</strong></td><td><strong>$55,000-$220,000</strong></td><td><strong>$270,000-$1.1M</strong></td></tr>
+    </tbody>
+  </table>
+
+  <div class="warning">
+    <p><strong>Hidden Costs:</strong> Don't forget ongoing costs &mdash; platform subscriptions, sensor battery replacements, network maintenance, and the time your team spends learning and managing the system.</p>
+  </div>
+
+  <h2>Step 3: Project the Return</h2>
+
+  <p>Use conservative estimates. It's better to over-deliver than over-promise.</p>
+
+  <h3>Typical ROI by Use Case</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Use Case</th>
+        <th>Typical Savings</th>
+        <th>Payback Period</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Predictive maintenance</td><td>25-40% reduction in maintenance costs</td><td>6-12 months</td></tr>
+      <tr><td>Energy management</td><td>10-20% energy cost reduction</td><td>3-9 months</td></tr>
+      <tr><td>Quality monitoring</td><td>20-50% reduction in scrap/rework</td><td>6-18 months</td></tr>
+      <tr><td>OEE improvement</td><td>5-15% OEE increase</td><td>6-12 months</td></tr>
+      <tr><td>Asset tracking</td><td>15-30% reduction in search time</td><td>3-6 months</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Calculating Payback Period</h3>
+  <div class="formula">
+    Payback Period = Total Investment &divide; Annual Savings
+  </div>
+  <p>For a pilot project: $15,000 investment with $30,000/year in prevented downtime = <strong>6-month payback</strong>. That's a compelling story for any executive.</p>
+
+  <h2>Step 4: Build the Presentation</h2>
+
+  <p>Structure your business case like this:</p>
+
+  <ol>
+    <li><strong>Executive Summary</strong> (1 slide) &mdash; Problem, solution, ROI in one sentence each</li>
+    <li><strong>Current State</strong> (2-3 slides) &mdash; Data on downtime, quality, or energy costs</li>
+    <li><strong>Proposed Solution</strong> (2-3 slides) &mdash; High-level technology description, not technical details</li>
+    <li><strong>Investment Required</strong> (1 slide) &mdash; Honest total cost breakdown</li>
+    <li><strong>Expected Returns</strong> (1-2 slides) &mdash; Conservative projections with payback timeline</li>
+    <li><strong>Risk Mitigation</strong> (1 slide) &mdash; Start small, pilot first, scale what works</li>
+    <li><strong>Next Steps</strong> (1 slide) &mdash; Specific ask: budget, timeline, team</li>
+  </ol>
+
+  <h2>The Pilot Approach</h2>
+
+  <p>The strongest business cases propose a <strong>low-risk pilot</strong> rather than a massive transformation:</p>
+
+  <ul>
+    <li>Choose one machine, one line, or one problem</li>
+    <li>Budget $5,000-$25,000 for the pilot</li>
+    <li>Set a 90-day timeline with clear success metrics</li>
+    <li>If the pilot succeeds, use the data to justify scaling</li>
+    <li>If it doesn't work, you've learned cheaply</li>
+  </ul>
+
+  <div class="callout">
+    <p><strong>Pro Tip:</strong> Use our <a href="/tools/roi-calculator">free ROI Calculator</a> to model your specific scenario. It generates a PDF report you can include in your business case presentation.</p>
+  </div>
+
+  <h2>Common Objections and Responses</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Objection</th>
+        <th>Response</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>"We can't afford it"</td><td>Frame it as: "Can you afford not to? Here's what downtime/scrap costs you today."</td></tr>
+      <tr><td>"We don't have the skills"</td><td>Start with managed services. Many vendors offer turnkey solutions with training.</td></tr>
+      <tr><td>"Our equipment is too old"</td><td>Retrofit sensors (CT clamps, vibration) work on any equipment, any age.</td></tr>
+      <tr><td>"What about cybersecurity?"</td><td>Network segmentation and encrypted protocols. Address it in the plan, don't ignore it.</td></tr>
+      <tr><td>"We tried this before and it failed"</td><td>Start smaller. A focused pilot on one pain point, not a plant-wide transformation.</td></tr>
+    </tbody>
+  </table>
+
+  <p>In the next lesson, we'll put it all together with a step-by-step implementation roadmap.</p>
 </body>
 </html>
