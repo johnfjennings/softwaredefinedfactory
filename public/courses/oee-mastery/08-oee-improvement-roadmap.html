@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OEE Improvement Roadmap</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      line-height: 1.7;
+      color: #1a1a1a;
+      background: #fff;
+    }
+    h1 { font-size: 2em; margin-bottom: 0.5em; }
+    h2 { font-size: 1.5em; margin-top: 1.5em; color: #333; }
+    h3 { font-size: 1.2em; margin-top: 1.2em; color: #444; }
+    p { margin-bottom: 1em; }
+    ul, ol { margin-bottom: 1em; padding-left: 1.5em; }
+    li { margin-bottom: 0.5em; }
+    .callout {
+      background: #f0f9ff;
+      border-left: 4px solid #3b82f6;
+      padding: 16px 20px;
+      margin: 24px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .callout p { margin: 0; }
+    .callout-warn {
+      background: #fffbeb;
+      border-left: 4px solid #f59e0b;
+      padding: 16px 20px;
+      margin: 24px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .callout-warn p { margin: 0; }
+    .callout-green {
+      background: #f0fdf4;
+      border-left: 4px solid #22c55e;
+      padding: 16px 20px;
+      margin: 24px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .callout-green p { margin: 0; }
+    .phase-box {
+      background: #eff6ff;
+      border: 2px solid #3b82f6;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0;
+    }
+    .phase-box h3 { margin-top: 0; color: #1e40af; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    th { background: #f9fafb; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <h1>OEE Improvement Roadmap</h1>
+
+  <p>You now understand OEE, the Six Big Losses, data collection, calculation, dashboards, and improvement techniques for each factor. This final lesson brings it all together into a practical roadmap you can follow to drive measurable improvements.</p>
+
+  <h2>The Four-Phase Approach</h2>
+
+  <p>OEE improvement works best in phases. Trying to fix everything at once leads to scattered efforts and burnout. Follow this sequence:</p>
+
+  <div class="phase-box">
+    <h3>Phase 1: Measure (Weeks 1-4)</h3>
+    <p><strong>Goal:</strong> Establish a reliable OEE baseline.</p>
+    <ul>
+      <li>Select 1-2 pilot lines (choose bottleneck equipment or highest-value lines)</li>
+      <li>Define reason codes and train operators on data collection</li>
+      <li>Verify ideal cycle times for each product</li>
+      <li>Collect data manually for 2-4 weeks</li>
+      <li>Calculate weekly OEE and identify the three sub-metric scores</li>
+    </ul>
+    <p><strong>Deliverable:</strong> Baseline OEE with breakdown of Availability, Performance, and Quality.</p>
+  </div>
+
+  <div class="phase-box">
+    <h3>Phase 2: Analyze (Weeks 5-8)</h3>
+    <p><strong>Goal:</strong> Identify the biggest losses and their root causes.</p>
+    <ul>
+      <li>Create a Pareto chart of all losses by category</li>
+      <li>Identify the top 2-3 losses (these will be 60-80% of total loss)</li>
+      <li>Run 5-Why analysis on the biggest loss category</li>
+      <li>Set up a basic OEE dashboard (even a spreadsheet on a TV works)</li>
+      <li>Define specific, measurable improvement targets</li>
+    </ul>
+    <p><strong>Deliverable:</strong> Prioritized loss list with root causes and improvement targets.</p>
+  </div>
+
+  <div class="phase-box">
+    <h3>Phase 3: Improve (Weeks 9-20)</h3>
+    <p><strong>Goal:</strong> Implement targeted improvements for the top losses.</p>
+    <ul>
+      <li>Attack losses in priority order (biggest first)</li>
+      <li>Apply the right tool for each loss type:
+        <ul>
+          <li>Breakdowns → TPM, autonomous maintenance, predictive maintenance</li>
+          <li>Changeovers → SMED</li>
+          <li>Minor stops → Equipment cleaning, sensor maintenance, design fixes</li>
+          <li>Speed losses → Verify ideal cycle time, gradual speed increases</li>
+          <li>Defects → SPC, poka-yoke, standardized work</li>
+          <li>Startup losses → Standardized startup procedures</li>
+        </ul>
+      </li>
+      <li>Track OEE weekly to verify improvements</li>
+      <li>Document what worked for each improvement</li>
+    </ul>
+    <p><strong>Deliverable:</strong> Measurable OEE improvement vs. baseline.</p>
+  </div>
+
+  <div class="phase-box">
+    <h3>Phase 4: Sustain & Expand (Ongoing)</h3>
+    <p><strong>Goal:</strong> Lock in gains and expand to more lines.</p>
+    <ul>
+      <li>Standardize successful improvements into daily work procedures</li>
+      <li>Transition from manual to semi-automated data collection</li>
+      <li>Conduct monthly OEE review meetings with cross-functional teams</li>
+      <li>Roll out the process to additional production lines</li>
+      <li>Set new targets once current targets are consistently met</li>
+    </ul>
+    <p><strong>Deliverable:</strong> Self-sustaining OEE improvement culture.</p>
+  </div>
+
+  <h2>Setting Realistic Targets</h2>
+
+  <p>Don't aim for world-class (85%) overnight. Use these guidelines:</p>
+
+  <table>
+    <tr>
+      <th>Current OEE</th>
+      <th>Realistic 6-Month Target</th>
+      <th>Focus Area</th>
+    </tr>
+    <tr>
+      <td>Below 40%</td>
+      <td>50-55%</td>
+      <td>Basics: data accuracy, major breakdowns, obvious changeover waste</td>
+    </tr>
+    <tr>
+      <td>40-60%</td>
+      <td>65-70%</td>
+      <td>TPM, SMED, addressing top 2-3 Pareto losses</td>
+    </tr>
+    <tr>
+      <td>60-75%</td>
+      <td>75-80%</td>
+      <td>Speed optimization, minor stop elimination, SPC</td>
+    </tr>
+    <tr>
+      <td>75-85%</td>
+      <td>82-87%</td>
+      <td>Fine-tuning: predictive maintenance, poka-yoke, autonomous maintenance maturity</td>
+    </tr>
+    <tr>
+      <td>85%+</td>
+      <td>Maintain + expand</td>
+      <td>Sustain gains, focus on TEEP (total capacity), roll out to all lines</td>
+    </tr>
+  </table>
+
+  <div class="callout-warn">
+    <p><strong>Warning:</strong> The hardest points are the last ones. Going from 40% to 60% is dramatically easier than going from 80% to 85%. Budget more time and effort as you approach world-class levels.</p>
+  </div>
+
+  <h2>Building the Business Case</h2>
+
+  <p>Management needs to know: <em>what's the financial return?</em></p>
+
+  <p>Here's how to translate OEE improvement into money:</p>
+
+  <ol>
+    <li><strong>Calculate current production capacity:</strong> Planned time &times; Ideal run rate &times; Current OEE = actual good output</li>
+    <li><strong>Calculate improved capacity:</strong> Same formula with your target OEE</li>
+    <li><strong>Value the gap:</strong>
+      <ul>
+        <li>If you're capacity-constrained: extra output = extra revenue</li>
+        <li>If you're not: improved OEE = same output in less time = overtime savings, energy savings, maintenance savings</li>
+      </ul>
+    </li>
+  </ol>
+
+  <h3>Example Business Case</h3>
+
+  <table>
+    <tr>
+      <th>Metric</th>
+      <th>Current</th>
+      <th>Target</th>
+    </tr>
+    <tr>
+      <td>OEE</td>
+      <td>60%</td>
+      <td>75%</td>
+    </tr>
+    <tr>
+      <td>Planned production</td>
+      <td>16 hrs/day, 250 days/yr</td>
+      <td>Same</td>
+    </tr>
+    <tr>
+      <td>Ideal rate</td>
+      <td>100 parts/hour</td>
+      <td>Same</td>
+    </tr>
+    <tr>
+      <td>Good parts/year</td>
+      <td>240,000</td>
+      <td>300,000</td>
+    </tr>
+    <tr>
+      <td>Margin per part</td>
+      <td>$5</td>
+      <td>$5</td>
+    </tr>
+    <tr>
+      <td><strong>Additional revenue</strong></td>
+      <td></td>
+      <td><strong>$300,000/year</strong></td>
+    </tr>
+  </table>
+
+  <p>A 15-point OEE improvement on a single production line can generate hundreds of thousands in additional revenue or savings — often with minimal capital investment.</p>
+
+  <h2>Common Pitfalls to Avoid</h2>
+
+  <ol>
+    <li><strong>Gaming the numbers:</strong> Operators inflate OEE by misclassifying unplanned downtime as planned. Build trust by using OEE for improvement, never for blame.</li>
+    <li><strong>Tracking without acting:</strong> OEE data without follow-up action is just overhead. Every review meeting should produce action items.</li>
+    <li><strong>Trying to be perfect:</strong> Don't wait for perfect data or perfect tools. Start with good-enough data and improve the system as you go.</li>
+    <li><strong>Ignoring the people:</strong> OEE improvement requires operator engagement. They know the equipment best. Involve them in root cause analysis and solution design.</li>
+    <li><strong>Focusing only on OEE:</strong> OEE is a powerful metric, but it doesn't capture everything. Safety, morale, on-time delivery, and cost per unit all matter too.</li>
+  </ol>
+
+  <div class="callout-green">
+    <p><strong>The #1 Success Factor:</strong> Management commitment. OEE improvement programs succeed when leadership visibly participates in review meetings, allocates time for improvement activities, and celebrates progress. They fail when OEE is treated as "the operator's job."</p>
+  </div>
+
+  <h2>Sustaining Gains</h2>
+
+  <p>Improvements that aren't standardized will fade. Lock in gains with:</p>
+
+  <ul>
+    <li><strong>Standard Operating Procedures (SOPs)</strong> — Document the new way of working</li>
+    <li><strong>Visual management</strong> — Post procedures, targets, and results at the machine</li>
+    <li><strong>Daily stand-ups</strong> — 5-minute shift-start meetings reviewing yesterday's OEE and today's focus</li>
+    <li><strong>Monthly reviews</strong> — Cross-functional meeting to review trends and set priorities</li>
+    <li><strong>Recognition</strong> — Celebrate teams that achieve and sustain their OEE targets</li>
+  </ul>
+
+  <h2>Course Summary</h2>
+
+  <p>Over these eight lessons, you've learned to:</p>
+
+  <ol>
+    <li>Understand what OEE measures and why it's the gold standard manufacturing metric</li>
+    <li>Identify the Six Big Losses that steal your production capacity</li>
+    <li>Collect accurate OEE data using manual or automated methods</li>
+    <li>Calculate and interpret OEE scores and sub-metrics</li>
+    <li>Build dashboards that make OEE visible in real time</li>
+    <li>Improve Availability with TPM, 5-Why, and SMED</li>
+    <li>Improve Performance and Quality with SPC, poka-yoke, and speed recovery</li>
+    <li>Build a phased improvement roadmap with realistic targets</li>
+  </ol>
+
+  <div class="callout">
+    <p><strong>Next Steps:</strong> Start with Phase 1 — pick one production line and measure its OEE for two weeks. Use our free <a href="/tools/oee-calculator">OEE Calculator</a> to run your numbers, then follow the roadmap in this lesson to drive improvement. You now have everything you need to begin.</p>
+  </div>
+
+  <p><em>Congratulations on completing OEE Mastery. Good luck on your improvement journey!</em></p>
+</body>
+</html>

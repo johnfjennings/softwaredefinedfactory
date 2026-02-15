@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Collecting OEE Data</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      line-height: 1.7;
+      color: #1a1a1a;
+      background: #fff;
+    }
+    h1 { font-size: 2em; margin-bottom: 0.5em; }
+    h2 { font-size: 1.5em; margin-top: 1.5em; color: #333; }
+    h3 { font-size: 1.2em; margin-top: 1.2em; color: #444; }
+    p { margin-bottom: 1em; }
+    ul, ol { margin-bottom: 1em; padding-left: 1.5em; }
+    li { margin-bottom: 0.5em; }
+    .callout {
+      background: #f0f9ff;
+      border-left: 4px solid #3b82f6;
+      padding: 16px 20px;
+      margin: 24px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .callout p { margin: 0; }
+    .callout-warn {
+      background: #fffbeb;
+      border-left: 4px solid #f59e0b;
+      padding: 16px 20px;
+      margin: 24px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .callout-warn p { margin: 0; }
+    .callout-green {
+      background: #f0fdf4;
+      border-left: 4px solid #22c55e;
+      padding: 16px 20px;
+      margin: 24px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .callout-green p { margin: 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    th { background: #f9fafb; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <h1>Collecting OEE Data</h1>
+
+  <p>OEE is only as good as the data behind it. Garbage in, garbage out. This lesson covers the practical side of data collection — what to capture, how to capture it, and the common pitfalls that lead to misleading OEE numbers.</p>
+
+  <h2>The Five Data Points You Need</h2>
+
+  <p>At minimum, calculating OEE requires five pieces of information per production run:</p>
+
+  <ol>
+    <li><strong>Planned production time</strong> — How long was the equipment scheduled to run?</li>
+    <li><strong>Downtime events</strong> — When did the equipment stop, for how long, and why?</li>
+    <li><strong>Ideal cycle time</strong> — What is the theoretical best speed for this product?</li>
+    <li><strong>Total output</strong> — How many units were produced (good + defective)?</li>
+    <li><strong>Defect count</strong> — How many units failed to meet quality specifications?</li>
+  </ol>
+
+  <div class="callout">
+    <p><strong>Key Insight:</strong> Most factories already track output and defects. The challenge is accurate <em>downtime</em> data — knowing exactly when equipment stopped and categorizing the reason correctly.</p>
+  </div>
+
+  <h2>Manual vs. Automated Data Collection</h2>
+
+  <h3>Manual Collection</h3>
+  <p>Operators record data on paper forms or spreadsheets. This is how most manufacturers start.</p>
+
+  <p><strong>Pros:</strong></p>
+  <ul>
+    <li>Zero upfront investment</li>
+    <li>Forces operators to engage with the data</li>
+    <li>Builds awareness of losses before investing in automation</li>
+  </ul>
+
+  <p><strong>Cons:</strong></p>
+  <ul>
+    <li>Inaccurate — operators estimate downtime duration and often round</li>
+    <li>Incomplete — short stops under 2-3 minutes are rarely recorded</li>
+    <li>Delayed — data is often entered at end of shift from memory</li>
+    <li>Time-consuming — pulls operators away from value-adding work</li>
+  </ul>
+
+  <h3>Semi-Automated Collection</h3>
+  <p>Equipment signals (run/stop) are captured automatically, but operators add context (reason codes, notes).</p>
+
+  <p><strong>How it works:</strong></p>
+  <ul>
+    <li>A sensor or PLC signal detects when the machine is running</li>
+    <li>The system automatically records start/stop timestamps</li>
+    <li>When a stop occurs, the operator selects a reason from a dropdown on a tablet or HMI</li>
+    <li>Output counts come from machine counters or sensors</li>
+  </ul>
+
+  <div class="callout-green">
+    <p><strong>Best Practice:</strong> Semi-automated is the sweet spot for most manufacturers. You get accurate timing with human context — the "what happened" that pure automation misses.</p>
+  </div>
+
+  <h3>Fully Automated Collection</h3>
+  <p>MES (Manufacturing Execution Systems) or IIoT platforms capture everything automatically with minimal operator input.</p>
+
+  <ul>
+    <li>Machine states detected in real-time via PLC/SCADA integration</li>
+    <li>Reason codes auto-classified using machine learning patterns</li>
+    <li>Part counts from vision systems or encoder signals</li>
+    <li>Quality data from inline inspection systems</li>
+  </ul>
+
+  <p><strong>Best for:</strong> High-volume, high-speed lines where manual recording is impossible (e.g., packaging at 500+ units/minute).</p>
+
+  <h2>Defining Your Ideal Cycle Time</h2>
+
+  <p>This is the most commonly misunderstood OEE input. The ideal cycle time should be:</p>
+
+  <table>
+    <tr>
+      <th>Use This</th>
+      <th>Not This</th>
+    </tr>
+    <tr>
+      <td>The fastest sustainable speed the equipment can run for this specific product</td>
+      <td>The average speed you typically run at</td>
+    </tr>
+    <tr>
+      <td>Based on nameplate capacity or time studies</td>
+      <td>Based on "what feels right" or historical averages</td>
+    </tr>
+    <tr>
+      <td>Product-specific (different products may have different ideal speeds)</td>
+      <td>One number for all products</td>
+    </tr>
+  </table>
+
+  <div class="callout-warn">
+    <p><strong>Common Mistake:</strong> Setting the ideal cycle time too slow inflates your OEE and hides speed losses. Setting it unrealistically fast makes OEE look impossibly low. Use the manufacturer's rated speed or your best-ever sustained run as the benchmark.</p>
+  </div>
+
+  <h2>Downtime Reason Codes</h2>
+
+  <p>A well-designed reason code system is critical. Keep these principles in mind:</p>
+
+  <ul>
+    <li><strong>Keep it short:</strong> 10-20 codes maximum. Too many codes and operators won't use them correctly.</li>
+    <li><strong>Make codes specific enough to act on:</strong> "Mechanical failure" is too vague. "Bearing failure — Drive motor" is actionable.</li>
+    <li><strong>Map codes to the Six Big Losses:</strong> Each reason code should clearly fall under one of the six categories.</li>
+    <li><strong>Include an "Other" code</strong> with a free-text field — but monitor it. If "Other" exceeds 10%, your code list needs updating.</li>
+    <li><strong>Separate planned from unplanned stops:</strong> Changeovers, scheduled maintenance, and breaks are planned. Breakdowns are unplanned.</li>
+  </ul>
+
+  <h3>Example Reason Code Structure</h3>
+
+  <table>
+    <tr>
+      <th>Code</th>
+      <th>Description</th>
+      <th>Loss Category</th>
+    </tr>
+    <tr>
+      <td>BD-01</td>
+      <td>Mechanical breakdown</td>
+      <td>Breakdown (Availability)</td>
+    </tr>
+    <tr>
+      <td>BD-02</td>
+      <td>Electrical failure</td>
+      <td>Breakdown (Availability)</td>
+    </tr>
+    <tr>
+      <td>CO-01</td>
+      <td>Product changeover</td>
+      <td>Setup (Availability)</td>
+    </tr>
+    <tr>
+      <td>CO-02</td>
+      <td>Material change</td>
+      <td>Setup (Availability)</td>
+    </tr>
+    <tr>
+      <td>MS-01</td>
+      <td>Jam / blockage</td>
+      <td>Minor Stop (Performance)</td>
+    </tr>
+    <tr>
+      <td>MS-02</td>
+      <td>Sensor trip</td>
+      <td>Minor Stop (Performance)</td>
+    </tr>
+    <tr>
+      <td>QD-01</td>
+      <td>Out-of-spec product</td>
+      <td>Defect (Quality)</td>
+    </tr>
+    <tr>
+      <td>QD-02</td>
+      <td>Startup rejects</td>
+      <td>Startup Loss (Quality)</td>
+    </tr>
+  </table>
+
+  <h2>Data Quality Pitfalls</h2>
+
+  <p>Watch out for these common problems that corrupt OEE data:</p>
+
+  <ol>
+    <li><strong>Rounding downtime:</strong> "About 10 minutes" recorded for a 17-minute stop. Use timestamps, not estimates.</li>
+    <li><strong>Missing short stops:</strong> Stops under 2-3 minutes often go unrecorded in manual systems. These add up.</li>
+    <li><strong>Misclassifying planned vs. unplanned:</strong> Calling an unplanned breakdown a "planned" stop inflates Availability artificially.</li>
+    <li><strong>Incorrect part counts:</strong> Double-counting, missed rejects at downstream inspection, or counter resets mid-shift.</li>
+    <li><strong>Ignoring warm-up time:</strong> Some machines take 15-30 minutes to reach operating temperature. Is this planned or unplanned?</li>
+  </ol>
+
+  <div class="callout">
+    <p><strong>Rule of Thumb:</strong> Start with manual data collection for 2-4 weeks before investing in automation. You'll learn what matters, what's hard to capture, and what your operators need — all before spending any money on sensors or software.</p>
+  </div>
+
+  <p>In the next lesson, we'll take your collected data and walk through calculating and interpreting OEE step by step.</p>
+</body>
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Building an OEE Dashboard</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
+  <style>
+    .reveal h1 { font-size: 2em; color: #1a1a1a; }
+    .reveal h2 { font-size: 1.5em; color: #333; }
+    .reveal h3 { font-size: 1.2em; color: #444; }
+    .reveal p { font-size: 0.9em; }
+    .reveal li { font-size: 0.85em; margin-bottom: 0.3em; }
+    .reveal .highlight { color: #3b82f6; font-weight: bold; }
+    .reveal .green { color: #22c55e; font-weight: bold; }
+    .reveal .orange { color: #f97316; font-weight: bold; }
+    .reveal .red { color: #ef4444; font-weight: bold; }
+    .reveal table { font-size: 0.8em; }
+    .reveal th, .reveal td { padding: 6px 10px; text-align: left; border-bottom: 1px solid #e5e7eb; }
+    .reveal th { background: #f9fafb; }
+    .reveal .stat { font-size: 2em; color: #3b82f6; font-weight: bold; }
+    .reveal .dashboard-box {
+      background: #f8fafc;
+      border: 2px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 16px;
+      margin: 10px 0;
+      text-align: left;
+    }
+    .reveal .kpi-card {
+      display: inline-block;
+      background: #f0f9ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 8px;
+      padding: 12px 20px;
+      margin: 4px;
+      text-align: center;
+    }
+    .reveal .kpi-card .label { font-size: 0.7em; color: #64748b; }
+    .reveal .kpi-card .value { font-size: 1.4em; font-weight: bold; color: #1e40af; }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <section>
+        <h1>Building an OEE Dashboard</h1>
+        <p>From raw data to real-time visibility</p>
+        <p><small>Software Defined Factory</small></p>
+      </section>
+
+      <section>
+        <h2>Why a Dashboard?</h2>
+        <p>A spreadsheet tells you what happened <em>yesterday</em>.</p>
+        <p>A dashboard tells you what's happening <span class="highlight">right now</span>.</p>
+        <ul>
+          <li>Real-time OEE visibility for operators and management</li>
+          <li>Instant identification of active problems</li>
+          <li>Trend analysis to verify improvement efforts</li>
+          <li>Shift handover information at a glance</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Dashboard Layout: The Big Picture</h2>
+        <p>An effective OEE dashboard has <span class="highlight">four zones</span>:</p>
+        <ol>
+          <li><strong>OEE Score</strong> — Large, color-coded, impossible to miss</li>
+          <li><strong>Sub-Metrics</strong> — Availability, Performance, Quality gauges</li>
+          <li><strong>Loss Breakdown</strong> — Pareto chart of current losses</li>
+          <li><strong>Trend View</strong> — OEE over time (shift, day, week)</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>Zone 1: The OEE Score</h2>
+        <div class="dashboard-box">
+          <p>The headline number. Design guidelines:</p>
+          <ul>
+            <li>Large font — visible from <span class="highlight">10+ meters</span> away on a shop floor display</li>
+            <li>Color-coded: <span class="green">Green 85%+</span> | <span class="orange">Yellow 60-84%</span> | <span class="red">Red &lt;60%</span></li>
+            <li>Update frequency: every <strong>5-15 minutes</strong> (not every second)</li>
+            <li>Show current shift OEE, not just the last hour</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>Zone 2: Sub-Metric Gauges</h2>
+        <div style="text-align: center;">
+          <div class="kpi-card">
+            <div class="label">Availability</div>
+            <div class="value">87.2%</div>
+          </div>
+          <div class="kpi-card">
+            <div class="label">Performance</div>
+            <div class="value">82.1%</div>
+          </div>
+          <div class="kpi-card">
+            <div class="label">Quality</div>
+            <div class="value">98.4%</div>
+          </div>
+        </div>
+        <p>Show each factor with its <span class="highlight">target line</span> so operators can immediately see which one is dragging OEE down.</p>
+      </section>
+
+      <section>
+        <h2>Zone 3: Loss Pareto</h2>
+        <p>A horizontal bar chart sorted by impact:</p>
+        <div class="dashboard-box">
+          <p><strong>Top losses this shift:</strong></p>
+          <ul>
+            <li><span class="red">Changeover</span> — 35 min (42%)</li>
+            <li><span class="orange">Minor stops</span> — 22 min (26%)</li>
+            <li><span class="orange">Speed loss</span> — 15 min (18%)</li>
+            <li><span class="red">Breakdown</span> — 8 min (10%)</li>
+            <li><span class="highlight">Defects</span> — 3 min (4%)</li>
+          </ul>
+        </div>
+        <p>The Pareto chart answers: <em>"Where should we focus right now?"</em></p>
+      </section>
+
+      <section>
+        <h2>Zone 4: Trend View</h2>
+        <p>Show OEE over time at multiple levels:</p>
+        <ul>
+          <li><strong>Hourly</strong> — Within a shift, spot when losses occur</li>
+          <li><strong>Daily</strong> — Compare day-to-day consistency</li>
+          <li><strong>Weekly</strong> — See the improvement trajectory</li>
+        </ul>
+        <p>Add a <span class="highlight">target line</span> (e.g., 75%) and a <span class="green">trend line</span> to show direction.</p>
+        <p>Operators need to see: <em>"Are we getting better?"</em></p>
+      </section>
+
+      <section>
+        <h2>Comparison Views</h2>
+        <p>Beyond the single-line dashboard, add views to compare:</p>
+        <table>
+          <tr>
+            <th>Comparison</th>
+            <th>What It Reveals</th>
+          </tr>
+          <tr>
+            <td>Line vs. Line</td>
+            <td>Which equipment needs the most attention?</td>
+          </tr>
+          <tr>
+            <td>Shift vs. Shift</td>
+            <td>Are there training or staffing gaps?</td>
+          </tr>
+          <tr>
+            <td>Product vs. Product</td>
+            <td>Which products are hardest to run efficiently?</td>
+          </tr>
+          <tr>
+            <td>Week vs. Week</td>
+            <td>Is the improvement trend real or noise?</td>
+          </tr>
+        </table>
+      </section>
+
+      <section>
+        <h2>Technology Options</h2>
+        <table>
+          <tr>
+            <th>Tool</th>
+            <th>Cost</th>
+            <th>Best For</th>
+          </tr>
+          <tr>
+            <td>Google Sheets + Apps Script</td>
+            <td>Free</td>
+            <td>Manual data entry, small operations</td>
+          </tr>
+          <tr>
+            <td>Power BI / Tableau</td>
+            <td>$10-70/mo</td>
+            <td>Connecting to databases, rich visualizations</td>
+          </tr>
+          <tr>
+            <td>Grafana + InfluxDB</td>
+            <td>Free (open source)</td>
+            <td>Real-time sensor data, IIoT integration</td>
+          </tr>
+          <tr>
+            <td>Commercial MES/OEE</td>
+            <td>$500-5,000/mo</td>
+            <td>Full solution with hardware, support, compliance</td>
+          </tr>
+        </table>
+      </section>
+
+      <section>
+        <h2>Dashboard Design Rules</h2>
+        <ol>
+          <li><span class="highlight">5-second rule:</span> Anyone should understand the status in 5 seconds</li>
+          <li><strong>Color = action:</strong> Green = keep going, Yellow = monitor, Red = intervene</li>
+          <li><strong>Less is more:</strong> Max 6-8 KPIs per screen. Add detail on drill-down pages.</li>
+          <li><strong>Match the audience:</strong> Operators need real-time; managers need trends</li>
+          <li><strong>Show targets:</strong> A number without a target is just a number</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>Shop Floor Display Tips</h2>
+        <ul>
+          <li>Use a large TV (42"+) mounted where operators can see it</li>
+          <li>Auto-refresh — no manual interaction needed</li>
+          <li>High contrast colors for factory lighting conditions</li>
+          <li>Include current downtime timer if equipment is stopped</li>
+          <li>Show shift target vs. actual production count</li>
+        </ul>
+        <p><strong>Cost:</strong> A Raspberry Pi ($50) + TV ($200) + free dashboard tool = shop floor OEE display for under $300.</p>
+      </section>
+
+      <section>
+        <h2>Key Takeaways</h2>
+        <ul>
+          <li>A dashboard turns OEE from a historical report into a <span class="highlight">real-time management tool</span></li>
+          <li>Four zones: OEE score, sub-metrics, loss Pareto, trend view</li>
+          <li>Start simple — even a Google Sheet on a TV is better than no visibility</li>
+          <li>Design for the audience: operators need action signals, managers need trends</li>
+          <li>The dashboard doesn't improve OEE — the actions people take because of it do</li>
+        </ul>
+      </section>
+
+      <section>
+        <h1>Next Up</h1>
+        <p>Improving Availability — practical techniques to reduce breakdowns and changeover times.</p>
+      </section>
+
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+  <script>Reveal.initialize({ hash: true });</script>
+</body>
+</html>

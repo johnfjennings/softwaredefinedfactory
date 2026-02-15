@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Improving Availability</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      line-height: 1.7;
+      color: #1a1a1a;
+      background: #fff;
+    }
+    h1 { font-size: 2em; margin-bottom: 0.5em; }
+    h2 { font-size: 1.5em; margin-top: 1.5em; color: #333; }
+    h3 { font-size: 1.2em; margin-top: 1.2em; color: #444; }
+    p { margin-bottom: 1em; }
+    ul, ol { margin-bottom: 1em; padding-left: 1.5em; }
+    li { margin-bottom: 0.5em; }
+    .callout {
+      background: #f0f9ff;
+      border-left: 4px solid #3b82f6;
+      padding: 16px 20px;
+      margin: 24px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .callout p { margin: 0; }
+    .callout-warn {
+      background: #fffbeb;
+      border-left: 4px solid #f59e0b;
+      padding: 16px 20px;
+      margin: 24px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .callout-warn p { margin: 0; }
+    .callout-green {
+      background: #f0fdf4;
+      border-left: 4px solid #22c55e;
+      padding: 16px 20px;
+      margin: 24px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .callout-green p { margin: 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    th { background: #f9fafb; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <h1>Improving Availability</h1>
+
+  <p>Availability measures the proportion of planned production time that the equipment is actually running. It is reduced by two of the Six Big Losses: <strong>breakdowns</strong> and <strong>setup/adjustment time</strong>. This lesson covers proven techniques for improving both.</p>
+
+  <h2>Part 1: Reducing Breakdowns</h2>
+
+  <p>Breakdowns are the most dramatic form of production loss. A machine stops, production halts, people scramble to fix it. But most breakdowns are preventable.</p>
+
+  <h3>Total Productive Maintenance (TPM)</h3>
+
+  <p>TPM is a systematic approach to equipment maintenance that involves everyone — from operators to maintenance engineers. The goal is zero breakdowns.</p>
+
+  <p>TPM has eight pillars, but three are most relevant to OEE:</p>
+
+  <ol>
+    <li><strong>Autonomous Maintenance</strong> — Operators perform routine care (cleaning, inspecting, lubricating) rather than waiting for maintenance. When operators own their machines, they catch problems early.</li>
+    <li><strong>Planned Maintenance</strong> — Replace reactive "fix it when it breaks" with scheduled maintenance based on equipment condition or time intervals.</li>
+    <li><strong>Focused Improvement</strong> — Cross-functional teams tackle specific chronic losses using structured problem-solving.</li>
+  </ol>
+
+  <div class="callout-green">
+    <p><strong>Quick Win:</strong> Start with autonomous maintenance. Create a simple daily checklist for operators: 5 things to check, 5 things to clean, 5 things to tighten. This alone can reduce breakdowns by 30-50%.</p>
+  </div>
+
+  <h3>Root Cause Analysis with 5-Why</h3>
+
+  <p>When a breakdown occurs, don't just fix the symptom. Ask "why?" five times to find the root cause:</p>
+
+  <table>
+    <tr>
+      <th>Level</th>
+      <th>Question & Answer</th>
+    </tr>
+    <tr>
+      <td>Problem</td>
+      <td>The conveyor belt stopped.</td>
+    </tr>
+    <tr>
+      <td>Why 1</td>
+      <td>The drive motor overheated and tripped.</td>
+    </tr>
+    <tr>
+      <td>Why 2</td>
+      <td>The motor bearing was failing, causing friction.</td>
+    </tr>
+    <tr>
+      <td>Why 3</td>
+      <td>The bearing had no lubrication.</td>
+    </tr>
+    <tr>
+      <td>Why 4</td>
+      <td>The lubrication schedule was missed.</td>
+    </tr>
+    <tr>
+      <td>Why 5</td>
+      <td>There is no visible PM checklist at the machine.</td>
+    </tr>
+    <tr>
+      <td><strong>Root Cause</strong></td>
+      <td><strong>Missing visual management for maintenance tasks.</strong></td>
+    </tr>
+  </table>
+
+  <p>The fix isn't replacing the bearing — it's creating a visual maintenance board with checklists at each machine.</p>
+
+  <h3>Predictive Maintenance</h3>
+
+  <p>For manufacturers with IIoT capabilities, predictive maintenance uses sensor data to detect failures <em>before</em> they happen:</p>
+
+  <ul>
+    <li><strong>Vibration monitoring</strong> — Detects bearing wear, misalignment, and imbalance weeks before failure</li>
+    <li><strong>Thermal imaging</strong> — Identifies hot spots in electrical panels and motors</li>
+    <li><strong>Oil analysis</strong> — Reveals contamination and wear particles in gearbox oil</li>
+    <li><strong>Current monitoring</strong> — Abnormal motor current draw indicates developing problems</li>
+  </ul>
+
+  <div class="callout">
+    <p><strong>ROI Insight:</strong> Predictive maintenance costs more than reactive maintenance per event, but far less in total because it prevents catastrophic failures and unplanned production stops. Use our <a href="/tools/roi-calculator">ROI Calculator</a> to estimate the savings for your operation.</p>
+  </div>
+
+  <h2>Part 2: Reducing Changeover Time (SMED)</h2>
+
+  <p>SMED — Single Minute Exchange of Die — is a methodology developed by Shigeo Shingo to dramatically reduce changeover times. Despite the name, the goal isn't necessarily under one minute, but to reduce changeovers as much as possible.</p>
+
+  <h3>The SMED Process</h3>
+
+  <ol>
+    <li><strong>Document the current changeover</strong> — Video-record the entire changeover. Identify every step and its duration.</li>
+    <li><strong>Separate internal from external tasks</strong>
+      <ul>
+        <li><em>Internal tasks</em> — Can only be done while the machine is stopped (e.g., changing a die)</li>
+        <li><em>External tasks</em> — Can be done while the machine is still running (e.g., getting tools ready, pre-heating, staging materials)</li>
+      </ul>
+    </li>
+    <li><strong>Move external tasks outside the changeover</strong> — This alone typically reduces changeover time by 30-50%.</li>
+    <li><strong>Simplify internal tasks</strong> — Replace bolts with quick-release clamps, eliminate adjustments with pre-set fixtures, standardize tooling.</li>
+    <li><strong>Practice and standardize</strong> — Create a changeover procedure, train all operators, and time the process to verify.</li>
+  </ol>
+
+  <h3>SMED Results Table</h3>
+
+  <table>
+    <tr>
+      <th>Before SMED</th>
+      <th>After SMED (Typical)</th>
+      <th>Improvement</th>
+    </tr>
+    <tr>
+      <td>45-minute changeover</td>
+      <td>12-minute changeover</td>
+      <td>73% reduction</td>
+    </tr>
+    <tr>
+      <td>3 changeovers per shift</td>
+      <td>3 changeovers per shift</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td>135 min lost per shift</td>
+      <td>36 min lost per shift</td>
+      <td>99 min recovered</td>
+    </tr>
+    <tr>
+      <td>Availability: 72%</td>
+      <td>Availability: 92.5%</td>
+      <td>+20.5 points</td>
+    </tr>
+  </table>
+
+  <div class="callout-warn">
+    <p><strong>Common Mistake:</strong> Manufacturers often reduce changeovers to run larger batches instead of shorter ones. The real benefit of SMED is the <em>flexibility</em> to run more changeovers with less total time — enabling smaller batches, lower inventory, and better customer responsiveness.</p>
+  </div>
+
+  <h2>Measuring Progress</h2>
+
+  <p>Track these metrics to verify your availability improvements:</p>
+
+  <ul>
+    <li><strong>MTBF (Mean Time Between Failures)</strong> — Should be increasing as breakdowns decrease</li>
+    <li><strong>MTTR (Mean Time To Repair)</strong> — Should be decreasing as maintenance teams improve response and repair skills</li>
+    <li><strong>Changeover time</strong> — Track the average and spread. Consistency matters as much as speed.</li>
+    <li><strong>Number of breakdowns per week</strong> — Simple but powerful trend indicator</li>
+    <li><strong>Availability trend</strong> — The ultimate measure on your OEE dashboard</li>
+  </ul>
+
+  <p>In the next lesson, we'll tackle the other two OEE factors — <strong>Performance and Quality</strong> — with equally practical techniques.</p>
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What OEE Really Measures</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      line-height: 1.7;
+      color: #1a1a1a;
+      background: #fff;
+    }
+    h1 { font-size: 2em; margin-bottom: 0.5em; }
+    h2 { font-size: 1.5em; margin-top: 1.5em; color: #333; }
+    h3 { font-size: 1.2em; margin-top: 1.2em; color: #444; }
+    p { margin-bottom: 1em; }
+    ul, ol { margin-bottom: 1em; padding-left: 1.5em; }
+    li { margin-bottom: 0.5em; }
+    .callout {
+      background: #f0f9ff;
+      border-left: 4px solid #3b82f6;
+      padding: 16px 20px;
+      margin: 24px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .callout p { margin: 0; }
+    .callout-warn {
+      background: #fffbeb;
+      border-left: 4px solid #f59e0b;
+      padding: 16px 20px;
+      margin: 24px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .callout-warn p { margin: 0; }
+    .formula {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      padding: 20px;
+      margin: 24px 0;
+      border-radius: 8px;
+      text-align: center;
+      font-size: 1.2em;
+      font-weight: bold;
+      color: #1e40af;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    th { background: #f9fafb; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <h1>What OEE Really Measures</h1>
+
+  <p>Overall Equipment Effectiveness (OEE) is the single most important metric in manufacturing. It answers a deceptively simple question: <em>of the time you planned to produce, how much was truly productive?</em></p>
+
+  <div class="callout">
+    <p><strong>Key Takeaway:</strong> OEE doesn't just measure your machines. It measures the effectiveness of your entire production system — equipment, people, materials, and processes working together.</p>
+  </div>
+
+  <h2>The OEE Formula</h2>
+
+  <p>OEE combines three independent factors into one percentage:</p>
+
+  <div class="formula">
+    OEE = Availability &times; Performance &times; Quality
+  </div>
+
+  <p>Each factor captures a different type of production loss:</p>
+
+  <ul>
+    <li><strong>Availability</strong> — Did the equipment run when it was supposed to? Measures losses from downtime (breakdowns, changeovers, setup).</li>
+    <li><strong>Performance</strong> — Did it run at full speed? Measures losses from slow cycles, minor stops, and speed reductions.</li>
+    <li><strong>Quality</strong> — Did it produce good parts? Measures losses from scrap, rework, and startup rejects.</li>
+  </ul>
+
+  <h2>A Practical Example</h2>
+
+  <p>Imagine an 8-hour shift on a packaging line:</p>
+
+  <ul>
+    <li><strong>Planned production time:</strong> 480 minutes</li>
+    <li><strong>Downtime (breakdowns + changeovers):</strong> 60 minutes</li>
+    <li><strong>Run time:</strong> 420 minutes</li>
+    <li><strong>Ideal cycle time:</strong> 1 second per unit (3,600 units/hour)</li>
+    <li><strong>Total units produced:</strong> 20,000</li>
+    <li><strong>Defective units:</strong> 400</li>
+  </ul>
+
+  <p>Let's calculate each factor:</p>
+
+  <table>
+    <tr>
+      <th>Factor</th>
+      <th>Calculation</th>
+      <th>Result</th>
+    </tr>
+    <tr>
+      <td>Availability</td>
+      <td>420 / 480</td>
+      <td>87.5%</td>
+    </tr>
+    <tr>
+      <td>Performance</td>
+      <td>(1 sec &times; 20,000) / (420 &times; 60 sec)</td>
+      <td>79.4%</td>
+    </tr>
+    <tr>
+      <td>Quality</td>
+      <td>19,600 / 20,000</td>
+      <td>98.0%</td>
+    </tr>
+    <tr>
+      <th>OEE</th>
+      <th>0.875 &times; 0.794 &times; 0.98</th>
+      <th>68.1%</th>
+    </tr>
+  </table>
+
+  <p>An OEE of 68% means that out of every 100 minutes you planned to produce, only 68 minutes resulted in good product at full speed. The other 32 minutes were consumed by downtime, speed losses, or quality defects.</p>
+
+  <h2>OEE Benchmarks</h2>
+
+  <table>
+    <tr>
+      <th>Level</th>
+      <th>OEE Score</th>
+      <th>What It Means</th>
+    </tr>
+    <tr>
+      <td><strong>World Class</strong></td>
+      <td>85%+</td>
+      <td>Top-tier performance. A realistic long-term target for most manufacturers.</td>
+    </tr>
+    <tr>
+      <td><strong>Typical</strong></td>
+      <td>60%</td>
+      <td>Average for discrete manufacturers. Significant room for improvement exists.</td>
+    </tr>
+    <tr>
+      <td><strong>Low</strong></td>
+      <td>Below 40%</td>
+      <td>Common for manufacturers just starting to track OEE. Quick wins are available.</td>
+    </tr>
+  </table>
+
+  <div class="callout-warn">
+    <p><strong>Common Misconception:</strong> Many people hear "85% world class" and think it's easy. Remember: 85% OEE requires 90%+ Availability, 95%+ Performance, <em>and</em> 99%+ Quality — all at the same time. Each factor compounds the others.</p>
+  </div>
+
+  <h2>OEE vs. Other Metrics</h2>
+
+  <p>OEE is related to but different from these metrics:</p>
+
+  <ul>
+    <li><strong>TEEP (Total Effective Equipment Performance)</strong> — Like OEE but uses total calendar time (24/7/365) as the denominator instead of planned production time. TEEP reveals hidden capacity in unscheduled shifts.</li>
+    <li><strong>OPE (Overall Process Effectiveness)</strong> — Extends OEE to include losses across an entire process or value stream, not just a single machine.</li>
+    <li><strong>Machine Utilization</strong> — Simply measures uptime vs. total time. It ignores speed and quality losses entirely.</li>
+  </ul>
+
+  <h2>Why OEE Matters</h2>
+
+  <p>OEE is powerful because it:</p>
+
+  <ol>
+    <li><strong>Provides a single number</strong> that captures multiple loss categories — no need to juggle dozens of separate KPIs.</li>
+    <li><strong>Highlights hidden losses</strong> that are invisible when tracking uptime alone — especially speed losses, which often go unnoticed.</li>
+    <li><strong>Creates a common language</strong> for operators, engineers, and management to discuss productivity.</li>
+    <li><strong>Prioritizes improvement efforts</strong> — by breaking OEE into its three components, you can see exactly where to focus.</li>
+    <li><strong>Benchmarks progress</strong> over time — a single number makes trend analysis straightforward.</li>
+  </ol>
+
+  <div class="callout">
+    <p><strong>Try It Yourself:</strong> Use our free <a href="/tools/oee-calculator">OEE Calculator</a> to calculate your production line's OEE and see how you compare to world-class benchmarks.</p>
+  </div>
+
+  <p>In the next lesson, we'll break down the <strong>Six Big Losses</strong> — the framework that tells you exactly where your OEE points are going.</p>
+</body>
+</html>

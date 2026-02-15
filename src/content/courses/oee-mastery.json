@@ -1,0 +1,88 @@
+{
+  "title": "OEE Mastery: Measuring & Improving Equipment Performance",
+  "slug": "oee-mastery",
+  "description": "Master Overall Equipment Effectiveness — the gold standard metric for manufacturing productivity. Learn to calculate OEE, analyze the Six Big Losses, collect production data, build dashboards, and drive continuous improvement on your factory floor.",
+  "instructor": "John Jennings",
+  "difficulty": "intermediate",
+  "category": "smart-manufacturing",
+  "thumbnail": "/images/courses/oee-mastery.jpg",
+  "priceCents": 4900,
+  "isPublished": true,
+  "tags": ["OEE", "TPM", "Six Big Losses", "Continuous Improvement", "KPIs"],
+  "modules": [
+    {
+      "title": "Understanding OEE",
+      "description": "Learn what OEE measures, why it matters, and how the Six Big Losses framework identifies hidden productivity gaps.",
+      "lessons": [
+        {
+          "slug": "01-what-oee-really-measures",
+          "title": "What OEE Really Measures",
+          "type": "article",
+          "durationMinutes": 15,
+          "isPreview": true
+        },
+        {
+          "slug": "02-six-big-losses-explained",
+          "title": "The Six Big Losses Explained",
+          "type": "slides",
+          "durationMinutes": 20,
+          "isPreview": true
+        },
+        {
+          "slug": "03-collecting-oee-data",
+          "title": "Collecting OEE Data",
+          "type": "article",
+          "durationMinutes": 20,
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "title": "Calculating & Analyzing",
+      "description": "Hands-on OEE calculation, interpretation, benchmarking, and building real-time dashboards.",
+      "lessons": [
+        {
+          "slug": "04-calculating-and-interpreting-oee",
+          "title": "Calculating & Interpreting OEE",
+          "type": "article",
+          "durationMinutes": 20,
+          "isPreview": false
+        },
+        {
+          "slug": "05-building-an-oee-dashboard",
+          "title": "Building an OEE Dashboard",
+          "type": "slides",
+          "durationMinutes": 25,
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "title": "Improving OEE",
+      "description": "Practical strategies for improving Availability, Performance, and Quality using proven lean and TPM techniques.",
+      "lessons": [
+        {
+          "slug": "06-improving-availability",
+          "title": "Improving Availability",
+          "type": "article",
+          "durationMinutes": 20,
+          "isPreview": false
+        },
+        {
+          "slug": "07-improving-performance-and-quality",
+          "title": "Improving Performance & Quality",
+          "type": "slides",
+          "durationMinutes": 25,
+          "isPreview": false
+        },
+        {
+          "slug": "08-oee-improvement-roadmap",
+          "title": "OEE Improvement Roadmap",
+          "type": "article",
+          "durationMinutes": 15,
+          "isPreview": false
+        }
+      ]
+    }
+  ]
+}

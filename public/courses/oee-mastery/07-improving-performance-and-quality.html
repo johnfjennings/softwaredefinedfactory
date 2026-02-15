@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Improving Performance & Quality</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
+  <style>
+    .reveal h1 { font-size: 2em; color: #1a1a1a; }
+    .reveal h2 { font-size: 1.5em; color: #333; }
+    .reveal h3 { font-size: 1.2em; color: #444; }
+    .reveal p { font-size: 0.9em; }
+    .reveal li { font-size: 0.85em; margin-bottom: 0.3em; }
+    .reveal .highlight { color: #3b82f6; font-weight: bold; }
+    .reveal .green { color: #22c55e; font-weight: bold; }
+    .reveal .orange { color: #f97316; font-weight: bold; }
+    .reveal .red { color: #ef4444; font-weight: bold; }
+    .reveal table { font-size: 0.8em; }
+    .reveal th, .reveal td { padding: 6px 10px; text-align: left; border-bottom: 1px solid #e5e7eb; }
+    .reveal th { background: #f9fafb; }
+    .reveal .stat { font-size: 2em; color: #3b82f6; font-weight: bold; }
+    .reveal .technique-box {
+      background: #f0fdf4;
+      border: 2px solid #22c55e;
+      border-radius: 8px;
+      padding: 16px;
+      margin: 10px 0;
+      text-align: left;
+    }
+    .reveal .warn-box {
+      background: #fef3c7;
+      border: 2px solid #f59e0b;
+      border-radius: 8px;
+      padding: 16px;
+      margin: 10px 0;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <section>
+        <h1>Improving Performance & Quality</h1>
+        <p>Tackling the hidden losses in speed and yield</p>
+        <p><small>Software Defined Factory</small></p>
+      </section>
+
+      <!-- PERFORMANCE SECTION -->
+
+      <section>
+        <h2>Performance: The Hidden Giant</h2>
+        <p>Performance losses are the <span class="orange">most commonly overlooked</span> OEE losses.</p>
+        <p>Unlike breakdowns (everyone notices) or defects (quality catches them), speed losses happen silently.</p>
+        <ul>
+          <li><strong>Minor stops:</strong> 30-second jams that nobody records</li>
+          <li><strong>Speed reductions:</strong> Running at 80% of ideal speed "because it's always been that way"</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Tackling Minor Stops</h2>
+        <p>Minor stops are typically <span class="highlight">under 5 minutes</span> each, but they happen frequently.</p>
+        <div class="technique-box">
+          <strong>Step 1: Make them visible</strong>
+          <ul>
+            <li>Install an andon light or alarm for any stop over 30 seconds</li>
+            <li>Automated stop logging captures what operators miss</li>
+            <li>Track frequency and duration separately</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>Minor Stop Root Causes</h2>
+        <table>
+          <tr>
+            <th>Symptom</th>
+            <th>Common Root Cause</th>
+            <th>Solution</th>
+          </tr>
+          <tr>
+            <td>Material jams</td>
+            <td>Worn guides, incorrect material specs</td>
+            <td>Replace guides, verify material specifications</td>
+          </tr>
+          <tr>
+            <td>Sensor trips</td>
+            <td>Dirty sensors, misalignment</td>
+            <td>Cleaning schedule, alignment verification</td>
+          </tr>
+          <tr>
+            <td>Misfeeds</td>
+            <td>Hopper design, material clumping</td>
+            <td>Feeder modifications, material handling improvements</td>
+          </tr>
+          <tr>
+            <td>Overloads</td>
+            <td>Accumulated debris, wear</td>
+            <td>Regular cleaning, component replacement schedule</td>
+          </tr>
+        </table>
+      </section>
+
+      <section>
+        <h2>Tackling Speed Losses</h2>
+        <p>If your equipment runs below its rated speed, ask:</p>
+        <ol>
+          <li>Do we actually <span class="highlight">know</span> the ideal cycle time for this product?</li>
+          <li>Was the speed reduced to "fix" a quality or jam problem?</li>
+          <li>Is the speed limited by upstream/downstream bottlenecks?</li>
+          <li>Is there equipment wear causing vibration at higher speeds?</li>
+          <li>Is operator training adequate for running at full speed?</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>Speed Recovery Process</h2>
+        <div class="technique-box">
+          <ol>
+            <li><strong>Verify nameplate speed</strong> — Check the equipment manual for designed capacity</li>
+            <li><strong>Run a trial at ideal speed</strong> — Observe what happens: jams? defects? vibration?</li>
+            <li><strong>Fix the barrier</strong> — Address the root cause that prevents full speed</li>
+            <li><strong>Increase gradually</strong> — Step up speed 5% at a time, verify stability at each level</li>
+            <li><strong>Standardize</strong> — Document the proven speed in the work instruction</li>
+          </ol>
+        </div>
+        <p><span class="green">Typical result:</span> 5-15% speed improvement once root causes are addressed.</p>
+      </section>
+
+      <!-- QUALITY SECTION -->
+
+      <section>
+        <h2>Quality: Getting to 99%+</h2>
+        <p>Quality losses seem small in percentage terms, but they're expensive:</p>
+        <ul>
+          <li>Every defect wastes <strong>machine time</strong> (not just material)</li>
+          <li>Rework consumes <strong>double</strong> the resources</li>
+          <li>Escaped defects damage <strong>customer trust</strong></li>
+        </ul>
+        <p>World-class quality is <span class="highlight">99%+ first-pass yield</span>.</p>
+      </section>
+
+      <section>
+        <h2>Statistical Process Control (SPC)</h2>
+        <p>SPC uses control charts to detect process drift <span class="highlight">before</span> defects occur.</p>
+        <ul>
+          <li><strong>X-bar and R charts</strong> — Track process mean and variation</li>
+          <li><strong>Upper/Lower Control Limits (UCL/LCL)</strong> — Statistical boundaries, not specification limits</li>
+          <li><strong>Out-of-control signals</strong> — Point outside limits, 7 consecutive points trending, etc.</li>
+        </ul>
+        <div class="warn-box">
+          <strong>Key principle:</strong> Control limits are NOT the same as specification limits. A process can be in-spec but out-of-control (drifting toward failure).
+        </div>
+      </section>
+
+      <section>
+        <h2>Error-Proofing (Poka-Yoke)</h2>
+        <p>Design processes so that <span class="highlight">mistakes are impossible</span> or immediately detected.</p>
+        <table>
+          <tr>
+            <th>Type</th>
+            <th>Example</th>
+            <th>Effectiveness</th>
+          </tr>
+          <tr>
+            <td>Prevention</td>
+            <td>Asymmetric connectors that only fit one way</td>
+            <td>Defect is impossible</td>
+          </tr>
+          <tr>
+            <td>Detection</td>
+            <td>Sensor that stops the line if part is missing</td>
+            <td>Defect caught immediately</td>
+          </tr>
+          <tr>
+            <td>Warning</td>
+            <td>Alarm when parameter exceeds threshold</td>
+            <td>Operator intervention required</td>
+          </tr>
+        </table>
+        <p><span class="green">Best poka-yoke: prevention.</span> The defect literally cannot happen.</p>
+      </section>
+
+      <section>
+        <h2>Reducing Startup Losses</h2>
+        <p>Startup losses occur when the process produces defects during warm-up or after changeover.</p>
+        <ul>
+          <li><strong>Standardize startup parameters</strong> — Document the exact settings (temperature, pressure, speed) for each product</li>
+          <li><strong>Pre-heat equipment</strong> — Start warm-up while the previous batch finishes (external task per SMED)</li>
+          <li><strong>First-article inspection</strong> — Check the first 3-5 parts before running at full speed</li>
+          <li><strong>Golden samples</strong> — Keep reference parts for visual comparison during startup</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Combining the Approaches</h2>
+        <p>The most effective quality strategy layers multiple techniques:</p>
+        <ol>
+          <li><span class="highlight">SPC</span> — Detects drift before specs are violated</li>
+          <li><span class="green">Poka-Yoke</span> — Prevents or catches errors in real time</li>
+          <li><span class="orange">5-Why</span> — Finds root causes of defects that do occur</li>
+          <li><strong>Standardized work</strong> — Ensures consistent execution shift to shift</li>
+        </ol>
+        <p>Together, these techniques close the gap between 95% and 99%+ quality.</p>
+      </section>
+
+      <section>
+        <h2>Key Takeaways</h2>
+        <ul>
+          <li>Performance losses are the most hidden — make them visible first</li>
+          <li>Know your true ideal cycle time before trying to improve speed</li>
+          <li>Minor stops add up — ten 2-minute stops = 20 minutes lost</li>
+          <li>SPC catches drift before it becomes defects</li>
+          <li>Poka-yoke is the ultimate quality tool: <span class="green">prevent, don't just detect</span></li>
+          <li>Standardize startup procedures to eliminate yield losses</li>
+        </ul>
+      </section>
+
+      <section>
+        <h1>Next Up</h1>
+        <p>OEE Improvement Roadmap — putting it all together into a structured improvement plan.</p>
+      </section>
+
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+  <script>Reveal.initialize({ hash: true });</script>
+</body>
+</html>

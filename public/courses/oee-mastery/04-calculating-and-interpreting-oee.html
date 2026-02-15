@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculating & Interpreting OEE</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      line-height: 1.7;
+      color: #1a1a1a;
+      background: #fff;
+    }
+    h1 { font-size: 2em; margin-bottom: 0.5em; }
+    h2 { font-size: 1.5em; margin-top: 1.5em; color: #333; }
+    h3 { font-size: 1.2em; margin-top: 1.2em; color: #444; }
+    p { margin-bottom: 1em; }
+    ul, ol { margin-bottom: 1em; padding-left: 1.5em; }
+    li { margin-bottom: 0.5em; }
+    .callout {
+      background: #f0f9ff;
+      border-left: 4px solid #3b82f6;
+      padding: 16px 20px;
+      margin: 24px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .callout p { margin: 0; }
+    .callout-warn {
+      background: #fffbeb;
+      border-left: 4px solid #f59e0b;
+      padding: 16px 20px;
+      margin: 24px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .callout-warn p { margin: 0; }
+    .callout-green {
+      background: #f0fdf4;
+      border-left: 4px solid #22c55e;
+      padding: 16px 20px;
+      margin: 24px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .callout-green p { margin: 0; }
+    .formula {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      padding: 20px;
+      margin: 24px 0;
+      border-radius: 8px;
+      text-align: center;
+      font-size: 1.1em;
+      font-weight: bold;
+      color: #1e40af;
+    }
+    .example-box {
+      background: #fafafa;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    th { background: #f9fafb; font-weight: 600; }
+    .result { font-size: 1.3em; font-weight: bold; color: #1e40af; }
+  </style>
+</head>
+<body>
+  <h1>Calculating & Interpreting OEE</h1>
+
+  <p>Now that you understand the theory, let's walk through a complete OEE calculation step by step. We'll use a realistic scenario and then explore how to interpret the results.</p>
+
+  <h2>Step-by-Step Calculation</h2>
+
+  <div class="example-box">
+    <h3>Scenario: CNC Machining Cell — Morning Shift</h3>
+    <ul>
+      <li><strong>Shift length:</strong> 8 hours (480 minutes)</li>
+      <li><strong>Scheduled breaks:</strong> 30 minutes (excluded from planned time)</li>
+      <li><strong>Planned production time:</strong> 450 minutes</li>
+      <li><strong>Changeover time:</strong> 25 minutes (2 changeovers)</li>
+      <li><strong>Unplanned downtime:</strong> 40 minutes (tool breakage + material delay)</li>
+      <li><strong>Ideal cycle time:</strong> 45 seconds per part</li>
+      <li><strong>Total parts produced:</strong> 410</li>
+      <li><strong>Rejected parts:</strong> 12 (8 scrap + 4 rework)</li>
+    </ul>
+  </div>
+
+  <h3>Step 1: Calculate Run Time</h3>
+  <div class="formula">
+    Run Time = Planned Production Time - Stop Time<br>
+    Run Time = 450 - 25 - 40 = <strong>385 minutes</strong>
+  </div>
+
+  <h3>Step 2: Calculate Availability</h3>
+  <div class="formula">
+    Availability = Run Time / Planned Production Time<br>
+    Availability = 385 / 450 = <strong>85.6%</strong>
+  </div>
+  <p>You lost 65 minutes out of 450 planned — 25 to changeovers and 40 to unplanned stops.</p>
+
+  <h3>Step 3: Calculate Performance</h3>
+  <div class="formula">
+    Performance = (Ideal Cycle Time &times; Total Parts) / Run Time<br>
+    Performance = (0.75 min &times; 410) / 385 = 307.5 / 385 = <strong>79.9%</strong>
+  </div>
+  <p>At ideal speed, 385 minutes should have produced 385 / 0.75 = 513 parts. You produced 410 — a gap of 103 parts worth of speed and minor-stop losses.</p>
+
+  <div class="callout-warn">
+    <p><strong>Note:</strong> Performance is capped at 100%. If you produce <em>more</em> than the theoretical maximum, it means your ideal cycle time is set too slow and needs updating.</p>
+  </div>
+
+  <h3>Step 4: Calculate Quality</h3>
+  <div class="formula">
+    Quality = Good Parts / Total Parts<br>
+    Quality = (410 - 12) / 410 = 398 / 410 = <strong>97.1%</strong>
+  </div>
+
+  <h3>Step 5: Calculate OEE</h3>
+  <div class="formula">
+    OEE = Availability &times; Performance &times; Quality<br>
+    OEE = 0.856 &times; 0.799 &times; 0.971 = <strong>66.4%</strong>
+  </div>
+
+  <p class="result">OEE = 66.4% — Typical performance. Significant improvement opportunity exists.</p>
+
+  <h2>Interpreting the Results</h2>
+
+  <p>The OEE score alone tells you <em>how much</em> you're losing. The three sub-metrics tell you <em>where</em>:</p>
+
+  <table>
+    <tr>
+      <th>Factor</th>
+      <th>Your Score</th>
+      <th>World Class</th>
+      <th>Gap</th>
+      <th>Interpretation</th>
+    </tr>
+    <tr>
+      <td>Availability</td>
+      <td>85.6%</td>
+      <td>90%</td>
+      <td>4.4%</td>
+      <td>Moderate gap — changeover and breakdown improvements needed</td>
+    </tr>
+    <tr>
+      <td>Performance</td>
+      <td>79.9%</td>
+      <td>95%</td>
+      <td>15.1%</td>
+      <td>Largest gap — investigate speed losses and minor stops</td>
+    </tr>
+    <tr>
+      <td>Quality</td>
+      <td>97.1%</td>
+      <td>99%</td>
+      <td>1.9%</td>
+      <td>Close to target — maintain focus on SPC and error-proofing</td>
+    </tr>
+  </table>
+
+  <div class="callout-green">
+    <p><strong>Action Priority:</strong> Performance is the biggest drag on OEE. Improving Performance from 79.9% to 90% alone would lift OEE from 66.4% to 74.8% — an 8.4-point improvement with no changes to Availability or Quality.</p>
+  </div>
+
+  <h2>The Sensitivity Effect</h2>
+
+  <p>A small improvement in any one factor has a multiplied effect on OEE. Consider what happens if you improve each factor by just 5 percentage points:</p>
+
+  <table>
+    <tr>
+      <th>Scenario</th>
+      <th>Avail.</th>
+      <th>Perf.</th>
+      <th>Qual.</th>
+      <th>OEE</th>
+      <th>Gain</th>
+    </tr>
+    <tr>
+      <td>Current</td>
+      <td>85.6%</td>
+      <td>79.9%</td>
+      <td>97.1%</td>
+      <td>66.4%</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td>+5% Availability</td>
+      <td>90.6%</td>
+      <td>79.9%</td>
+      <td>97.1%</td>
+      <td>70.3%</td>
+      <td>+3.9</td>
+    </tr>
+    <tr>
+      <td>+5% Performance</td>
+      <td>85.6%</td>
+      <td>84.9%</td>
+      <td>97.1%</td>
+      <td>70.6%</td>
+      <td>+4.2</td>
+    </tr>
+    <tr>
+      <td>+5% Quality</td>
+      <td>85.6%</td>
+      <td>79.9%</td>
+      <td>100%</td>
+      <td>68.4%</td>
+      <td>+2.0</td>
+    </tr>
+    <tr>
+      <td>All three +5%</td>
+      <td>90.6%</td>
+      <td>84.9%</td>
+      <td>100%</td>
+      <td>76.9%</td>
+      <td>+10.5</td>
+    </tr>
+  </table>
+
+  <p>Improving the factor with the <strong>biggest gap</strong> (Performance in this case) gives you the most OEE points per unit of effort.</p>
+
+  <h2>Common Calculation Mistakes</h2>
+
+  <ol>
+    <li><strong>Including breaks in planned time:</strong> Scheduled breaks, lunches, and meetings should be <em>excluded</em> from planned production time. They're not losses — they were never meant to be production time.</li>
+    <li><strong>Mixing up units:</strong> Ideal cycle time in seconds but run time in minutes. Always convert to the same unit before calculating.</li>
+    <li><strong>Averaging OEE incorrectly:</strong> You can't average OEE across lines by simply taking the mean. Weight by planned production time instead.</li>
+    <li><strong>Ignoring the denominator:</strong> If planned time is too short (e.g., a 2-hour run), a single changeover can make OEE look terrible. OEE is most meaningful over a full shift or day.</li>
+  </ol>
+
+  <div class="callout">
+    <p><strong>Hands-On Practice:</strong> Enter your own production data into our <a href="/tools/oee-calculator">OEE Calculator</a> to see your score, sub-metrics, and Six Big Losses breakdown instantly.</p>
+  </div>
+
+  <h2>Tracking OEE Over Time</h2>
+
+  <p>A single OEE number is a snapshot. The real power comes from tracking trends:</p>
+
+  <ul>
+    <li><strong>Daily OEE trend</strong> — Spot sudden drops that indicate new problems</li>
+    <li><strong>Weekly average</strong> — Smooth out day-to-day variability to see the real trajectory</li>
+    <li><strong>By product</strong> — Which products run best on this equipment? Which cause the most changeover loss?</li>
+    <li><strong>By shift</strong> — Do night shifts underperform? Is training needed?</li>
+    <li><strong>Before/after</strong> — Quantify the impact of improvement projects</li>
+  </ul>
+
+  <p>In the next lesson, we'll cover how to build an OEE dashboard that visualizes all of this in real time.</p>
+</body>
+</html>

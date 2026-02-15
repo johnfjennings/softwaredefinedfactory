@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Six Big Losses Explained</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
+  <style>
+    .reveal h1 { font-size: 2em; color: #1a1a1a; }
+    .reveal h2 { font-size: 1.5em; color: #333; }
+    .reveal h3 { font-size: 1.2em; color: #444; }
+    .reveal p { font-size: 0.9em; }
+    .reveal li { font-size: 0.85em; margin-bottom: 0.3em; }
+    .reveal .highlight { color: #3b82f6; font-weight: bold; }
+    .reveal .green { color: #22c55e; font-weight: bold; }
+    .reveal .orange { color: #f97316; font-weight: bold; }
+    .reveal .red { color: #ef4444; font-weight: bold; }
+    .reveal .loss-box {
+      background: #fef3c7;
+      border: 2px solid #f59e0b;
+      border-radius: 8px;
+      padding: 16px;
+      margin: 10px 0;
+      text-align: left;
+    }
+    .reveal .avail-box {
+      background: #fee2e2;
+      border-left: 4px solid #ef4444;
+      padding: 12px 16px;
+      margin: 8px 0;
+      text-align: left;
+      border-radius: 0 8px 8px 0;
+    }
+    .reveal .perf-box {
+      background: #fef9c3;
+      border-left: 4px solid #eab308;
+      padding: 12px 16px;
+      margin: 8px 0;
+      text-align: left;
+      border-radius: 0 8px 8px 0;
+    }
+    .reveal .qual-box {
+      background: #dbeafe;
+      border-left: 4px solid #3b82f6;
+      padding: 12px 16px;
+      margin: 8px 0;
+      text-align: left;
+      border-radius: 0 8px 8px 0;
+    }
+    .reveal table { font-size: 0.8em; }
+    .reveal th, .reveal td { padding: 6px 10px; text-align: left; border-bottom: 1px solid #e5e7eb; }
+    .reveal th { background: #f9fafb; }
+    .reveal .stat { font-size: 2em; color: #3b82f6; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <section>
+        <h1>The Six Big Losses</h1>
+        <p>Understanding where your OEE points go</p>
+        <p><small>Software Defined Factory</small></p>
+      </section>
+
+      <section>
+        <h2>The Framework</h2>
+        <p>The Six Big Losses were defined by Seiichi Nakajima in the <span class="highlight">Total Productive Maintenance (TPM)</span> methodology.</p>
+        <p>Every minute of lost production falls into one of six categories, grouped under the three OEE factors.</p>
+      </section>
+
+      <section>
+        <h2>Mapping Losses to OEE</h2>
+        <div class="avail-box">
+          <strong>Availability Losses</strong><br>
+          1. Equipment Breakdowns &nbsp; 2. Setup & Adjustments
+        </div>
+        <div class="perf-box">
+          <strong>Performance Losses</strong><br>
+          3. Minor Stops &nbsp; 4. Reduced Speed
+        </div>
+        <div class="qual-box">
+          <strong>Quality Losses</strong><br>
+          5. Process Defects &nbsp; 6. Startup/Yield Losses
+        </div>
+      </section>
+
+      <section>
+        <h2>Loss 1: Equipment Breakdowns</h2>
+        <p class="red">Availability Loss</p>
+        <ul>
+          <li>Unplanned stops due to equipment failure</li>
+          <li>Includes mechanical, electrical, and tooling failures</li>
+          <li>Often the most visible and costly loss</li>
+          <li>Typical impact: <span class="highlight">5-20%</span> of planned time</li>
+        </ul>
+        <p><strong>Key question:</strong> Is the same failure recurring? Root cause analysis is critical.</p>
+      </section>
+
+      <section>
+        <h2>Loss 2: Setup & Adjustments</h2>
+        <p class="orange">Availability Loss</p>
+        <ul>
+          <li>Changeovers between products or batches</li>
+          <li>Material loading, warm-up time, parameter adjustments</li>
+          <li>Grows with product variety and short-run production</li>
+          <li>Typical impact: <span class="highlight">5-15%</span> of planned time</li>
+        </ul>
+        <p><strong>Key technique:</strong> SMED (Single Minute Exchange of Die) can reduce changeovers by 50-90%.</p>
+      </section>
+
+      <section>
+        <h2>Loss 3: Minor Stops</h2>
+        <p class="orange">Performance Loss</p>
+        <ul>
+          <li>Brief interruptions (typically under 5 minutes)</li>
+          <li>Jams, misfeeds, sensor trips, obstruction clears</li>
+          <li>Often too short to record but add up significantly</li>
+          <li>Typical impact: <span class="highlight">5-10%</span> of run time</li>
+        </ul>
+        <p><strong>The hidden killer:</strong> Ten 2-minute stops per shift = 20 minutes of lost production that nobody tracks.</p>
+      </section>
+
+      <section>
+        <h2>Loss 4: Reduced Speed</h2>
+        <p class="orange">Performance Loss</p>
+        <ul>
+          <li>Equipment running below its designed cycle time</li>
+          <li>Causes: wear, poor materials, operator caution, unknown ideal speed</li>
+          <li>Often the largest and most overlooked loss</li>
+          <li>Typical impact: <span class="highlight">5-15%</span> of run time</li>
+        </ul>
+        <p><strong>Warning:</strong> Many plants don't know their true ideal cycle time, making this loss invisible.</p>
+      </section>
+
+      <section>
+        <h2>Loss 5: Process Defects</h2>
+        <p class="highlight">Quality Loss</p>
+        <ul>
+          <li>Parts that don't meet spec during steady-state production</li>
+          <li>Includes scrap (discarded) and rework (re-processed)</li>
+          <li>Cost goes beyond wasted material — includes wasted machine time</li>
+          <li>Typical impact: <span class="highlight">1-5%</span> of total output</li>
+        </ul>
+        <p><strong>Remember:</strong> OEE counts the <em>time</em> lost making defects, not just the material cost.</p>
+      </section>
+
+      <section>
+        <h2>Loss 6: Startup/Yield Losses</h2>
+        <p class="highlight">Quality Loss</p>
+        <ul>
+          <li>Defective parts produced during startup, warm-up, or after changeover</li>
+          <li>First-run rejects until process stabilizes</li>
+          <li>Particularly significant in process industries (chemicals, food, plastics)</li>
+          <li>Typical impact: <span class="highlight">0.5-3%</span> of total output</li>
+        </ul>
+        <p><strong>Reduction strategy:</strong> Standardize startup procedures and document optimal initial parameters.</p>
+      </section>
+
+      <section>
+        <h2>Which Loss is Biggest?</h2>
+        <p>In a typical factory, the ranking is often:</p>
+        <ol>
+          <li><span class="red">Setup & Adjustments</span> — especially in high-mix environments</li>
+          <li><span class="orange">Reduced Speed</span> — the invisible giant</li>
+          <li><span class="orange">Minor Stops</span> — death by a thousand cuts</li>
+          <li><span class="red">Equipment Breakdowns</span> — dramatic but often well-managed</li>
+          <li><span class="highlight">Process Defects</span> — usually tracked carefully</li>
+          <li><span class="highlight">Startup Losses</span> — smallest but not zero</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>The Pareto Principle</h2>
+        <p class="stat">80 / 20</p>
+        <p>Typically, <span class="highlight">80% of your total loss</span> comes from just <span class="highlight">2-3 loss categories</span>.</p>
+        <p>The key to OEE improvement is finding your biggest loss and attacking it first.</p>
+        <p>Don't try to fix everything at once.</p>
+      </section>
+
+      <section>
+        <h2>Key Takeaways</h2>
+        <ul>
+          <li>Every minute of lost production fits into one of the Six Big Losses</li>
+          <li>Availability losses are the most visible; Performance losses are the most hidden</li>
+          <li>Use Pareto analysis to focus on the 2-3 biggest losses first</li>
+          <li>Track all six — even if they seem small today</li>
+          <li>The Six Big Losses framework turns "we need to improve" into "here's exactly where to focus"</li>
+        </ul>
+      </section>
+
+      <section>
+        <h1>Next Up</h1>
+        <p>Collecting OEE Data — manual vs. automated methods, what to capture, and how to avoid common pitfalls.</p>
+      </section>
+
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+  <script>Reveal.initialize({ hash: true });</script>
+</body>
+</html>
