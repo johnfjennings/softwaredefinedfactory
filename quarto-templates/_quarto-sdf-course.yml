@@ -1,0 +1,56 @@
+# Software Defined Factory - Full Course Template
+#
+# For courses with BOTH article and slide lessons in the same project.
+# Each .qmd file specifies its format in YAML frontmatter to override
+# the default (article).
+#
+# Usage:
+#   1. Copy this file to your Quarto project as _quarto.yml
+#   2. Copy sdf-lesson.css and sdf-slides.css alongside it
+#   3. Set format in each .qmd frontmatter (see examples below)
+#   4. Run: quarto render
+#   5. Copy the output .html files to public/courses/{slug}/
+#
+# Article lesson frontmatter:
+#   ---
+#   title: "What OEE Really Measures"
+#   format:
+#     html:
+#       embed-resources: true
+#       standalone: true
+#       minimal: true
+#       toc: false
+#       css: sdf-lesson.css
+#       theme: none
+#   ---
+#
+# Slide lesson frontmatter:
+#   ---
+#   title: "Sensors and Connectivity"
+#   format:
+#     revealjs:
+#       embed-resources: true
+#       theme: [default, sdf-slides.css]
+#       chalkboard: true
+#       menu: true
+#   ---
+
+project:
+  type: default
+  output-dir: _output
+
+# Default format (articles). Override per-file via frontmatter.
+format:
+  html:
+    embed-resources: true
+    standalone: true
+    minimal: true
+    toc: false
+    css: sdf-lesson.css
+    theme: none
+    title-block-banner: false
+    title-block-style: none
+
+execute:
+  echo: false
+  warning: false

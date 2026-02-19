@@ -1,0 +1,32 @@
+# Software Defined Factory - Quarto Article Lesson Template
+#
+# Produces a single self-contained HTML file with no Quarto chrome
+# (no navbar, sidebar, search, or footer). Designed to be embedded
+# in the SDF lesson player iframe.
+#
+# Usage:
+#   1. Copy this file to your Quarto project as _quarto.yml
+#   2. Copy sdf-lesson.css alongside it
+#   3. Run: quarto render
+#   4. Copy the output .html files to public/courses/{slug}/
+
+project:
+  type: default
+  output-dir: _output
+
+format:
+  html:
+    embed-resources: true
+    standalone: true
+    minimal: true
+    toc: false
+    css: sdf-lesson.css
+    theme: none
+    page-layout: article
+    title-block-banner: false
+    title-block-style: none
+
+# Disable all Quarto site features (we use Next.js for navigation)
+execute:
+  echo: false
+  warning: false

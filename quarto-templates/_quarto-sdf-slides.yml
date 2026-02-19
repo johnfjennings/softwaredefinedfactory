@@ -1,0 +1,34 @@
+# Software Defined Factory - Quarto RevealJS Slides Template
+#
+# Produces a single self-contained RevealJS presentation with
+# chalkboard and menu plugins. Designed to be embedded in the
+# SDF lesson player iframe.
+#
+# Usage:
+#   1. Copy this file to your Quarto project as _quarto.yml
+#   2. Copy sdf-slides.css alongside it
+#   3. Run: quarto render
+#   4. Copy the output .html files to public/courses/{slug}/
+
+project:
+  type: default
+  output-dir: _output
+
+format:
+  revealjs:
+    embed-resources: true
+    theme: [default, sdf-slides.css]
+    slide-number: true
+    chalkboard: true
+    menu: true
+    controls: true
+    progress: true
+    hash: true
+    center: true
+    transition: slide
+    width: 1280
+    height: 720
+
+execute:
+  echo: true
+  warning: false

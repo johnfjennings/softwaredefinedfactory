@@ -1,0 +1,176 @@
+/*
+ * Software Defined Factory - RevealJS Slide Theme
+ * Used with Quarto's `embed-resources: true` for self-contained slides.
+ * Matches the existing SDF brand and hand-authored slide style.
+ *
+ * Usage in _quarto.yml:
+ *   format:
+ *     revealjs:
+ *       theme: [default, sdf-slides.css]
+ */
+
+/* ── Slide background ─────────────────────────────── */
+.reveal {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* ── Headings ─────────────────────────────────────── */
+.reveal h1 {
+  font-size: 2em;
+  color: #1a1a1a;
+  font-weight: 700;
+}
+
+.reveal h2 {
+  font-size: 1.5em;
+  color: #333;
+  font-weight: 600;
+}
+
+.reveal h3 {
+  font-size: 1.2em;
+  color: #444;
+}
+
+/* ── Body text ────────────────────────────────────── */
+.reveal p {
+  font-size: 0.9em;
+  line-height: 1.6;
+}
+
+.reveal li {
+  font-size: 0.85em;
+  margin-bottom: 0.3em;
+  line-height: 1.5;
+}
+
+/* ── Brand accent color ───────────────────────────── */
+.reveal .highlight,
+.reveal strong {
+  color: #3b82f6;
+}
+
+/* Stat callout — large number for impact */
+.reveal .stat {
+  font-size: 2em;
+  color: #3b82f6;
+  font-weight: 700;
+}
+
+/* ── Tables ───────────────────────────────────────── */
+.reveal table {
+  font-size: 0.75em;
+  margin: 0 auto;
+  border-collapse: collapse;
+}
+
+.reveal th,
+.reveal td {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.reveal th {
+  background: #f5f5f5;
+  font-weight: 600;
+}
+
+/* ── Code ─────────────────────────────────────────── */
+.reveal code {
+  font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: 0.85em;
+  background: #f3f4f6;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.reveal pre {
+  font-size: 0.7em;
+  box-shadow: none;
+  border-radius: 8px;
+}
+
+.reveal pre code {
+  background: none;
+  padding: 16px;
+}
+
+/* ── Callouts ─────────────────────────────────────── */
+.reveal div.callout-note,
+.reveal div.callout-tip,
+.reveal div.callout-important,
+.reveal div.callout-warning {
+  font-size: 0.8em;
+  padding: 12px 16px;
+  border-radius: 0 8px 8px 0;
+  border-left: 4px solid #3b82f6;
+  background: #f0f9ff;
+  text-align: left;
+}
+
+.reveal div.callout-tip {
+  border-left-color: #10b981;
+  background: #f0fdf4;
+}
+
+.reveal div.callout-important {
+  border-left-color: #f59e0b;
+  background: #fffbeb;
+}
+
+.reveal div.callout-warning {
+  border-left-color: #ef4444;
+  background: #fef2f2;
+}
+
+/* ── Images ───────────────────────────────────────── */
+.reveal img {
+  border-radius: 8px;
+}
+
+.reveal figure figcaption {
+  font-size: 0.7em;
+  color: #666;
+  font-style: italic;
+}
+
+/* ── Mermaid diagrams ─────────────────────────────── */
+.reveal .mermaid {
+  font-size: 0.8em;
+}
+
+/* ── Title slide ──────────────────────────────────── */
+.reveal .title-slide h1 {
+  font-size: 2.2em;
+}
+
+.reveal .title-slide p {
+  font-size: 1em;
+  color: #666;
+}
+
+/* ── Footer / branding ────────────────────────────── */
+.reveal .slide-number {
+  font-size: 0.6em;
+  color: #999;
+}
+
+/* ── Links ────────────────────────────────────────── */
+.reveal a {
+  color: #3b82f6;
+}
+
+.reveal a:hover {
+  color: #2563eb;
+}
+
+/* ── Chalkboard overrides ─────────────────────────── */
+/* Keep chalkboard buttons subtle */
+.reveal .chalkboard-button {
+  opacity: 0.3;
+}
+
+.reveal .chalkboard-button:hover {
+  opacity: 1;
+}
