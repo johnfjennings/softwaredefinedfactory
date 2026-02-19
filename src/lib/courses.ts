@@ -48,6 +48,14 @@ export function getAllCourses(): Course[] {
     .sort((a, b) => a.title.localeCompare(b.title))
 }
 
+export function getAllCoursesIncludingUnpublished(): Course[] {
+  const slugs = getAllCourseSlugs()
+  return slugs
+    .map((slug) => getCourseBySlug(slug))
+    .filter((course): course is Course => course !== null)
+    .sort((a, b) => a.title.localeCompare(b.title))
+}
+
 export function getCoursesByCategory(category: string): Course[] {
   return getAllCourses().filter((course) => course.category === category)
 }
