@@ -7,11 +7,31 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Menu, Moon, Sun } from "lucide-react"
 import { useTheme } from "@/components/theme-provider"
 import { NAV_LINKS, SITE_CONFIG } from "@/lib/constants"
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { createClient } from "@/lib/supabase/client"
 
 export function Header() {
   const { theme, setTheme } = useTheme()
   const [isOpen, setIsOpen] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [isAdmin, setIsAdmin] = useState(false)
+
+  useEffect(() => {
+    const supabase = createClient()
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      setIsLoggedIn(!!user)
+      if (user) {
+        supabase
+          .from("profiles")
+          .select("role")
+          .eq("id", user.id)
+          .single()
+          .then(({ data }) => {
+            setIsAdmin(data?.role === "admin")
+          })
+      }
+    })
+  }, [])
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -59,12 +79,27 @@ export function Header() {
 
           {/* Auth Buttons */}
           <div className="hidden md:flex items-center space-x-2">
-            <Button variant="ghost" asChild>
-              <Link href="/login">Login</Link>
-            </Button>
-            <Button asChild>
-              <Link href="/signup">Get Started</Link>
-            </Button>
+            {isLoggedIn ? (
+              <>
+                {isAdmin && (
+                  <Button variant="outline" asChild>
+                    <Link href="/dashboard/admin">Admin</Link>
+                  </Button>
+                )}
+                <Button asChild>
+                  <Link href="/dashboard">Dashboard</Link>
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button variant="ghost" asChild>
+                  <Link href="/login">Login</Link>
+                </Button>
+                <Button asChild>
+                  <Link href="/signup">Get Started</Link>
+                </Button>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu */}
@@ -88,16 +123,35 @@ export function Header() {
                   </Link>
                 ))}
                 <div className="pt-4 border-t space-y-2">
-                  <Button variant="outline" className="w-full" asChild>
-                    <Link href="/login" onClick={() => setIsOpen(false)}>
-                      Login
-                    </Link>
-                  </Button>
-                  <Button className="w-full" asChild>
-                    <Link href="/signup" onClick={() => setIsOpen(false)}>
-                      Get Started
-                    </Link>
-                  </Button>
+                  {isLoggedIn ? (
+                    <>
+                      {isAdmin && (
+                        <Button variant="outline" className="w-full" asChild>
+                          <Link href="/dashboard/admin" onClick={() => setIsOpen(false)}>
+                            Admin
+                          </Link>
+                        </Button>
+                      )}
+                      <Button className="w-full" asChild>
+                        <Link href="/dashboard" onClick={() => setIsOpen(false)}>
+                          Dashboard
+                        </Link>
+                      </Button>
+                    </>
+                  ) : (
+                    <>
+                      <Button variant="outline" className="w-full" asChild>
+                        <Link href="/login" onClick={() => setIsOpen(false)}>
+                          Login
+                        </Link>
+                      </Button>
+                      <Button className="w-full" asChild>
+                        <Link href="/signup" onClick={() => setIsOpen(false)}>
+                          Get Started
+                        </Link>
+                      </Button>
+                    </>
+                  )}
                 </div>
               </div>
             </SheetContent>
