@@ -8,7 +8,7 @@
   "thumbnail": "/images/courses/oee-mastery.jpg",
   "priceCents": 4900,
   "stripePriceId":"price_1T1B96RtJS0uqwcUpNCudKdn",
-  "isPublished": true,
+  "isPublished": false,
   "tags": ["OEE", "TPM", "Six Big Losses", "Continuous Improvement", "KPIs"],
   "modules": [
     {
