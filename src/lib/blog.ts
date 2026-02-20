@@ -15,6 +15,7 @@ export interface BlogPost {
   tags: string[]
   coverImage?: string
   readingTime: number
+  draft?: boolean
 }
 
 export interface BlogPostMetadata {
@@ -66,21 +67,22 @@ export function getPostBySlug(slug: string): BlogPost | null {
       coverImage: data.coverImage,
       content,
       readingTime: calculateReadingTime(content),
+      draft: data.draft === true,
     }
   } catch (error) {
     return null
   }
 }
 
-// Get all posts metadata (sorted by date)
+// Get all posts metadata (sorted by date, excludes drafts)
 export function getAllPosts(): BlogPostMetadata[] {
   const slugs = getAllPostSlugs()
   const posts = slugs
     .map((slug) => getPostBySlug(slug))
-    .filter((post): post is BlogPost => post !== null)
+    .filter((post): post is BlogPost => post !== null && !post.draft)
     .sort((a, b) => (a.date > b.date ? -1 : 1))
 
-  return posts.map(({ content, ...metadata }) => metadata)
+  return posts.map(({ content, draft, ...metadata }) => metadata)
 }
 
 // Get posts by category
