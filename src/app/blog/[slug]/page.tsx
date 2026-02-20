@@ -2,9 +2,11 @@ import { notFound } from "next/navigation"
 import Link from "next/link"
 import { MDXRemote } from "next-mdx-remote/rsc"
 import remarkGfm from "remark-gfm"
+import rehypeGlossary from "@/lib/rehype-glossary"
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
 import { PostCard } from "@/components/blog/post-card"
+import { GlossaryTooltip } from "@/components/blog/glossary-tooltip"
 import { getAllPostSlugs, getPostBySlug, getRelatedPosts } from "@/lib/blog"
 import { Calendar, Clock, Tag, ArrowLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -114,7 +116,29 @@ export default async function BlogPostPage({ params }: PageProps) {
 
           {/* Post Content */}
           <div className="prose prose-lg dark:prose-invert max-w-none mb-16">
-            <MDXRemote source={post.content} options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }} />
+            <MDXRemote
+              source={post.content}
+              options={{
+                mdxOptions: {
+                  remarkPlugins: [remarkGfm],
+                  rehypePlugins: [rehypeGlossary],
+                },
+              }}
+              components={{
+                span: ({ children, ...props }: React.ComponentProps<"span"> & { "data-glossary"?: string; "data-glossary-definition"?: string }) => {
+                  const term = props["data-glossary"]
+                  const definition = props["data-glossary-definition"]
+                  if (term && definition) {
+                    return (
+                      <GlossaryTooltip term={term} definition={definition}>
+                        {children}
+                      </GlossaryTooltip>
+                    )
+                  }
+                  return <span {...props}>{children}</span>
+                },
+              }}
+            />
           </div>
 
           {/* Share Buttons */}
