@@ -76,9 +76,10 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
 async function downloadOne(file, prompt, attempt = 1) {
   const encoded = encodeURIComponent(prompt)
   // Try without model param first (uses default flux), then with flux
-  const model = attempt === 1 ? "flux" : "turbo"
-  const url = `https://image.pollinations.ai/prompt/${encoded}?width=1280&height=720&model=${model}&nologo=true`
+  const model = attempt === 1 ? "flux" : "nova-fast"
+  const url3 = `https://image.pollinations.ai/prompt/${encoded}?width=1280&height=720&model=${model}&nologo=true&key=sk_GXzQ23NEsVV5dnkFyHxg6FiTFKVN2YU0`
 
+  const url = `https://gen.pollinations.ai/image/${encoded}?model=${model}&width=1280&height=720&seed=0&enhance=false&key=sk_GXzQ23NEsVV5dnkFyHxg6FiTFKVN2YU0` 
   const res = await fetch(url, {
     headers: {
       Accept: "image/jpeg,image/png,image/*;q=0.9,*/*;q=0.8",
