@@ -1,8 +1,8 @@
-import { createWriteStream, existsSync } from "fs"
-import { pipeline } from "stream/promises"
-import https from "https"
+import { writeFileSync, mkdirSync } from "fs"
+import { join } from "path"
 
-const OUT_DIR = "c:/JohnJennings/_Projects/ClaudePro/softwaredefinedfactory/public/images/blog"
+const OUT_DIR = join(import.meta.dirname, "../public/images/blog")
+mkdirSync(OUT_DIR, { recursive: true })
 
 const images = [
   {
@@ -19,7 +19,7 @@ const images = [
   },
   {
     file: "it-ot-convergence.jpg",
-    prompt: "photorealistic split composition: modern data center server racks with blue LED lights on left seamlessly merging into industrial factory control room with SCADA screens on right, glowing data streams bridging IT and OT worlds, cinematic professional technology photography",
+    prompt: "photorealistic modern data center server racks with blue LED lights seamlessly merging into industrial factory control room with SCADA screens, glowing data streams bridging IT and OT worlds, cinematic professional technology photography",
   },
   {
     file: "computer-vision-inspection.jpg",
@@ -27,7 +27,7 @@ const images = [
   },
   {
     file: "unified-namespace-mqtt.jpg",
-    prompt: "photorealistic abstract technology: glowing blue network graph node diagram showing factory equipment connected to central unified data hub, MQTT message data streams flowing between industrial sensors PLCs cloud platforms, dark background teal blue color palette, editorial industrial IoT architecture visualization",
+    prompt: "photorealistic glowing blue network graph node diagram showing factory equipment connected to central unified data hub, MQTT data streams flowing between industrial sensors and cloud platforms, dark background teal blue color palette, editorial industrial IoT architecture visualization",
   },
   {
     file: "predictive-maintenance-iiot.jpg",
@@ -43,7 +43,7 @@ const images = [
   },
   {
     file: "ot-cybersecurity.jpg",
-    prompt: "photorealistic industrial cybersecurity: SCADA control room screens showing network intrusion detection red warning alerts, glowing firewall shield barrier between IT network and OT factory systems, dark atmospheric moody lighting, editorial security photography",
+    prompt: "photorealistic industrial cybersecurity SCADA control room screens showing network intrusion detection red warning alerts, glowing firewall shield barrier between IT network and OT factory systems, dark atmospheric moody lighting, editorial security photography",
   },
   {
     file: "oee-metrics-dashboard.jpg",
@@ -63,7 +63,7 @@ const images = [
   },
   {
     file: "industry-4-0-explained.jpg",
-    prompt: "photorealistic panoramic view of fully automated Industry 4.0 smart factory: collaborative robot arms, automated guided vehicles AGVs, conveyor systems, real-time digital production displays, workers using tablets, cinematic ultra wide angle factory photography, clean white and blue lighting",
+    prompt: "photorealistic panoramic view of fully automated Industry 4.0 smart factory with collaborative robot arms, automated guided vehicles AGVs, conveyor systems, real-time digital production displays, workers using tablets, cinematic ultra wide angle factory photography, clean white and blue lighting",
   },
   {
     file: "smart-manufacturing-intro.jpg",
@@ -71,49 +71,74 @@ const images = [
   },
 ]
 
-function download(url, dest) {
-  return new Promise((resolve, reject) => {
-    const file = createWriteStream(dest)
-    https.get(url, (res) => {
-      if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
-        // Follow redirect
-        file.close()
-        download(res.headers.location, dest).then(resolve).catch(reject)
-        return
-      }
-      if (res.statusCode !== 200) {
-        file.close()
-        reject(new Error(`HTTP ${res.statusCode}`))
-        return
-      }
-      res.pipe(file)
-      file.on("finish", () => file.close(resolve))
-      file.on("error", reject)
-    }).on("error", reject)
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
+
+async function downloadOne(file, prompt, attempt = 1) {
+  const encoded = encodeURIComponent(prompt)
+  // Try without model param first (uses default flux), then with flux
+  const model = attempt === 1 ? "flux" : "turbo"
+  const url = `https://image.pollinations.ai/prompt/${encoded}?width=1280&height=720&model=${model}&nologo=true`
+
+  const res = await fetch(url, {
+    headers: {
+      Accept: "image/jpeg,image/png,image/*;q=0.9,*/*;q=0.8",
+      "User-Agent":
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
+      Referer: "https://pollinations.ai/",
+    },
+    redirect: "follow",
   })
+
+  if (!res.ok) throw new Error(`HTTP ${res.status}`)
+
+  const buffer = Buffer.from(await res.arrayBuffer())
+  if (buffer.length < 1000) throw new Error(`Response too small (${buffer.length} bytes) — likely not an image`)
+
+  const dest = join(OUT_DIR, file)
+  writeFileSync(dest, buffer)
+  return buffer.length
 }
 
-// Download in batches of 4 to avoid overwhelming the API
 async function downloadAll() {
-  const BATCH = 4
-  for (let i = 0; i < images.length; i += BATCH) {
-    const batch = images.slice(i, i + BATCH)
-    await Promise.all(
-      batch.map(async ({ file, prompt }) => {
-        const dest = `${OUT_DIR}/${file}`
-        const encoded = encodeURIComponent(prompt)
-        const url = `https://image.pollinations.ai/prompt/${encoded}?width=1280&height=720&model=flux-realism&nologo=true&seed=${Math.floor(Math.random() * 99999)}`
-        console.log(`Downloading ${file}...`)
-        try {
-          await download(url, dest)
-          console.log(`  OK  ${file}`)
-        } catch (err) {
-          console.error(`  FAIL ${file}: ${err.message}`)
-        }
-      })
-    )
+  let ok = 0
+  let failed = []
+
+  for (const { file, prompt } of images) {
+    console.log(`\n⟳  ${file}`)
+    let success = false
+
+    for (let attempt = 1; attempt <= 3 && !success; attempt++) {
+      if (attempt > 1) {
+        console.log(`   retry ${attempt}/3 (waiting 5s)...`)
+        await sleep(5000)
+      }
+      try {
+        const bytes = await downloadOne(file, prompt, attempt)
+        console.log(`   OK  ${(bytes / 1024).toFixed(0)} KB`)
+        success = true
+        ok++
+      } catch (err) {
+        console.log(`   FAIL: ${err.message}`)
+      }
+    }
+
+    if (!success) failed.push(file)
+
+    // Be polite — wait between requests
+    await sleep(2000)
   }
-  console.log("\nAll downloads complete.")
+
+  console.log(`\n${"─".repeat(50)}`)
+  console.log(`Done: ${ok}/${images.length} images downloaded`)
+  if (failed.length) {
+    console.log(`\nFailed (${failed.length}):`)
+    failed.forEach((f) => console.log(`  - ${f}`))
+    console.log("\nFor failed images, try running the script again or use the")
+    console.log("prompts from the MDX comments with Midjourney/DALL-E.")
+  } else {
+    console.log("\nAll images ready! Commit with:")
+    console.log("  git add public/images/blog && git commit -m 'Add hero images' && git push")
+  }
 }
 
-downloadAll()
+downloadAll().catch(console.error)
