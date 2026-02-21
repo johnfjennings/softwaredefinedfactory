@@ -11,25 +11,25 @@ draft: true
 
 # IIoT Trend #6: The Unified Namespace Becomes the Data Backbone
 
-The traditional approach to industrial data integration — point-to-point connections between systems — creates an exponentially growing web of interfaces that is fragile, expensive to maintain, and impossible to scale. In 2026, the Unified Namespace (UNS) is emerging as the standard architectural pattern for industrial data.
+The traditional approach to industrial data integration - point-to-point connections between systems - creates an exponentially growing web of interfaces that is fragile, expensive to maintain, and impossible to scale. In 2026, the Unified Namespace (UNS) is emerging as the standard architectural pattern for industrial data.
 
 ## What is a Unified Namespace?
 
 The UNS has two core functions:
 
-1. **Single source of truth** — all operational, business, and contextual data organised under a common namespace
-2. **Central message broker** — instead of many point-to-point interfaces, all data flows through a single communication layer
+1. **Single source of truth** - all operational, business, and contextual data organised under a common namespace
+2. **Central message broker** - instead of many point-to-point interfaces, all data flows through a single communication layer
 
-Instead of having separate data sources for each system (MES, SCADA, ERP, historian), all data is organised under a unified topic hierarchy — typically following the ISA-95 standard: Enterprise / Site / Area / Line / Cell.
+Instead of having separate data sources for each system (MES, SCADA, ERP, historian), all data is organised under a unified topic hierarchy - typically following the ISA-95 standard: Enterprise / Site / Area / Line / Cell.
 
 ## Why MQTT and Sparkplug B?
 
 MQTT (Message Queuing Telemetry Transport) has emerged as the best-fit protocol for UNS because of its lightweight publish-subscribe model. Sparkplug B adds industrial-grade features on top:
 
-- **Auto-discovery** — new devices and data sources are immediately discoverable
-- **State management** — birth, death, and state messages provide device status
-- **Defined data types** — structured payloads with consistent schemas
-- **Report by exception** — data is published only when values change, reducing bandwidth
+- **Auto-discovery** - new devices and data sources are immediately discoverable
+- **State management** - birth, death, and state messages provide device status
+- **Defined data types** - structured payloads with consistent schemas
+- **Report by exception** - data is published only when values change, reducing bandwidth
 
 ## 2026 Use Case: IT/OT Data Convergence
 
@@ -55,7 +55,7 @@ No new point-to-point integrations were needed. Each new consumer simply subscri
 
 ## The Evolving Architecture
 
-Industry practitioners are converging on a hybrid approach: use Sparkplug B where it excels — at the edge with PLCs and smart sensors — while using standard MQTT or even Kafka for higher-level enterprise data flows. The UNS concept remains the same; the protocol choice varies by layer.
+Industry practitioners are converging on a hybrid approach: use Sparkplug B where it excels - at the edge with PLCs and smart sensors - while using standard MQTT or even Kafka for higher-level enterprise data flows. The UNS concept remains the same; the protocol choice varies by layer.
 
 ## What This Means for Your Factory
 
@@ -64,7 +64,7 @@ If you are still building point-to-point integrations between your OT and IT sys
 ---
 
 **Sources:**
-- [HiveMQ — Smart Manufacturing Using ISA95, MQTT Sparkplug and UNS](https://www.hivemq.com/resources/smart-manufacturing-using-isa95-mqtt-sparkplug-and-uns/)
-- [HiveMQ — Implementing UNS with MQTT Sparkplug](https://www.hivemq.com/blog/implementing-unified-namespace-uns-mqtt-sparkplug/)
-- [EMQ — MQTT Sparkplug: Bridging IT and OT for IIoT](https://www.emqx.com/en/blog/mqtt-sparkplug-bridging-it-and-ot-in-industry-4-0)
-- [Cedalo — Implementing UNS using MQTT](https://cedalo.com/blog/uns-mqtt-implementation/)
+- [HiveMQ - Smart Manufacturing Using ISA95, MQTT Sparkplug and UNS](https://www.hivemq.com/resources/smart-manufacturing-using-isa95-mqtt-sparkplug-and-uns/)
+- [HiveMQ - Implementing UNS with MQTT Sparkplug](https://www.hivemq.com/blog/implementing-unified-namespace-uns-mqtt-sparkplug/)
+- [EMQ - MQTT Sparkplug: Bridging IT and OT for IIoT](https://www.emqx.com/en/blog/mqtt-sparkplug-bridging-it-and-ot-in-industry-4-0)
+- [Cedalo - Implementing UNS using MQTT](https://cedalo.com/blog/uns-mqtt-implementation/)
