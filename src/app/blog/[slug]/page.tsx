@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation"
 import Link from "next/link"
+import Image from "next/image"
 import { MDXRemote } from "next-mdx-remote/rsc"
 import remarkGfm from "remark-gfm"
 import rehypeGlossary from "@/lib/rehype-glossary"
@@ -113,6 +114,20 @@ export default async function BlogPostPage({ params }: PageProps) {
               </div>
             )}
           </header>
+
+          {/* Hero Image */}
+          {post.coverImage && (
+            <div className="relative w-full aspect-[16/9] rounded-xl overflow-hidden mb-12">
+              <Image
+                src={post.coverImage}
+                alt={post.title}
+                fill
+                className="object-cover"
+                priority
+                sizes="(max-width: 896px) 100vw, 896px"
+              />
+            </div>
+          )}
 
           {/* Post Content */}
           <div className="prose prose-lg dark:prose-invert max-w-none mb-16">
