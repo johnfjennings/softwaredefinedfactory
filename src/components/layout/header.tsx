@@ -4,7 +4,13 @@ import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { Menu, Moon, Sun } from "lucide-react"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { Menu, Moon, Sun, ChevronDown } from "lucide-react"
 import { useTheme } from "@/components/theme-provider"
 import { NAV_LINKS, SITE_CONFIG } from "@/lib/constants"
 import { useState, useEffect } from "react"
@@ -52,15 +58,31 @@ export function Header() {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex flex-1 items-center space-x-6 text-sm font-medium">
-          {NAV_LINKS.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="transition-colors hover:text-foreground/80 text-foreground/60"
-            >
-              {link.title}
-            </Link>
-          ))}
+          {NAV_LINKS.map((link) =>
+            link.children ? (
+              <DropdownMenu key={link.href}>
+                <DropdownMenuTrigger className="flex items-center gap-1 transition-colors hover:text-foreground/80 text-foreground/60 outline-none">
+                  {link.title}
+                  <ChevronDown className="h-3.5 w-3.5" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start">
+                  {link.children.map((child) => (
+                    <DropdownMenuItem key={child.href} asChild>
+                      <Link href={child.href}>{child.title}</Link>
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="transition-colors hover:text-foreground/80 text-foreground/60"
+              >
+                {link.title}
+              </Link>
+            )
+          )}
         </nav>
 
         {/* Right side actions */}
@@ -112,16 +134,36 @@ export function Header() {
             </SheetTrigger>
             <SheetContent side="right">
               <div className="flex flex-col space-y-4 mt-8">
-                {NAV_LINKS.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className="text-lg font-medium hover:text-foreground/80 text-foreground/60"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    {link.title}
-                  </Link>
-                ))}
+                {NAV_LINKS.map((link) =>
+                  link.children ? (
+                    <div key={link.href}>
+                      <span className="text-lg font-medium text-foreground/60">
+                        {link.title}
+                      </span>
+                      <div className="pl-4 flex flex-col space-y-2 mt-2">
+                        {link.children.map((child) => (
+                          <Link
+                            key={child.href}
+                            href={child.href}
+                            className="text-base font-medium hover:text-foreground/80 text-foreground/60"
+                            onClick={() => setIsOpen(false)}
+                          >
+                            {child.title}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  ) : (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      className="text-lg font-medium hover:text-foreground/80 text-foreground/60"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      {link.title}
+                    </Link>
+                  )
+                )}
                 <div className="pt-4 border-t space-y-2">
                   {isLoggedIn ? (
                     <>

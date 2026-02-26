@@ -4,9 +4,75 @@ import { Button } from "@/components/ui/button"
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
 import { NewsletterForm } from "@/components/marketing/newsletter-form"
-import { ArrowRight, Factory, Cpu, TrendingUp, Zap, BookOpen, Wrench } from "lucide-react"
+import { ArrowRight, Factory, Cpu, TrendingUp, Zap, BookOpen, Wrench, Building2, User, Package } from "lucide-react"
+import { createClient } from "@/lib/supabase/server"
 
-export default function Home() {
+export const revalidate = 3600
+
+type ProfileEntry = {
+  type: "company" | "person" | "product"
+  slug: string
+  name: string
+  tagline: string | null
+  logoUrl: string | null
+  meta: string | null
+}
+
+async function getFeaturedProfile(): Promise<ProfileEntry | null> {
+  try {
+    const supabase = await createClient()
+    const [{ data: companies }, { data: people }, { data: products }] = await Promise.all([
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (supabase as any).from("company_profiles").select("slug, name, tagline, logo_url, headquarters").eq("status", "published"),
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (supabase as any).from("person_profiles").select("slug, full_name, title, company, avatar_url").eq("status", "published"),
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (supabase as any).from("product_profiles").select("slug, name, tagline, logo_url, vendor_name").eq("status", "published"),
+    ])
+
+    const all: ProfileEntry[] = [
+      ...((companies as { slug: string; name: string; tagline: string | null; logo_url: string | null; headquarters: string | null }[] | null) || []).map((c) => ({
+        type: "company" as const,
+        slug: c.slug,
+        name: c.name,
+        tagline: c.tagline,
+        logoUrl: c.logo_url,
+        meta: c.headquarters,
+      })),
+      ...((people as { slug: string; full_name: string; title: string | null; company: string | null; avatar_url: string | null }[] | null) || []).map((p) => ({
+        type: "person" as const,
+        slug: p.slug,
+        name: p.full_name,
+        tagline: p.title ? (p.company ? `${p.title} at ${p.company}` : p.title) : null,
+        logoUrl: p.avatar_url,
+        meta: p.company,
+      })),
+      ...((products as { slug: string; name: string; tagline: string | null; logo_url: string | null; vendor_name: string | null }[] | null) || []).map((p) => ({
+        type: "product" as const,
+        slug: p.slug,
+        name: p.name,
+        tagline: p.tagline,
+        logoUrl: p.logo_url,
+        meta: p.vendor_name,
+      })),
+    ]
+
+    if (all.length === 0) return null
+    return all[Math.floor(Math.random() * all.length)]
+  } catch {
+    return null
+  }
+}
+
+const PROFILE_CONFIG = {
+  company: { label: "Featured Company", icon: Building2, basePath: "companies", color: "text-blue-600 dark:text-blue-400", bg: "bg-blue-500/10" },
+  person: { label: "Industry Leader", icon: User, basePath: "people", color: "text-emerald-600 dark:text-emerald-400", bg: "bg-emerald-500/10" },
+  product: { label: "Product Spotlight", icon: Package, basePath: "products", color: "text-amber-600 dark:text-amber-400", bg: "bg-amber-500/10" },
+}
+
+export default async function Home() {
+  const featured = await getFeaturedProfile()
+
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
@@ -66,7 +132,6 @@ export default function Home() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {/* Feature 1 */}
               <div className="flex flex-col items-center text-center p-6 rounded-lg bg-background border border-border/40">
                 <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
                   <BookOpen className="h-6 w-6 text-primary" />
@@ -77,7 +142,6 @@ export default function Home() {
                 </p>
               </div>
 
-              {/* Feature 2 */}
               <div className="flex flex-col items-center text-center p-6 rounded-lg bg-background border border-border/40">
                 <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
                   <Wrench className="h-6 w-6 text-primary" />
@@ -88,7 +152,6 @@ export default function Home() {
                 </p>
               </div>
 
-              {/* Feature 3 */}
               <div className="flex flex-col items-center text-center p-6 rounded-lg bg-background border border-border/40">
                 <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
                   <Factory className="h-6 w-6 text-primary" />
@@ -99,7 +162,6 @@ export default function Home() {
                 </p>
               </div>
 
-              {/* Feature 4 */}
               <div className="flex flex-col items-center text-center p-6 rounded-lg bg-background border border-border/40">
                 <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
                   <Cpu className="h-6 w-6 text-primary" />
@@ -110,7 +172,6 @@ export default function Home() {
                 </p>
               </div>
 
-              {/* Feature 5 */}
               <div className="flex flex-col items-center text-center p-6 rounded-lg bg-background border border-border/40">
                 <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
                   <TrendingUp className="h-6 w-6 text-primary" />
@@ -121,7 +182,6 @@ export default function Home() {
                 </p>
               </div>
 
-              {/* Feature 6 */}
               <div className="flex flex-col items-center text-center p-6 rounded-lg bg-background border border-border/40">
                 <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
                   <Zap className="h-6 w-6 text-primary" />
@@ -134,6 +194,68 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        {/* Featured Profile Section — only renders when published profiles exist */}
+        {featured && (() => {
+          const cfg = PROFILE_CONFIG[featured.type]
+          const Icon = cfg.icon
+          return (
+            <section className="container mx-auto max-w-7xl px-4 py-20">
+              <div className="text-center mb-10">
+                <p className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2">
+                  From the Directory
+                </p>
+                <h2 className="text-3xl font-bold tracking-tight">Featured Profile</h2>
+              </div>
+
+              <div className="max-w-2xl mx-auto">
+                <div className="rounded-xl border bg-card p-8 flex flex-col sm:flex-row gap-6 items-start hover:border-primary/40 transition-colors">
+                  {/* Logo / Avatar */}
+                  {featured.logoUrl ? (
+                    <div className="h-20 w-20 rounded-lg overflow-hidden flex-shrink-0 border bg-muted">
+                      <Image
+                        src={featured.logoUrl}
+                        alt={featured.name}
+                        width={80}
+                        height={80}
+                        className="object-contain w-full h-full"
+                      />
+                    </div>
+                  ) : (
+                    <div className={`h-20 w-20 rounded-lg flex items-center justify-center flex-shrink-0 ${cfg.bg}`}>
+                      <Icon className={`h-10 w-10 ${cfg.color}`} />
+                    </div>
+                  )}
+
+                  {/* Content */}
+                  <div className="flex-1 min-w-0">
+                    <span className={`inline-block px-2 py-1 rounded-md text-xs font-semibold mb-3 ${cfg.bg} ${cfg.color}`}>
+                      {cfg.label}
+                    </span>
+                    <h3 className="text-2xl font-bold mb-1 truncate">{featured.name}</h3>
+                    {featured.tagline && (
+                      <p className="text-muted-foreground mb-4 line-clamp-2">{featured.tagline}</p>
+                    )}
+                    <Link
+                      href={`/${cfg.basePath}/${featured.slug}`}
+                      className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
+                    >
+                      View full profile <ArrowRight className="h-3.5 w-3.5" />
+                    </Link>
+                  </div>
+                </div>
+
+                <p className="text-center text-sm text-muted-foreground mt-4">
+                  <Link href="/companies" className="hover:underline">Browse all companies</Link>
+                  {" · "}
+                  <Link href="/people" className="hover:underline">Industry leaders</Link>
+                  {" · "}
+                  <Link href="/products" className="hover:underline">Products</Link>
+                </p>
+              </div>
+            </section>
+          )
+        })()}
 
         {/* CTA Section */}
         <section className="container mx-auto max-w-7xl px-4 py-24">

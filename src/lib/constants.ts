@@ -10,39 +10,25 @@ export const SITE_CONFIG = {
   },
 }
 
-export const NAV_LINKS = [
+export const NAV_LINKS: Array<{
+  title: string
+  href: string
+  children?: Array<{ title: string; href: string }>
+}> = [
+  { title: "Blog", href: "/blog" },
+  { title: "Courses", href: "/courses" },
+  { title: "Tools", href: "/tools" },
+  { title: "Conferences", href: "/conferences" },
   {
-    title: "Blog",
-    href: "/blog",
-  },
-  {
-    title: "Courses",
-    href: "/courses",
-  },
-  {
-    title: "Tools",
-    href: "/tools",
-  },
-  {
-    title: "Conferences",
-    href: "/conferences",
-  },
-  {
-    title: "Companies",
+    title: "Commercial Profiles",
     href: "/companies",
+    children: [
+      { title: "Companies", href: "/companies" },
+      { title: "People", href: "/people" },
+      { title: "Products", href: "/products" },
+    ],
   },
-  {
-    title: "People",
-    href: "/people",
-  },
-  {
-    title: "Products",
-    href: "/products",
-  },
-  {
-    title: "About",
-    href: "/about",
-  },
+  { title: "About", href: "/about" },
 ]
 
 export const COURSE_CATEGORIES = [
