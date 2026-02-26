@@ -61,7 +61,7 @@ export function Header() {
           {NAV_LINKS.map((link) =>
             link.children ? (
               <DropdownMenu key={link.href}>
-                <DropdownMenuTrigger className="flex items-center gap-1 transition-colors hover:text-foreground/80 text-foreground/60 outline-none">
+                <DropdownMenuTrigger className="flex items-center gap-1 transition-colors hover:text-foreground/80 text-foreground/60 outline-none whitespace-nowrap">
                   {link.title}
                   <ChevronDown className="h-3.5 w-3.5" />
                 </DropdownMenuTrigger>
