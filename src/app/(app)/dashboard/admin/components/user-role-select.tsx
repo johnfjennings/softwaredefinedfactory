@@ -41,6 +41,7 @@ export function UserRoleSelect({ userId, currentRole, currentUserId }: UserRoleS
       className="text-sm border rounded px-2 py-1 bg-background disabled:opacity-50"
     >
       <option value="user">user</option>
+      <option value="contributor">contributor</option>
       <option value="instructor">instructor</option>
       <option value="admin">admin</option>
     </select>

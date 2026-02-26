@@ -9,9 +9,10 @@ interface AdminTabsProps {
   subscribers: React.ReactNode
   payments: React.ReactNode
   toolUsage: React.ReactNode
+  contentReview: React.ReactNode
 }
 
-export function AdminTabs({ overview, users, courses, subscribers, payments, toolUsage }: AdminTabsProps) {
+export function AdminTabs({ overview, users, courses, subscribers, payments, toolUsage, contentReview }: AdminTabsProps) {
   return (
     <Tabs defaultValue="overview">
       <TabsList className="mb-6">
@@ -21,6 +22,7 @@ export function AdminTabs({ overview, users, courses, subscribers, payments, too
         <TabsTrigger value="subscribers">Subscribers</TabsTrigger>
         <TabsTrigger value="payments">Payments</TabsTrigger>
         <TabsTrigger value="tools">Tool Usage</TabsTrigger>
+        <TabsTrigger value="content-review">Content Review</TabsTrigger>
       </TabsList>
       <TabsContent value="overview">{overview}</TabsContent>
       <TabsContent value="users">{users}</TabsContent>
@@ -28,6 +30,7 @@ export function AdminTabs({ overview, users, courses, subscribers, payments, too
       <TabsContent value="subscribers">{subscribers}</TabsContent>
       <TabsContent value="payments">{payments}</TabsContent>
       <TabsContent value="tools">{toolUsage}</TabsContent>
+      <TabsContent value="content-review">{contentReview}</TabsContent>
     </Tabs>
   )
 }

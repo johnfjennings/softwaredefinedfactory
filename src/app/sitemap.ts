@@ -1,16 +1,46 @@
 import type { MetadataRoute } from "next"
 import { getAllPosts } from "@/lib/blog"
+import { createClient } from "@/lib/supabase/server"
 
 const BASE_URL = "https://softwaredefinedfactory.com"
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const posts = getAllPosts()
+  const supabase = await createClient()
+
+  // Fetch published profile slugs for directory pages
+  const [{ data: companies }, { data: people }, { data: products }] = await Promise.all([
+    supabase.from("company_profiles").select("slug, updated_at").eq("status", "published"),
+    supabase.from("person_profiles").select("slug, updated_at").eq("status", "published"),
+    supabase.from("product_profiles").select("slug, updated_at").eq("status", "published"),
+  ])
 
   const blogEntries = posts.map((post) => ({
     url: `${BASE_URL}/blog/${post.slug}`,
     lastModified: new Date(post.date),
     changeFrequency: "monthly" as const,
     priority: 0.7,
+  }))
+
+  const companyEntries = (companies ?? []).map((c) => ({
+    url: `${BASE_URL}/companies/${c.slug}`,
+    lastModified: c.updated_at ? new Date(c.updated_at) : new Date(),
+    changeFrequency: "monthly" as const,
+    priority: 0.6,
+  }))
+
+  const peopleEntries = (people ?? []).map((p) => ({
+    url: `${BASE_URL}/people/${p.slug}`,
+    lastModified: p.updated_at ? new Date(p.updated_at) : new Date(),
+    changeFrequency: "monthly" as const,
+    priority: 0.6,
+  }))
+
+  const productEntries = (products ?? []).map((p) => ({
+    url: `${BASE_URL}/products/${p.slug}`,
+    lastModified: p.updated_at ? new Date(p.updated_at) : new Date(),
+    changeFrequency: "monthly" as const,
+    priority: 0.6,
   }))
 
   const staticPages: MetadataRoute.Sitemap = [
@@ -57,6 +87,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
     },
     {
+      url: `${BASE_URL}/companies`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.7,
+    },
+    {
+      url: `${BASE_URL}/people`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.7,
+    },
+    {
+      url: `${BASE_URL}/products`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.7,
+    },
+    {
       url: `${BASE_URL}/about`,
       lastModified: new Date(),
       changeFrequency: "monthly",
@@ -76,5 +124,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ]
 
-  return [...staticPages, ...blogEntries]
+  return [...staticPages, ...blogEntries, ...companyEntries, ...peopleEntries, ...productEntries]
 }

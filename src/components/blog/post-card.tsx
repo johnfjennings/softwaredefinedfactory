@@ -1,10 +1,16 @@
 import Link from "next/link"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Calendar, Clock, Tag } from "lucide-react"
-import type { BlogPostMetadata } from "@/lib/blog"
+import type { UnifiedBlogPostMetadata } from "@/lib/blog"
+
+const POST_TYPE_LABELS: Record<string, string> = {
+  featured_company: "Company Feature",
+  featured_person: "Industry Leader",
+  featured_product: "Product Spotlight",
+}
 
 interface PostCardProps {
-  post: BlogPostMetadata
+  post: UnifiedBlogPostMetadata
 }
 
 export function PostCard({ post }: PostCardProps) {
@@ -15,6 +21,11 @@ export function PostCard({ post }: PostCardProps) {
           <span className="px-2 py-1 rounded-md bg-primary/10 text-primary text-xs font-medium">
             {post.category}
           </span>
+          {post.postType && POST_TYPE_LABELS[post.postType] && (
+            <span className="px-2 py-1 rounded-md bg-amber-500/10 text-amber-600 text-xs font-medium">
+              {POST_TYPE_LABELS[post.postType]}
+            </span>
+          )}
           <span className="flex items-center gap-1">
             <Calendar className="h-3 w-3" />
             {new Date(post.date).toLocaleDateString("en-US", {

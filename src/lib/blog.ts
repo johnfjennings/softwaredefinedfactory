@@ -1,6 +1,7 @@
 import fs from "fs"
 import path from "path"
 import matter from "gray-matter"
+import { createClient } from "@/lib/supabase/server"
 
 const postsDirectory = path.join(process.cwd(), "src/content/blog")
 
@@ -28,6 +29,13 @@ export interface BlogPostMetadata {
   tags: string[]
   coverImage?: string
   readingTime: number
+}
+
+// Extends BlogPostMetadata with source-tracking for DB-sourced posts
+export interface UnifiedBlogPostMetadata extends BlogPostMetadata {
+  source?: "mdx" | "db"
+  postType?: string
+  dbId?: string
 }
 
 // Calculate reading time (average 200 words per minute)
@@ -69,7 +77,7 @@ export function getPostBySlug(slug: string): BlogPost | null {
       readingTime: calculateReadingTime(content),
       draft: data.draft === true,
     }
-  } catch (error) {
+  } catch {
     return null
   }
 }
@@ -137,4 +145,43 @@ export function getAllTags(): string[] {
   const posts = getAllPosts()
   const tags = new Set(posts.flatMap((post) => post.tags))
   return Array.from(tags)
+}
+
+// Get all posts from both MDX files and the Supabase posts table, sorted by date
+export async function getAllPostsCombined(): Promise<UnifiedBlogPostMetadata[]> {
+  const mdxPosts: UnifiedBlogPostMetadata[] = getAllPosts().map((p) => ({
+    ...p,
+    source: "mdx" as const,
+    postType: "article",
+  }))
+
+  try {
+    const supabase = await createClient()
+    const { data: dbPosts } = await supabase
+      .from("posts")
+      .select("id, slug, title, excerpt, content, cover_image_url, published_at, category, tags, post_type")
+      .eq("status", "published")
+      .order("published_at", { ascending: false })
+
+    const mappedDbPosts: UnifiedBlogPostMetadata[] = (dbPosts || []).map((p) => ({
+      slug: p.slug,
+      title: p.title,
+      date: (p.published_at as string) || new Date().toISOString(),
+      excerpt: (p.excerpt as string) || "",
+      author: "Contributor",
+      category: (p.category as string) || "Uncategorized",
+      tags: (p.tags as string[]) || [],
+      coverImage: (p.cover_image_url as string) || undefined,
+      readingTime: p.content ? Math.ceil((p.content as string).split(/\s+/).length / 200) : 1,
+      source: "db" as const,
+      postType: (p.post_type as string) || "article",
+      dbId: p.id as string,
+    }))
+
+    return [...mdxPosts, ...mappedDbPosts].sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+    )
+  } catch {
+    return mdxPosts
+  }
 }

@@ -30,7 +30,7 @@ export async function POST(
     }
 
     const { role } = await request.json()
-    const validRoles = ["user", "instructor", "admin"]
+    const validRoles = ["user", "contributor", "instructor", "admin"]
 
     if (!validRoles.includes(role)) {
       return NextResponse.json({ error: "Invalid role" }, { status: 400 })

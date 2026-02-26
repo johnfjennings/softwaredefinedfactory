@@ -28,6 +28,18 @@ export const NAV_LINKS = [
     href: "/conferences",
   },
   {
+    title: "Companies",
+    href: "/companies",
+  },
+  {
+    title: "People",
+    href: "/people",
+  },
+  {
+    title: "Products",
+    href: "/products",
+  },
+  {
     title: "About",
     href: "/about",
   },

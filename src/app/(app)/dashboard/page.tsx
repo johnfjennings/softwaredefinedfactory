@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import Link from "next/link"
-import { BookOpen, Wrench, TrendingUp, Settings, Play } from "lucide-react"
+import { BookOpen, Wrench, TrendingUp, Settings, Play, PenSquare } from "lucide-react"
 import { LogoutButton } from "@/components/auth/logout-button"
 import { getCourseBySlug, getCourseLessons } from "@/lib/courses"
 
@@ -129,6 +129,47 @@ export default async function DashboardPage() {
               </CardContent>
             </Card>
           </div>
+
+          {/* Contributor / Instructor / Admin quick links */}
+          {(profile?.role === "contributor" ||
+            profile?.role === "instructor" ||
+            profile?.role === "admin") && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+              {(profile?.role === "contributor" ||
+                profile?.role === "instructor" ||
+                profile?.role === "admin") && (
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <PenSquare className="h-5 w-5" />
+                      Content Contributions
+                    </CardTitle>
+                    <CardDescription>
+                      Submit articles, company profiles, events and more
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <Button asChild className="w-full">
+                      <Link href="/dashboard/contributor">Contributor Dashboard</Link>
+                    </Button>
+                  </CardContent>
+                </Card>
+              )}
+              {(profile?.role === "instructor" || profile?.role === "admin") && (
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Course Management</CardTitle>
+                    <CardDescription>Manage courses and track enrollments</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <Button asChild className="w-full">
+                      <Link href="/dashboard/creator">Creator Dashboard</Link>
+                    </Button>
+                  </CardContent>
+                </Card>
+              )}
+            </div>
+          )}
 
           {/* Quick Actions + Account */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">

@@ -6,30 +6,197 @@ export type Json =
   | { [key: string]: Json | undefined }
   | Json[]
 
-export interface Database {
+export type Database = {
+  // Allows to automatically instantiate createClient with right options
+  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
+  __InternalSupabase: {
+    PostgrestVersion: "14.1"
+  }
   public: {
     Tables: {
-      course_enrollments: {
+      company_profiles: {
         Row: {
+          company_size: string | null
+          cover_image_url: string | null
+          created_at: string | null
+          description: string | null
+          founded_year: number | null
+          headquarters: string | null
           id: string
-          user_id: string
-          course_slug: string
-          enrolled_at: string
-          completed_at: string | null
+          industry_focus: string[] | null
+          logo_url: string | null
+          name: string
+          products_services: string | null
+          review_notes: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          seo_description: string | null
+          seo_title: string | null
+          slug: string
+          status: string
+          submitted_by: string | null
+          tagline: string | null
+          updated_at: string | null
+          website_url: string | null
         }
         Insert: {
+          company_size?: string | null
+          cover_image_url?: string | null
+          created_at?: string | null
+          description?: string | null
+          founded_year?: number | null
+          headquarters?: string | null
           id?: string
-          user_id: string
-          course_slug: string
-          enrolled_at?: string
-          completed_at?: string | null
+          industry_focus?: string[] | null
+          logo_url?: string | null
+          name: string
+          products_services?: string | null
+          review_notes?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          seo_description?: string | null
+          seo_title?: string | null
+          slug: string
+          status?: string
+          submitted_by?: string | null
+          tagline?: string | null
+          updated_at?: string | null
+          website_url?: string | null
         }
         Update: {
+          company_size?: string | null
+          cover_image_url?: string | null
+          created_at?: string | null
+          description?: string | null
+          founded_year?: number | null
+          headquarters?: string | null
+          id?: string
+          industry_focus?: string[] | null
+          logo_url?: string | null
+          name?: string
+          products_services?: string | null
+          review_notes?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          seo_description?: string | null
+          seo_title?: string | null
+          slug?: string
+          status?: string
+          submitted_by?: string | null
+          tagline?: string | null
+          updated_at?: string | null
+          website_url?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "company_profiles_reviewed_by_fkey"
+            columns: ["reviewed_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "company_profiles_submitted_by_fkey"
+            columns: ["submitted_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      conference_proposals: {
+        Row: {
+          created_at: string | null
+          dates: string
+          description: string | null
+          id: string
+          location: string
+          name: string
+          region: string | null
+          review_notes: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          start_date: string | null
+          status: string
+          submitted_by: string | null
+          tags: string[] | null
+          updated_at: string | null
+          url: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          dates: string
+          description?: string | null
+          id?: string
+          location: string
+          name: string
+          region?: string | null
+          review_notes?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          start_date?: string | null
+          status?: string
+          submitted_by?: string | null
+          tags?: string[] | null
+          updated_at?: string | null
+          url?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          dates?: string
+          description?: string | null
+          id?: string
+          location?: string
+          name?: string
+          region?: string | null
+          review_notes?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          start_date?: string | null
+          status?: string
+          submitted_by?: string | null
+          tags?: string[] | null
+          updated_at?: string | null
+          url?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "conference_proposals_reviewed_by_fkey"
+            columns: ["reviewed_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "conference_proposals_submitted_by_fkey"
+            columns: ["submitted_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      course_enrollments: {
+        Row: {
+          completed_at: string | null
+          course_slug: string
+          enrolled_at: string | null
+          id: string
+          user_id: string
+        }
+        Insert: {
+          completed_at?: string | null
+          course_slug: string
+          enrolled_at?: string | null
+          id?: string
+          user_id: string
+        }
+        Update: {
+          completed_at?: string | null
+          course_slug?: string
+          enrolled_at?: string | null
           id?: string
           user_id?: string
-          course_slug?: string
-          enrolled_at?: string
-          completed_at?: string | null
         }
         Relationships: [
           {
@@ -43,28 +210,28 @@ export interface Database {
       }
       course_lesson_progress: {
         Row: {
-          id: string
-          user_id: string
-          course_slug: string
-          lesson_slug: string
-          completed: boolean
+          completed: boolean | null
           completed_at: string | null
+          course_slug: string
+          id: string
+          lesson_slug: string
+          user_id: string
         }
         Insert: {
-          id?: string
-          user_id: string
-          course_slug: string
-          lesson_slug: string
-          completed?: boolean
+          completed?: boolean | null
           completed_at?: string | null
+          course_slug: string
+          id?: string
+          lesson_slug: string
+          user_id: string
         }
         Update: {
-          id?: string
-          user_id?: string
-          course_slug?: string
-          lesson_slug?: string
-          completed?: boolean
+          completed?: boolean | null
           completed_at?: string | null
+          course_slug?: string
+          id?: string
+          lesson_slug?: string
+          user_id?: string
         }
         Relationships: [
           {
@@ -78,55 +245,55 @@ export interface Database {
       }
       courses: {
         Row: {
-          id: string
-          slug: string
-          title: string
-          description: string | null
-          thumbnail_url: string | null
-          instructor_id: string | null
-          price_cents: number
-          stripe_product_id: string | null
-          stripe_price_id: string | null
-          is_published: boolean
-          difficulty: string | null
           category: string | null
+          created_at: string | null
+          description: string | null
+          difficulty: string | null
           duration_minutes: number | null
-          created_at: string
-          updated_at: string
+          id: string
+          instructor_id: string | null
+          is_published: boolean | null
+          price_cents: number | null
+          slug: string
+          stripe_price_id: string | null
+          stripe_product_id: string | null
+          thumbnail_url: string | null
+          title: string
+          updated_at: string | null
         }
         Insert: {
-          id?: string
-          slug: string
-          title: string
-          description?: string | null
-          thumbnail_url?: string | null
-          instructor_id?: string | null
-          price_cents?: number
-          stripe_product_id?: string | null
-          stripe_price_id?: string | null
-          is_published?: boolean
-          difficulty?: string | null
           category?: string | null
+          created_at?: string | null
+          description?: string | null
+          difficulty?: string | null
           duration_minutes?: number | null
-          created_at?: string
-          updated_at?: string
+          id?: string
+          instructor_id?: string | null
+          is_published?: boolean | null
+          price_cents?: number | null
+          slug: string
+          stripe_price_id?: string | null
+          stripe_product_id?: string | null
+          thumbnail_url?: string | null
+          title: string
+          updated_at?: string | null
         }
         Update: {
-          id?: string
-          slug?: string
-          title?: string
-          description?: string | null
-          thumbnail_url?: string | null
-          instructor_id?: string | null
-          price_cents?: number
-          stripe_product_id?: string | null
-          stripe_price_id?: string | null
-          is_published?: boolean
-          difficulty?: string | null
           category?: string | null
+          created_at?: string | null
+          description?: string | null
+          difficulty?: string | null
           duration_minutes?: number | null
-          created_at?: string
-          updated_at?: string
+          id?: string
+          instructor_id?: string | null
+          is_published?: boolean | null
+          price_cents?: number | null
+          slug?: string
+          stripe_price_id?: string | null
+          stripe_product_id?: string | null
+          thumbnail_url?: string | null
+          title?: string
+          updated_at?: string | null
         }
         Relationships: [
           {
@@ -140,37 +307,30 @@ export interface Database {
       }
       enrollments: {
         Row: {
-          id: string
-          user_id: string | null
-          course_id: string | null
-          enrolled_at: string
           completed_at: string | null
-          progress_percent: number
+          course_id: string | null
+          enrolled_at: string | null
+          id: string
+          progress_percent: number | null
+          user_id: string | null
         }
         Insert: {
-          id?: string
-          user_id?: string | null
-          course_id?: string | null
-          enrolled_at?: string
           completed_at?: string | null
-          progress_percent?: number
+          course_id?: string | null
+          enrolled_at?: string | null
+          id?: string
+          progress_percent?: number | null
+          user_id?: string | null
         }
         Update: {
-          id?: string
-          user_id?: string | null
-          course_id?: string | null
-          enrolled_at?: string
           completed_at?: string | null
-          progress_percent?: number
+          course_id?: string | null
+          enrolled_at?: string | null
+          id?: string
+          progress_percent?: number | null
+          user_id?: string | null
         }
         Relationships: [
-          {
-            foreignKeyName: "enrollments_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
           {
             foreignKeyName: "enrollments_course_id_fkey"
             columns: ["course_id"]
@@ -178,41 +338,41 @@ export interface Database {
             referencedRelation: "courses"
             referencedColumns: ["id"]
           },
-        ]
-      }
-      lesson_progress: {
-        Row: {
-          id: string
-          user_id: string | null
-          lesson_id: string | null
-          completed: boolean
-          completed_at: string | null
-          last_position_seconds: number
-        }
-        Insert: {
-          id?: string
-          user_id?: string | null
-          lesson_id?: string | null
-          completed?: boolean
-          completed_at?: string | null
-          last_position_seconds?: number
-        }
-        Update: {
-          id?: string
-          user_id?: string | null
-          lesson_id?: string | null
-          completed?: boolean
-          completed_at?: string | null
-          last_position_seconds?: number
-        }
-        Relationships: [
           {
-            foreignKeyName: "lesson_progress_user_id_fkey"
+            foreignKeyName: "enrollments_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
+        ]
+      }
+      lesson_progress: {
+        Row: {
+          completed: boolean | null
+          completed_at: string | null
+          id: string
+          last_position_seconds: number | null
+          lesson_id: string | null
+          user_id: string | null
+        }
+        Insert: {
+          completed?: boolean | null
+          completed_at?: string | null
+          id?: string
+          last_position_seconds?: number | null
+          lesson_id?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          completed?: boolean | null
+          completed_at?: string | null
+          id?: string
+          last_position_seconds?: number | null
+          lesson_id?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
           {
             foreignKeyName: "lesson_progress_lesson_id_fkey"
             columns: ["lesson_id"]
@@ -220,41 +380,48 @@ export interface Database {
             referencedRelation: "lessons"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "lesson_progress_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
         ]
       }
       lessons: {
         Row: {
+          content_url: string | null
+          created_at: string | null
+          duration_minutes: number | null
           id: string
+          is_preview: boolean | null
           module_id: string | null
+          order_index: number
           title: string
           type: string
-          content_url: string | null
-          duration_minutes: number | null
-          order_index: number
-          is_preview: boolean
-          created_at: string
         }
         Insert: {
+          content_url?: string | null
+          created_at?: string | null
+          duration_minutes?: number | null
           id?: string
+          is_preview?: boolean | null
           module_id?: string | null
+          order_index: number
           title: string
           type: string
-          content_url?: string | null
-          duration_minutes?: number | null
-          order_index: number
-          is_preview?: boolean
-          created_at?: string
         }
         Update: {
+          content_url?: string | null
+          created_at?: string | null
+          duration_minutes?: number | null
           id?: string
+          is_preview?: boolean | null
           module_id?: string | null
+          order_index?: number
           title?: string
           type?: string
-          content_url?: string | null
-          duration_minutes?: number | null
-          order_index?: number
-          is_preview?: boolean
-          created_at?: string
         }
         Relationships: [
           {
@@ -268,28 +435,28 @@ export interface Database {
       }
       modules: {
         Row: {
-          id: string
           course_id: string | null
-          title: string
+          created_at: string | null
           description: string | null
+          id: string
           order_index: number
-          created_at: string
+          title: string
         }
         Insert: {
-          id?: string
           course_id?: string | null
-          title: string
+          created_at?: string | null
           description?: string | null
+          id?: string
           order_index: number
-          created_at?: string
+          title: string
         }
         Update: {
-          id?: string
           course_id?: string | null
-          title?: string
+          created_at?: string | null
           description?: string | null
+          id?: string
           order_index?: number
-          created_at?: string
+          title?: string
         }
         Relationships: [
           {
@@ -303,49 +470,42 @@ export interface Database {
       }
       payments: {
         Row: {
-          id: string
-          user_id: string | null
-          stripe_payment_intent_id: string | null
-          stripe_customer_id: string | null
           amount_cents: number
-          currency: string
-          status: string
           course_id: string | null
           course_slug: string | null
-          created_at: string
+          created_at: string | null
+          currency: string | null
+          id: string
+          status: string
+          stripe_customer_id: string | null
+          stripe_payment_intent_id: string | null
+          user_id: string | null
         }
         Insert: {
-          id?: string
-          user_id?: string | null
-          stripe_payment_intent_id?: string | null
-          stripe_customer_id?: string | null
           amount_cents: number
-          currency?: string
-          status: string
           course_id?: string | null
           course_slug?: string | null
-          created_at?: string
+          created_at?: string | null
+          currency?: string | null
+          id?: string
+          status: string
+          stripe_customer_id?: string | null
+          stripe_payment_intent_id?: string | null
+          user_id?: string | null
         }
         Update: {
-          id?: string
-          user_id?: string | null
-          stripe_payment_intent_id?: string | null
-          stripe_customer_id?: string | null
           amount_cents?: number
-          currency?: string
-          status?: string
           course_id?: string | null
           course_slug?: string | null
-          created_at?: string
+          created_at?: string | null
+          currency?: string | null
+          id?: string
+          status?: string
+          stripe_customer_id?: string | null
+          stripe_payment_intent_id?: string | null
+          user_id?: string | null
         }
         Relationships: [
-          {
-            foreignKeyName: "payments_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
           {
             foreignKeyName: "payments_course_id_fkey"
             columns: ["course_id"]
@@ -353,62 +513,174 @@ export interface Database {
             referencedRelation: "courses"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "payments_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      person_profiles: {
+        Row: {
+          avatar_url: string | null
+          bio: string | null
+          company: string | null
+          cover_image_url: string | null
+          created_at: string | null
+          expertise: string[] | null
+          full_name: string
+          id: string
+          linkedin_url: string | null
+          review_notes: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          seo_description: string | null
+          seo_title: string | null
+          slug: string
+          status: string
+          submitted_by: string | null
+          title: string | null
+          twitter_url: string | null
+          updated_at: string | null
+          website_url: string | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          bio?: string | null
+          company?: string | null
+          cover_image_url?: string | null
+          created_at?: string | null
+          expertise?: string[] | null
+          full_name: string
+          id?: string
+          linkedin_url?: string | null
+          review_notes?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          seo_description?: string | null
+          seo_title?: string | null
+          slug: string
+          status?: string
+          submitted_by?: string | null
+          title?: string | null
+          twitter_url?: string | null
+          updated_at?: string | null
+          website_url?: string | null
+        }
+        Update: {
+          avatar_url?: string | null
+          bio?: string | null
+          company?: string | null
+          cover_image_url?: string | null
+          created_at?: string | null
+          expertise?: string[] | null
+          full_name?: string
+          id?: string
+          linkedin_url?: string | null
+          review_notes?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          seo_description?: string | null
+          seo_title?: string | null
+          slug?: string
+          status?: string
+          submitted_by?: string | null
+          title?: string | null
+          twitter_url?: string | null
+          updated_at?: string | null
+          website_url?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "person_profiles_reviewed_by_fkey"
+            columns: ["reviewed_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "person_profiles_submitted_by_fkey"
+            columns: ["submitted_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
         ]
       }
       posts: {
         Row: {
-          id: string
-          slug: string
-          title: string
-          excerpt: string | null
-          content: string | null
           author_id: string | null
-          cover_image_url: string | null
-          is_published: boolean
-          published_at: string | null
           category: string | null
-          tags: string[] | null
-          seo_title: string | null
+          content: string | null
+          cover_image_url: string | null
+          created_at: string | null
+          excerpt: string | null
+          featured_entity_slug: string | null
+          id: string
+          is_published: boolean | null
+          post_type: string
+          published_at: string | null
+          review_notes: string | null
+          reviewed_at: string | null
+          reviewer_id: string | null
           seo_description: string | null
-          views: number
-          created_at: string
-          updated_at: string
+          seo_title: string | null
+          slug: string
+          status: string
+          tags: string[] | null
+          title: string
+          updated_at: string | null
+          views: number | null
         }
         Insert: {
-          id?: string
-          slug: string
-          title: string
-          excerpt?: string | null
-          content?: string | null
           author_id?: string | null
-          cover_image_url?: string | null
-          is_published?: boolean
-          published_at?: string | null
           category?: string | null
-          tags?: string[] | null
-          seo_title?: string | null
+          content?: string | null
+          cover_image_url?: string | null
+          created_at?: string | null
+          excerpt?: string | null
+          featured_entity_slug?: string | null
+          id?: string
+          is_published?: boolean | null
+          post_type?: string
+          published_at?: string | null
+          review_notes?: string | null
+          reviewed_at?: string | null
+          reviewer_id?: string | null
           seo_description?: string | null
-          views?: number
-          created_at?: string
-          updated_at?: string
+          seo_title?: string | null
+          slug: string
+          status?: string
+          tags?: string[] | null
+          title: string
+          updated_at?: string | null
+          views?: number | null
         }
         Update: {
-          id?: string
-          slug?: string
-          title?: string
-          excerpt?: string | null
-          content?: string | null
           author_id?: string | null
-          cover_image_url?: string | null
-          is_published?: boolean
-          published_at?: string | null
           category?: string | null
-          tags?: string[] | null
-          seo_title?: string | null
+          content?: string | null
+          cover_image_url?: string | null
+          created_at?: string | null
+          excerpt?: string | null
+          featured_entity_slug?: string | null
+          id?: string
+          is_published?: boolean | null
+          post_type?: string
+          published_at?: string | null
+          review_notes?: string | null
+          reviewed_at?: string | null
+          reviewer_id?: string | null
           seo_description?: string | null
-          views?: number
-          created_at?: string
-          updated_at?: string
+          seo_title?: string | null
+          slug?: string
+          status?: string
+          tags?: string[] | null
+          title?: string
+          updated_at?: string | null
+          views?: number | null
         }
         Relationships: [
           {
@@ -418,92 +690,189 @@ export interface Database {
             referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "posts_reviewer_id_fkey"
+            columns: ["reviewer_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      product_profiles: {
+        Row: {
+          category: string | null
+          cover_image_url: string | null
+          created_at: string | null
+          description: string | null
+          id: string
+          logo_url: string | null
+          name: string
+          pricing_model: string | null
+          product_url: string | null
+          review_notes: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          seo_description: string | null
+          seo_title: string | null
+          slug: string
+          status: string
+          submitted_by: string | null
+          tagline: string | null
+          tags: string[] | null
+          updated_at: string | null
+          vendor_name: string
+          vendor_url: string | null
+        }
+        Insert: {
+          category?: string | null
+          cover_image_url?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          logo_url?: string | null
+          name: string
+          pricing_model?: string | null
+          product_url?: string | null
+          review_notes?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          seo_description?: string | null
+          seo_title?: string | null
+          slug: string
+          status?: string
+          submitted_by?: string | null
+          tagline?: string | null
+          tags?: string[] | null
+          updated_at?: string | null
+          vendor_name: string
+          vendor_url?: string | null
+        }
+        Update: {
+          category?: string | null
+          cover_image_url?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          logo_url?: string | null
+          name?: string
+          pricing_model?: string | null
+          product_url?: string | null
+          review_notes?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          seo_description?: string | null
+          seo_title?: string | null
+          slug?: string
+          status?: string
+          submitted_by?: string | null
+          tagline?: string | null
+          tags?: string[] | null
+          updated_at?: string | null
+          vendor_name?: string
+          vendor_url?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "product_profiles_reviewed_by_fkey"
+            columns: ["reviewed_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "product_profiles_submitted_by_fkey"
+            columns: ["submitted_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
         ]
       }
       profiles: {
         Row: {
-          id: string
-          email: string
-          full_name: string | null
           avatar_url: string | null
           bio: string | null
-          role: string
-          created_at: string
-          updated_at: string
+          created_at: string | null
+          email: string
+          full_name: string | null
+          id: string
+          role: string | null
+          updated_at: string | null
         }
         Insert: {
-          id: string
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string | null
           email: string
           full_name?: string | null
-          avatar_url?: string | null
-          bio?: string | null
-          role?: string
-          created_at?: string
-          updated_at?: string
+          id: string
+          role?: string | null
+          updated_at?: string | null
         }
         Update: {
-          id?: string
-          email?: string
-          full_name?: string | null
           avatar_url?: string | null
           bio?: string | null
-          role?: string
-          created_at?: string
-          updated_at?: string
+          created_at?: string | null
+          email?: string
+          full_name?: string | null
+          id?: string
+          role?: string | null
+          updated_at?: string | null
         }
         Relationships: []
       }
       subscribers: {
         Row: {
-          id: string
           email: string
           full_name: string | null
-          status: string
+          id: string
           source: string | null
-          subscribed_at: string
+          status: string | null
+          subscribed_at: string | null
           unsubscribed_at: string | null
         }
         Insert: {
-          id?: string
           email: string
           full_name?: string | null
-          status?: string
+          id?: string
           source?: string | null
-          subscribed_at?: string
+          status?: string | null
+          subscribed_at?: string | null
           unsubscribed_at?: string | null
         }
         Update: {
-          id?: string
           email?: string
           full_name?: string | null
-          status?: string
+          id?: string
           source?: string | null
-          subscribed_at?: string
+          status?: string | null
+          subscribed_at?: string | null
           unsubscribed_at?: string | null
         }
         Relationships: []
       }
       tool_usage: {
         Row: {
+          created_at: string | null
           id: string
+          session_id: string | null
           tool_name: string
           user_id: string | null
-          session_id: string | null
-          created_at: string
         }
         Insert: {
+          created_at?: string | null
           id?: string
+          session_id?: string | null
           tool_name: string
           user_id?: string | null
-          session_id?: string | null
-          created_at?: string
         }
         Update: {
+          created_at?: string | null
           id?: string
+          session_id?: string | null
           tool_name?: string
           user_id?: string | null
-          session_id?: string | null
-          created_at?: string
         }
         Relationships: [
           {
@@ -530,3 +899,126 @@ export interface Database {
     }
   }
 }
+
+type DatabaseWithoutInternals = Omit<Database, "__InternalSupabase">
+
+type DefaultSchema = DatabaseWithoutInternals[Extract<keyof Database, "public">]
+
+export type Tables<
+  DefaultSchemaTableNameOrOptions extends
+    | keyof (DefaultSchema["Tables"] & DefaultSchema["Views"])
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+        DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])
+    : never = never,
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+      DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])[TableName] extends {
+      Row: infer R
+    }
+    ? R
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof (DefaultSchema["Tables"] &
+        DefaultSchema["Views"])
+    ? (DefaultSchema["Tables"] &
+        DefaultSchema["Views"])[DefaultSchemaTableNameOrOptions] extends {
+        Row: infer R
+      }
+      ? R
+      : never
+    : never
+
+export type TablesInsert<
+  DefaultSchemaTableNameOrOptions extends
+    | keyof DefaultSchema["Tables"]
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
+    : never = never,
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+      Insert: infer I
+    }
+    ? I
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
+    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
+        Insert: infer I
+      }
+      ? I
+      : never
+    : never
+
+export type TablesUpdate<
+  DefaultSchemaTableNameOrOptions extends
+    | keyof DefaultSchema["Tables"]
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
+    : never = never,
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+      Update: infer U
+    }
+    ? U
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
+    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
+        Update: infer U
+      }
+      ? U
+      : never
+    : never
+
+export type Enums<
+  DefaultSchemaEnumNameOrOptions extends
+    | keyof DefaultSchema["Enums"]
+    | { schema: keyof DatabaseWithoutInternals },
+  EnumName extends DefaultSchemaEnumNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
+    : never = never,
+> = DefaultSchemaEnumNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"][EnumName]
+  : DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema["Enums"]
+    ? DefaultSchema["Enums"][DefaultSchemaEnumNameOrOptions]
+    : never
+
+export type CompositeTypes<
+  PublicCompositeTypeNameOrOptions extends
+    | keyof DefaultSchema["CompositeTypes"]
+    | { schema: keyof DatabaseWithoutInternals },
+  CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
+    : never = never,
+> = PublicCompositeTypeNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
+  : PublicCompositeTypeNameOrOptions extends keyof DefaultSchema["CompositeTypes"]
+    ? DefaultSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
+    : never
+
+export const Constants = {
+  public: {
+    Enums: {},
+  },
+} as const

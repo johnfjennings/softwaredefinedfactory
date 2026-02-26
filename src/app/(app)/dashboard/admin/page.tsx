@@ -18,6 +18,7 @@ import { DIFFICULTY_LEVELS } from "@/lib/constants"
 import { AdminTabs } from "./components/admin-tabs"
 import { UserRoleSelect } from "./components/user-role-select"
 import { SubscriberExportButton } from "./components/subscriber-export-button"
+import { ContentReviewTabs } from "./components/content-review-tabs"
 import { Users, BookOpen, DollarSign, Mail, Wrench, TrendingUp } from "lucide-react"
 
 export default async function AdminDashboardPage() {
@@ -44,6 +45,11 @@ export default async function AdminDashboardPage() {
     { data: allPayments },
     { data: allSubscribers },
     { data: toolUsageRaw },
+    { data: pendingPosts },
+    { data: pendingCompanies },
+    { data: pendingPeople },
+    { data: pendingProducts },
+    { data: pendingConferences },
   ] = await Promise.all([
     supabaseAdmin
       .from("profiles")
@@ -61,6 +67,31 @@ export default async function AdminDashboardPage() {
       .select("id, email, full_name, status, source, subscribed_at")
       .order("subscribed_at", { ascending: false }),
     supabaseAdmin.from("tool_usage").select("tool_name, created_at"),
+    supabaseAdmin
+      .from("posts")
+      .select("id, title, slug, post_type, created_at, author_id")
+      .eq("status", "pending_review")
+      .order("created_at"),
+    supabaseAdmin
+      .from("company_profiles")
+      .select("id, name, slug, created_at, submitted_by")
+      .eq("status", "pending_review")
+      .order("created_at"),
+    supabaseAdmin
+      .from("person_profiles")
+      .select("id, full_name, slug, created_at, submitted_by")
+      .eq("status", "pending_review")
+      .order("created_at"),
+    supabaseAdmin
+      .from("product_profiles")
+      .select("id, name, slug, created_at, submitted_by")
+      .eq("status", "pending_review")
+      .order("created_at"),
+    supabaseAdmin
+      .from("conference_proposals")
+      .select("id, name, dates, location, created_at, submitted_by")
+      .eq("status", "pending_review")
+      .order("created_at"),
   ])
 
   const allCourses = getAllCoursesIncludingUnpublished()
@@ -115,10 +146,32 @@ export default async function AdminDashboardPage() {
     }
   }
 
-  // Profile lookup for payments table
+  // Profile lookup for payments table and content review
   const profileMap = new Map(
     (allProfiles ?? []).map((p: any) => [p.id, p.email])
   )
+
+  // Enrich pending content with submitter emails
+  const enrichedPendingPosts = (pendingPosts ?? []).map((p: any) => ({
+    ...p,
+    author_email: profileMap.get(p.author_id) ?? undefined,
+  }))
+  const enrichedPendingCompanies = (pendingCompanies ?? []).map((c: any) => ({
+    ...c,
+    submitter_email: profileMap.get(c.submitted_by) ?? undefined,
+  }))
+  const enrichedPendingPeople = (pendingPeople ?? []).map((p: any) => ({
+    ...p,
+    submitter_email: profileMap.get(p.submitted_by) ?? undefined,
+  }))
+  const enrichedPendingProducts = (pendingProducts ?? []).map((p: any) => ({
+    ...p,
+    submitter_email: profileMap.get(p.submitted_by) ?? undefined,
+  }))
+  const enrichedPendingConferences = (pendingConferences ?? []).map((c: any) => ({
+    ...c,
+    submitter_email: profileMap.get(c.submitted_by) ?? undefined,
+  }))
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -509,6 +562,15 @@ export default async function AdminDashboardPage() {
                   )}
                 </CardContent>
               </Card>
+            }
+            contentReview={
+              <ContentReviewTabs
+                pendingPosts={enrichedPendingPosts}
+                pendingCompanies={enrichedPendingCompanies}
+                pendingPeople={enrichedPendingPeople}
+                pendingProducts={enrichedPendingProducts}
+                pendingConferences={enrichedPendingConferences}
+              />
             }
           />
         </div>

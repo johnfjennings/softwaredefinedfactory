@@ -1,7 +1,7 @@
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
 import { PostCard } from "@/components/blog/post-card"
-import { getAllPosts, getAllCategories } from "@/lib/blog"
+import { getAllPostsCombined } from "@/lib/blog"
 import { BookOpen } from "lucide-react"
 
 export const metadata = {
@@ -9,9 +9,9 @@ export const metadata = {
   description: "Learn about smart manufacturing, Industry 4.0, IIoT, and digital transformation with expert guides and tutorials.",
 }
 
-export default function BlogPage() {
-  const posts = getAllPosts()
-  const categories = getAllCategories()
+export default async function BlogPage() {
+  const posts = await getAllPostsCombined()
+  const categories = Array.from(new Set(posts.map((p) => p.category)))
 
   return (
     <div className="flex min-h-screen flex-col">
