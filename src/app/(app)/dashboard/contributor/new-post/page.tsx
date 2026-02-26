@@ -19,7 +19,7 @@ export default async function NewPostPage() {
     .single()
 
   const allowedRoles = ["contributor", "instructor", "admin"]
-  if (!profile || !allowedRoles.includes(profile.role)) redirect("/dashboard")
+  if (!profile || !allowedRoles.includes(profile.role ?? "")) redirect("/dashboard")
 
   return (
     <div className="flex min-h-screen flex-col">

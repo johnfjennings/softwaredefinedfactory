@@ -21,7 +21,7 @@ export default async function ContributorDashboardPage() {
     .single()
 
   const allowedRoles = ["contributor", "instructor", "admin"]
-  if (!profile || !allowedRoles.includes(profile.role)) {
+  if (!profile || !allowedRoles.includes(profile.role ?? "")) {
     redirect("/dashboard")
   }
 
