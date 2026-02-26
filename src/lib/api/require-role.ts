@@ -25,7 +25,7 @@ export async function requireRole(allowedRoles: string[]): Promise<RequireRoleRe
     return { error: NextResponse.json({ error: "Forbidden" }, { status: 403 }) }
   }
 
-  return { user, profile }
+  return { user, profile: { role: profile.role! } }
 }
 
 export const CONTRIBUTOR_ROLES = ["contributor", "instructor", "admin"]
