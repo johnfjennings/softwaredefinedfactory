@@ -21,7 +21,7 @@ export async function requireRole(allowedRoles: string[]): Promise<RequireRoleRe
     .eq("id", user.id)
     .single()
 
-  if (!profile || !allowedRoles.includes(profile.role)) {
+  if (!profile || !allowedRoles.includes(profile.role ?? "")) {
     return { error: NextResponse.json({ error: "Forbidden" }, { status: 403 }) }
   }
 
