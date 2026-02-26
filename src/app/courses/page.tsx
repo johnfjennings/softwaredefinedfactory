@@ -1,8 +1,7 @@
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
-import { CourseCard } from "@/components/course/course-card"
+import { CoursesFilter } from "./components/courses-filter"
 import { getAllCourses } from "@/lib/courses"
-import { COURSE_CATEGORIES, DIFFICULTY_LEVELS } from "@/lib/constants"
 import { GraduationCap } from "lucide-react"
 
 export const metadata = {
@@ -28,24 +27,8 @@ export default function CoursesPage() {
             </p>
           </div>
 
-          {/* Category pills */}
-          <div className="flex flex-wrap justify-center gap-2 mb-12">
-            {COURSE_CATEGORIES.map((cat) => (
-              <span
-                key={cat.value}
-                className="px-3 py-1 rounded-full bg-muted text-sm text-muted-foreground"
-              >
-                {cat.label}
-              </span>
-            ))}
-          </div>
-
           {courses.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {courses.map((course) => (
-                <CourseCard key={course.slug} course={course} />
-              ))}
-            </div>
+            <CoursesFilter courses={courses} />
           ) : (
             <div className="text-center py-12">
               <GraduationCap className="h-12 w-12 mx-auto text-muted-foreground mb-4" />

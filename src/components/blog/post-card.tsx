@@ -11,9 +11,10 @@ const POST_TYPE_LABELS: Record<string, string> = {
 
 interface PostCardProps {
   post: UnifiedBlogPostMetadata
+  onTagClick?: (tag: string) => void
 }
 
-export function PostCard({ post }: PostCardProps) {
+export function PostCard({ post, onTagClick }: PostCardProps) {
   return (
     <Card className="h-full hover:border-primary/50 transition-colors">
       <CardHeader>
@@ -49,15 +50,26 @@ export function PostCard({ post }: PostCardProps) {
       <CardContent>
         {post.tags.length > 0 && (
           <div className="flex flex-wrap gap-2">
-            {post.tags.slice(0, 3).map((tag) => (
-              <span
-                key={tag}
-                className="inline-flex items-center gap-1 text-xs text-muted-foreground"
-              >
-                <Tag className="h-3 w-3" />
-                {tag}
-              </span>
-            ))}
+            {post.tags.slice(0, 3).map((tag) =>
+              onTagClick ? (
+                <button
+                  key={tag}
+                  onClick={() => onTagClick(tag)}
+                  className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-primary transition-colors"
+                >
+                  <Tag className="h-3 w-3" />
+                  {tag}
+                </button>
+              ) : (
+                <span
+                  key={tag}
+                  className="inline-flex items-center gap-1 text-xs text-muted-foreground"
+                >
+                  <Tag className="h-3 w-3" />
+                  {tag}
+                </span>
+              )
+            )}
           </div>
         )}
       </CardContent>
