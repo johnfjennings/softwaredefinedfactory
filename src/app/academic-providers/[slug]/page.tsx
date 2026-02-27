@@ -20,14 +20,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     .eq("status", "published")
     .single()
 
-  if (!data) return { title: "Person Not Found" }
+  if (!data) return { title: "Academic Provider Not Found" }
   return {
     title: data.seo_title || `${data.full_name} | Software Defined Factory`,
     description: data.seo_description || (data.title && data.company ? `${data.title} at ${data.company}` : undefined),
   }
 }
 
-export default async function PersonProfilePage({ params }: PageProps) {
+export default async function AcademicProviderProfilePage({ params }: PageProps) {
   const { slug } = await params
   const supabase = await createClient()
   const { data: person } = await supabase

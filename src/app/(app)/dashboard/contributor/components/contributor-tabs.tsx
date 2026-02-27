@@ -114,7 +114,7 @@ export function ContributorTabs({
           Companies {companies.length > 0 && <span className="ml-1 text-xs">({companies.length})</span>}
         </TabsTrigger>
         <TabsTrigger value="people">
-          People {people.length > 0 && <span className="ml-1 text-xs">({people.length})</span>}
+          Academic Providers {people.length > 0 && <span className="ml-1 text-xs">({people.length})</span>}
         </TabsTrigger>
         <TabsTrigger value="products">
           Products {products.length > 0 && <span className="ml-1 text-xs">({products.length})</span>}
@@ -157,8 +157,8 @@ export function ContributorTabs({
           />
           <SubmitCard
             icon={<User className="h-5 w-5" />}
-            title="Person Profile"
-            description="Highlight an industry leader or thought leader"
+            title="Academic Provider Profile"
+            description="Highlight an academic, researcher, or educator in smart manufacturing"
             href="/dashboard/contributor/new-person"
           />
           <SubmitCard
@@ -210,20 +210,20 @@ export function ContributorTabs({
         />
       </TabsContent>
 
-      {/* PEOPLE */}
+      {/* ACADEMIC PROVIDERS */}
       <TabsContent value="people">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-lg font-semibold">My Person Profiles</h2>
+          <h2 className="text-lg font-semibold">My Academic Provider Profiles</h2>
           <Button asChild size="sm">
             <Link href="/dashboard/contributor/new-person">
-              <Plus className="h-4 w-4 mr-1" /> Add Person
+              <Plus className="h-4 w-4 mr-1" /> Add Academic Provider
             </Link>
           </Button>
         </div>
         <ContentTable
           items={people.map((p) => ({ id: p.id, name: p.full_name, slug: p.slug, status: p.status, created_at: p.created_at }))}
           editBase="/dashboard/contributor/edit-person"
-          emptyText="No person profiles yet"
+          emptyText="No academic provider profiles yet"
         />
       </TabsContent>
 

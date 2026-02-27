@@ -24,7 +24,7 @@ export const NAV_LINKS: Array<{
     href: "/companies",
     children: [
       { title: "Companies", href: "/companies" },
-      { title: "People", href: "/people" },
+      { title: "Academic Providers", href: "/academic-providers" },
       { title: "Products", href: "/products" },
     ],
   },

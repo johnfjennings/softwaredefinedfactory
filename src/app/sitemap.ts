@@ -30,7 +30,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }))
 
   const peopleEntries = (people ?? []).map((p) => ({
-    url: `${BASE_URL}/people/${p.slug}`,
+    url: `${BASE_URL}/academic-providers/${p.slug}`,
     lastModified: p.updated_at ? new Date(p.updated_at) : new Date(),
     changeFrequency: "monthly" as const,
     priority: 0.6,
@@ -93,7 +93,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.7,
     },
     {
-      url: `${BASE_URL}/people`,
+      url: `${BASE_URL}/academic-providers`,
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.7,

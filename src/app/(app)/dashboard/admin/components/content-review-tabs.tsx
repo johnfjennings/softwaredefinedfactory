@@ -129,7 +129,7 @@ export function ContentReviewTabs({
               Companies {pendingCompanies.length > 0 && <Badge variant="secondary" className="ml-1">{pendingCompanies.length}</Badge>}
             </TabsTrigger>
             <TabsTrigger value="people">
-              People {pendingPeople.length > 0 && <Badge variant="secondary" className="ml-1">{pendingPeople.length}</Badge>}
+              Academic Providers {pendingPeople.length > 0 && <Badge variant="secondary" className="ml-1">{pendingPeople.length}</Badge>}
             </TabsTrigger>
             <TabsTrigger value="products">
               Products {pendingProducts.length > 0 && <Badge variant="secondary" className="ml-1">{pendingProducts.length}</Badge>}
@@ -157,7 +157,7 @@ export function ContentReviewTabs({
             <PendingTable
               items={pendingPeople.map((p) => ({ id: p.id, name: p.full_name, meta: p.slug, submitter: p.submitter_email, created_at: p.created_at }))}
               onReview={(id, name) => openReview(id, name, "person-profiles")}
-              emptyText="No pending person profiles"
+              emptyText="No pending academic provider profiles"
             />
           </TabsContent>
           <TabsContent value="products">

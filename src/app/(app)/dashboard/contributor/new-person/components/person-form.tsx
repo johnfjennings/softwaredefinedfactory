@@ -60,21 +60,21 @@ export function PersonForm() {
         <div className="space-y-2">
           <Label htmlFor="slug">Slug *</Label>
           <Input id="slug" value={form.slug} onChange={(e) => { setSlugManual(true); setForm((f) => ({ ...f, slug: slugify(e.target.value) })) }} />
-          <p className="text-xs text-muted-foreground">URL: /people/{form.slug || "person-slug"}</p>
+          <p className="text-xs text-muted-foreground">URL: /academic-providers/{form.slug || "provider-slug"}</p>
         </div>
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-2">
-            <Label htmlFor="title">Job Title</Label>
-            <Input id="title" value={form.title} onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))} placeholder="CTO" />
+            <Label htmlFor="title">Academic Title</Label>
+            <Input id="title" value={form.title} onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))} placeholder="Professor / Researcher" />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="company">Company</Label>
-            <Input id="company" value={form.company} onChange={(e) => setForm((f) => ({ ...f, company: e.target.value }))} placeholder="Acme Corp" />
+            <Label htmlFor="company">Institution</Label>
+            <Input id="company" value={form.company} onChange={(e) => setForm((f) => ({ ...f, company: e.target.value }))} placeholder="University or Organisation" />
           </div>
         </div>
         <div className="space-y-2">
           <Label htmlFor="bio">Bio *</Label>
-          <Textarea id="bio" value={form.bio} onChange={(e) => setForm((f) => ({ ...f, bio: e.target.value }))} rows={6} placeholder="Professional background and areas of expertise..." />
+          <Textarea id="bio" value={form.bio} onChange={(e) => setForm((f) => ({ ...f, bio: e.target.value }))} rows={6} placeholder="Academic background, research focus, and areas of expertise..." />
         </div>
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-2">

@@ -2,14 +2,14 @@ import { createClient } from "@/lib/supabase/server"
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
 import { PersonCard } from "@/components/directory/person-card"
-import { Users } from "lucide-react"
+import { GraduationCap } from "lucide-react"
 
 export const metadata = {
-  title: "Industry Leaders Directory | Software Defined Factory",
-  description: "Discover manufacturing and IIoT thought leaders and industry experts.",
+  title: "Academic Providers Directory | Software Defined Factory",
+  description: "Discover academics, researchers, and educators shaping smart manufacturing and Industry 4.0.",
 }
 
-export default async function PeoplePage() {
+export default async function AcademicProvidersPage() {
   const supabase = await createClient()
   const { data: people } = await supabase
     .from("person_profiles")
@@ -24,11 +24,11 @@ export default async function PeoplePage() {
         <div className="container mx-auto max-w-7xl px-4 py-12">
           <div className="mb-10">
             <div className="flex items-center gap-3 mb-3">
-              <Users className="h-8 w-8 text-primary" />
-              <h1 className="text-4xl font-bold tracking-tight">Industry Leaders</h1>
+              <GraduationCap className="h-8 w-8 text-primary" />
+              <h1 className="text-4xl font-bold tracking-tight">Academic Providers</h1>
             </div>
             <p className="text-lg text-muted-foreground max-w-2xl">
-              Thought leaders, practitioners, and innovators shaping the future of smart manufacturing.
+              Academics, researchers, and educators advancing knowledge in smart manufacturing and Industry 4.0.
             </p>
           </div>
 
@@ -40,9 +40,9 @@ export default async function PeoplePage() {
             </div>
           ) : (
             <div className="text-center py-20 text-muted-foreground">
-              <Users className="h-12 w-12 mx-auto mb-4 opacity-30" />
+              <GraduationCap className="h-12 w-12 mx-auto mb-4 opacity-30" />
               <p className="text-lg">No profiles yet.</p>
-              <p className="text-sm mt-1">Be the first to feature an industry leader.</p>
+              <p className="text-sm mt-1">Be the first to feature an academic provider.</p>
             </div>
           )}
         </div>

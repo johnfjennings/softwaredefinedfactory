@@ -14,7 +14,7 @@ interface PersonCardProps {
 
 export function PersonCard({ slug, full_name, title, company, avatar_url, expertise }: PersonCardProps) {
   return (
-    <Link href={`/people/${slug}`} className="block group">
+    <Link href={`/academic-providers/${slug}`} className="block group">
       <Card className="h-full hover:border-primary/50 transition-colors">
         <CardHeader className="pb-3">
           <div className="flex items-start gap-3">

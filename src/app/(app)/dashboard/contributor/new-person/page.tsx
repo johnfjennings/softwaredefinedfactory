@@ -17,8 +17,8 @@ export default async function NewPersonPage() {
       <main className="flex-1">
         <div className="container mx-auto max-w-3xl px-4 py-12">
           <div className="mb-8">
-            <h1 className="text-3xl font-bold tracking-tight">Submit Person Profile</h1>
-            <p className="text-muted-foreground mt-1">Highlight an industry leader or thought leader. Reviewed before publishing.</p>
+            <h1 className="text-3xl font-bold tracking-tight">Submit Academic Provider Profile</h1>
+            <p className="text-muted-foreground mt-1">Highlight an academic, researcher, or educator in smart manufacturing. Reviewed before publishing.</p>
           </div>
           <PersonForm />
         </div>
