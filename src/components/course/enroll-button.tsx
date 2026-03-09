@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Loader2, Play, ShoppingCart } from "lucide-react"
 import Link from "next/link"
+import { trackEvent } from "@/lib/hooks/use-activity-tracking"
 
 interface EnrollButtonProps {
   courseSlug: string
@@ -78,6 +79,7 @@ export function EnrollButton({
           throw new Error(data.error || "Failed to enroll")
         }
 
+        trackEvent("course_enroll", `/courses/${courseSlug}`, { courseSlug })
         setEnrolled(true)
         router.push(`/courses/${courseSlug}/learn/${firstLessonSlug}`)
       }

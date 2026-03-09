@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { createClient } from "@/lib/supabase/client"
+import { trackEvent } from "@/lib/hooks/use-activity-tracking"
 import { ArrowLeft } from "lucide-react"
 
 export default function LoginPage() {
@@ -31,6 +32,7 @@ export default function LoginPage() {
       if (error) {
         setError(error.message)
       } else if (data.user) {
+        trackEvent("auth_login", "/login")
         router.push("/dashboard")
         router.refresh()
       }

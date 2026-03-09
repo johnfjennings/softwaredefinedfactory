@@ -11,6 +11,7 @@ import { GlossaryTooltip } from "@/components/blog/glossary-tooltip"
 import { FeaturedProfileHeader } from "@/components/blog/featured-profile-header"
 import { getAllPostSlugs, getPostBySlug, getRelatedPosts } from "@/lib/blog"
 import { createClient } from "@/lib/supabase/server"
+import { BlogViewTracker } from "@/components/blog/blog-view-tracker"
 import { Calendar, Clock, Tag, ArrowLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
@@ -160,6 +161,7 @@ export default async function BlogPostPage({ params }: PageProps) {
     return (
       <div className="flex min-h-screen flex-col">
         <Header />
+        <BlogViewTracker slug={slug} />
         <main className="flex-1">
           <article className="container mx-auto max-w-4xl px-4 py-12">
             <Link href="/blog" className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors mb-8">
@@ -208,6 +210,7 @@ export default async function BlogPostPage({ params }: PageProps) {
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
+      <BlogViewTracker slug={slug} />
       <main className="flex-1">
         <article className="container mx-auto max-w-4xl px-4 py-12">
           <Link href="/blog" className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors mb-8">

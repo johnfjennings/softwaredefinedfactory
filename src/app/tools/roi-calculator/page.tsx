@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button"
 import { Calculator, TrendingUp, DollarSign, Clock, Download } from "lucide-react"
 import jsPDF from "jspdf"
 import { EmailCaptureModal } from "@/components/marketing/email-capture-modal"
+import { trackEvent } from "@/lib/hooks/use-activity-tracking"
 
 interface CalculatorInputs {
   initialInvestment: number
@@ -633,7 +634,7 @@ export default function ROICalculatorPage() {
                     <Button
                       className="w-full"
                       size="lg"
-                      onClick={() => setShowEmailModal(true)}
+                      onClick={() => { trackEvent("tool_use", "/tools/roi-calculator", { tool: "roi-calculator" }); setShowEmailModal(true) }}
                     >
                       <Download className="mr-2 h-4 w-4" />
                       Download PDF Report

@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button"
 import { Gauge, Download, AlertTriangle, TrendingDown } from "lucide-react"
 import jsPDF from "jspdf"
 import { EmailCaptureModal } from "@/components/marketing/email-capture-modal"
+import { trackEvent } from "@/lib/hooks/use-activity-tracking"
 
 interface OEEInputs {
   plannedProductionTime: number
@@ -777,7 +778,7 @@ export default function OEECalculatorPage() {
                     <Button
                       className="w-full"
                       size="lg"
-                      onClick={() => setShowEmailModal(true)}
+                      onClick={() => { trackEvent("tool_use", "/tools/oee-calculator", { tool: "oee-calculator" }); setShowEmailModal(true) }}
                     >
                       <Download className="mr-2 h-4 w-4" />
                       Download PDF Report

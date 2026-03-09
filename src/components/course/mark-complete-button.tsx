@@ -4,6 +4,7 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { CheckCircle2, Circle, Loader2 } from "lucide-react"
 import { useProgress } from "./progress-provider"
+import { trackEvent } from "@/lib/hooks/use-activity-tracking"
 
 interface MarkCompleteButtonProps {
   courseSlug: string
@@ -18,6 +19,10 @@ export function MarkCompleteButton({ courseSlug, lessonSlug }: MarkCompleteButto
   const handleToggle = async () => {
     setLoading(true)
     await toggleLessonComplete(courseSlug, lessonSlug)
+    if (!completed) {
+      // Only track completion, not un-completion
+      trackEvent("lesson_complete", `/courses/${courseSlug}/learn/${lessonSlug}`, { courseSlug, lessonSlug })
+    }
     setLoading(false)
   }
 

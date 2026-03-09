@@ -19,6 +19,8 @@ import { AdminTabs } from "./components/admin-tabs"
 import { UserRoleSelect } from "./components/user-role-select"
 import { SubscriberExportButton } from "./components/subscriber-export-button"
 import { ContentReviewTabs } from "./components/content-review-tabs"
+import { ActivityLog } from "./components/activity-log"
+import type { ActivityLogEntry, SuspiciousUser } from "./components/activity-log"
 import { Users, BookOpen, DollarSign, Mail, Wrench, TrendingUp } from "lucide-react"
 
 export default async function AdminDashboardPage() {
@@ -50,6 +52,8 @@ export default async function AdminDashboardPage() {
     { data: pendingPeople },
     { data: pendingProducts },
     { data: pendingConferences },
+    { data: activityEvents },
+    { count: totalActivityEvents },
   ] = await Promise.all([
     supabaseAdmin
       .from("profiles")
@@ -92,6 +96,14 @@ export default async function AdminDashboardPage() {
       .select("id, name, dates, location, created_at, submitted_by")
       .eq("status", "pending_review")
       .order("created_at"),
+    supabaseAdmin
+      .from("user_activity_log")
+      .select("id, user_id, session_id, event_type, page_path, metadata, ip_address, user_agent, created_at")
+      .order("created_at", { ascending: false })
+      .limit(200),
+    supabaseAdmin
+      .from("user_activity_log")
+      .select("id", { count: "exact", head: true }),
   ])
 
   const allCourses = getAllCoursesIncludingUnpublished()
@@ -146,10 +158,75 @@ export default async function AdminDashboardPage() {
     }
   }
 
-  // Profile lookup for payments table and content review
+  // Profile lookup for payments table, content review, and activity log
   const profileMap = new Map(
     (allProfiles ?? []).map((p: any) => [p.id, p.email])
   )
+  const profileMapObj: Record<string, string> = Object.fromEntries(profileMap)
+
+  // --- Bot detection signals ---
+  const ONE_MINUTE_MS = 60 * 1000
+  const BOT_EVENT_THRESHOLD = 20 // >20 events/minute is suspicious
+
+  // Group events by user_id
+  const eventsByUser = new Map<string, typeof activityEvents>()
+  for (const ev of activityEvents ?? []) {
+    const e = ev as any
+    if (!e.user_id) continue
+    if (!eventsByUser.has(e.user_id)) eventsByUser.set(e.user_id, [])
+    eventsByUser.get(e.user_id)!.push(e)
+  }
+
+  // Group events by IP (may span multiple users)
+  const usersByIp = new Map<string, Set<string>>()
+  for (const ev of activityEvents ?? []) {
+    const e = ev as any
+    if (!e.ip_address || !e.user_id) continue
+    if (!usersByIp.has(e.ip_address)) usersByIp.set(e.ip_address, new Set())
+    usersByIp.get(e.ip_address)!.add(e.user_id)
+  }
+
+  const suspiciousUsers: SuspiciousUser[] = []
+  for (const [userId, events] of eventsByUser) {
+    const signals: string[] = []
+
+    // Signal 1: high event velocity (>20 events in any 1-minute window)
+    const times = events.map((e: any) => new Date(e.created_at).getTime()).sort()
+    for (let i = 0; i < times.length; i++) {
+      const windowEvents = times.filter((t) => t >= times[i] && t <= times[i] + ONE_MINUTE_MS)
+      if (windowEvents.length > BOT_EVENT_THRESHOLD) {
+        signals.push("high velocity")
+        break
+      }
+    }
+
+    // Signal 2: same IP used by multiple user accounts
+    const ip = (events[0] as any).ip_address
+    if (ip && (usersByIp.get(ip)?.size ?? 0) > 2) {
+      signals.push("shared IP")
+    }
+
+    // Signal 3: suspiciously uniform user agent (common bot pattern)
+    const uas = new Set(events.map((e: any) => e.user_agent).filter(Boolean))
+    if (uas.size === 1) {
+      const ua = [...uas][0] as string
+      if (!ua || ua.length < 20 || /bot|crawler|spider|scraper/i.test(ua)) {
+        signals.push("bot user-agent")
+      }
+    }
+
+    if (signals.length > 0) {
+      const isFlagged = (allProfiles ?? []).find((p: any) => p.id === userId)?.is_flagged ?? false
+      suspiciousUsers.push({
+        user_id: userId,
+        email: profileMap.get(userId) ?? "unknown",
+        is_flagged: isFlagged,
+        signals,
+        event_count: events.length,
+        last_seen: (events[0] as any).created_at,
+      })
+    }
+  }
 
   // Enrich pending content with submitter emails
   const enrichedPendingPosts = (pendingPosts ?? []).map((p: any) => ({
@@ -570,6 +647,14 @@ export default async function AdminDashboardPage() {
                 pendingPeople={enrichedPendingPeople}
                 pendingProducts={enrichedPendingProducts}
                 pendingConferences={enrichedPendingConferences}
+              />
+            }
+            activity={
+              <ActivityLog
+                recentEvents={(activityEvents ?? []) as ActivityLogEntry[]}
+                suspiciousUsers={suspiciousUsers}
+                profileMap={profileMapObj}
+                totalEvents={totalActivityEvents ?? 0}
               />
             }
           />
