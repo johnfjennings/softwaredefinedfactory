@@ -188,6 +188,7 @@ export default async function AdminDashboardPage() {
 
   const suspiciousUsers: SuspiciousUser[] = []
   for (const [userId, events] of eventsByUser) {
+    if (!events) continue
     const signals: string[] = []
 
     // Signal 1: high event velocity (>20 events in any 1-minute window)
