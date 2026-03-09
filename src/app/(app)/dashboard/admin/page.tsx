@@ -57,7 +57,7 @@ export default async function AdminDashboardPage() {
   ] = await Promise.all([
     supabaseAdmin
       .from("profiles")
-      .select("id, email, full_name, role, created_at")
+      .select("id, email, full_name, role, created_at, is_flagged")
       .order("created_at", { ascending: false }),
     supabaseAdmin
       .from("course_enrollments")
