@@ -795,8 +795,12 @@ export type Database = {
           bio: string | null
           created_at: string | null
           email: string
+          flag_reason: string | null
           full_name: string | null
           id: string
+          is_disabled: boolean
+          is_flagged: boolean
+          last_accessed_at: string | null
           role: string | null
           updated_at: string | null
         }
@@ -805,8 +809,12 @@ export type Database = {
           bio?: string | null
           created_at?: string | null
           email: string
+          flag_reason?: string | null
           full_name?: string | null
           id: string
+          is_disabled?: boolean
+          is_flagged?: boolean
+          last_accessed_at?: string | null
           role?: string | null
           updated_at?: string | null
         }
@@ -815,8 +823,12 @@ export type Database = {
           bio?: string | null
           created_at?: string | null
           email?: string
+          flag_reason?: string | null
           full_name?: string | null
           id?: string
+          is_disabled?: boolean
+          is_flagged?: boolean
+          last_accessed_at?: string | null
           role?: string | null
           updated_at?: string | null
         }

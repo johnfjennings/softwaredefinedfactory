@@ -21,12 +21,19 @@ export default async function DashboardPage() {
     redirect("/login")
   }
 
-  // Get user profile
+  // Get user profile and update last_accessed_at
   const { data: profile } = await supabase
     .from("profiles")
     .select("*")
     .eq("id", user.id)
     .single()
+
+  // Fire-and-forget: update last accessed timestamp
+  supabase
+    .from("profiles")
+    .update({ last_accessed_at: new Date().toISOString() })
+    .eq("id", user.id)
+    .then(() => {})
 
   const userName = profile?.full_name || user.email?.split("@")[0] || "there"
 

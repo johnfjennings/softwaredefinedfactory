@@ -16,7 +16,7 @@ import {
 import { getAllCoursesIncludingUnpublished } from "@/lib/courses"
 import { DIFFICULTY_LEVELS } from "@/lib/constants"
 import { AdminTabs } from "./components/admin-tabs"
-import { UserRoleSelect } from "./components/user-role-select"
+import { UsersTable } from "./components/users-table"
 import { SubscriberExportButton } from "./components/subscriber-export-button"
 import { ContentReviewTabs } from "./components/content-review-tabs"
 import { ActivityLog } from "./components/activity-log"
@@ -57,7 +57,7 @@ export default async function AdminDashboardPage() {
   ] = await Promise.all([
     supabaseAdmin
       .from("profiles")
-      .select("id, email, full_name, role, created_at, is_flagged")
+      .select("id, email, full_name, role, created_at, last_accessed_at, is_flagged, is_disabled")
       .order("created_at", { ascending: false }),
     supabaseAdmin
       .from("course_enrollments")
@@ -352,34 +352,19 @@ export default async function AdminDashboardPage() {
                   <CardTitle>All Users ({totalUsers})</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead>Email</TableHead>
-                        <TableHead>Name</TableHead>
-                        <TableHead>Role</TableHead>
-                        <TableHead>Joined</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {(allProfiles ?? []).map((p: any) => (
-                        <TableRow key={p.id}>
-                          <TableCell className="font-medium">{p.email}</TableCell>
-                          <TableCell>{p.full_name ?? "—"}</TableCell>
-                          <TableCell>
-                            <UserRoleSelect
-                              userId={p.id}
-                              currentRole={p.role ?? "user"}
-                              currentUserId={user.id}
-                            />
-                          </TableCell>
-                          <TableCell className="text-muted-foreground">
-                            {new Date(p.created_at).toLocaleDateString()}
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
+                  <UsersTable
+                    users={(allProfiles ?? []).map((p: any) => ({
+                      id: p.id,
+                      email: p.email,
+                      full_name: p.full_name ?? null,
+                      role: p.role ?? null,
+                      created_at: p.created_at ?? null,
+                      last_accessed_at: p.last_accessed_at ?? null,
+                      is_flagged: p.is_flagged ?? false,
+                      is_disabled: p.is_disabled ?? false,
+                    }))}
+                    currentUserId={user.id}
+                  />
                 </CardContent>
               </Card>
             }
