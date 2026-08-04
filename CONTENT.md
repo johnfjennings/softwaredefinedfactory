@@ -136,7 +136,9 @@ A course is **two parts** — metadata JSON plus static HTML lesson content:
 - `stripePriceId` is optional and **must be created by a human** in the Stripe dashboard — routines never invent one. Free courses use `priceCents: 0`.
 - **Create new courses with `isPublished: false`.** A course only goes live after a human reviews the PR, adds the Stripe price if paid, and flips `isPublished` to `true`. The validator requires every lesson of a *published* course to have its HTML content file in place.
 - Make the first 1–2 lessons `isPreview: true` so logged-out visitors can sample the course.
-- Lesson HTML files are full standalone documents (Quarto-rendered output is the norm); videos are YouTube Unlisted embeds.
+- Lesson HTML files are full standalone documents (Quarto-rendered output is the norm); videos are YouTube Unlisted embeds. Automated routines should default to `article` lessons — `video` lessons require a human to record and upload the video.
+
+**On-demand scaffolding:** to queue a new course for the scaffolder routine, add a brief file to `course-briefs/<course-slug>.md` (template in `course-briefs/README.md`) and run the "SDF Course Scaffolder" routine. It scaffolds every brief without a matching course JSON and opens one PR per course.
 
 ---
 
