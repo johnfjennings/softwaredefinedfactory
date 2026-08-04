@@ -111,6 +111,11 @@ const images = [
     file: "ot-network-segmentation.jpg",
     prompt: `photorealistic industrial control room, engineer configuring network segmentation on a large monitor showing a glowing zones-and-conduits topology diagram with firewalls between segments, SCADA screens in the background, dark moody atmosphere, ${STYLE}`,
   },
+  {
+    slug: "agentic-ai-in-manufacturing",
+    file: "agentic-ai-in-manufacturing.jpg",
+    prompt: `photorealistic factory operator reviewing an AI agent's proposed maintenance work order on a large monitor showing a multi-step decision workflow with approve and reject controls, robotic assembly line visible through control room window, cool blue and amber accent lighting, ${STYLE}`,
+  },
 ]
 
 // Keep the hero-image-prompt comment in each MDX in sync with the image we generate.
