@@ -1,0 +1,82 @@
+---
+title: "OT Network Segmentation: A Practical Guide to IEC 62443 Zones and Conduits"
+date: "2026-08-04"
+excerpt: "With the EU Cyber Resilience Act's first reporting deadline landing in September 2026, manufacturers need a real segmentation plan. Here's how the IEC 62443 zones-and-conduits model works and how to apply it on your factory floor."
+author: "Software Defined Factory"
+category: "OT Security"
+tags: ["OT Security", "IEC 62443", "Cybersecurity", "Network Segmentation", "IT/OT Convergence"]
+---
+
+{/* hero-image-prompt: photorealistic industrial control room, engineer configuring network segmentation on a large monitor showing a glowing zones-and-conduits topology diagram with firewalls between segments, SCADA screens in the background, dark moody atmosphere, editorial industrial technology photography */}
+
+# OT Network Segmentation: A Practical Guide to IEC 62443 Zones and Conduits
+
+Most factory networks are flat. A PLC on the packaging line can, in principle, talk to a laptop in the front office, because nothing was ever put in between them to say otherwise. That design was fine when operational technology (OT) was physically isolated. It is not fine now that OT is connected to ERP systems, cloud analytics, and remote-access tools for vendors and technicians.
+
+The regulatory clock is also moving. Under the EU Cyber Resilience Act (CRA), manufacturers placing connected products on the EU market must report actively exploited vulnerabilities within 24 hours and full incident notifications within 72 hours, starting **11 September 2026** — with a final report due within 14 days of a fix becoming available. Those obligations apply to legacy products already on the market, not just new launches. Broader CRA product-security requirements follow on 11 December 2027. If you don't already have a vulnerability management process and a segmented network to contain what you find, that deadline arrives fast.
+
+Network segmentation is the single most effective control against the failure mode that matters most in OT: an intrusion in a low-value system (an office laptop, a contractor's VPN session) spreading laterally into a safety-critical one. The internationally recognised way to design that segmentation is the **IEC 62443 zones and conduits model**. This guide walks through what it is and how to apply it.
+
+## What Zones and Conduits Actually Are
+
+IEC 62443-3-2 defines two building blocks for an industrial network:
+
+- **Zone** — a group of assets that share the same security requirements. All devices in a zone are treated as equally trusted; a zone might be "packaging line 3 PLCs," "the plant historian," or "corporate IT."
+- **Conduit** — the logical grouping of communication paths that connect two or more zones. A conduit is where you put the firewall, the data diode, or the protocol-aware gateway that controls what crosses the boundary.
+
+Every asset in your industrial automation and control system (IACS) must sit inside a zone — there's no "unassigned" category. This forces an inventory exercise that most plants have never actually completed: you cannot draw zone boundaries around equipment you don't know exists.
+
+Each zone is then assigned a **Security Level** target from SL 1 to SL 4, based on the capability of the adversary it needs to resist — from casual misuse (SL 1) up to a well-resourced, motivated attacker with specialised ICS knowledge (SL 4). A zone containing safety instrumented systems on a chemical line warrants a higher SL target than a zone containing environmental sensors in a warehouse. This is the step people skip, and it's the one that matters — segmentation without differentiated security levels just means you've drawn more lines on the same flat trust model.
+
+If these terms are new to you, the [Software Defined Factory glossary](/glossary) has entries for OT, ICS, and related concepts worth bookmarking before you go further.
+
+## A Step-by-Step Approach
+
+1. **Inventory every asset.** PLCs, HMIs, historians, engineering workstations, remote-access gateways, even the network switches themselves. You cannot segment what you haven't catalogued.
+2. **Group assets into candidate zones** based on function and criticality — not by convenience or existing VLAN layout. A common industry pattern follows the Purdue Model / ISA-95 levels: safety systems, basic control, supervisory control (SCADA/HMI), site operations (MES, historian), and the IT/business layer.
+3. **Run a risk assessment per zone** to set the SL target — consider consequence of compromise, not just likelihood.
+4. **Identify every conduit** between zones and document what protocol and traffic legitimately needs to cross it. If you can't say why a connection exists, that's a candidate for removal, not documentation.
+5. **Deploy protocol-aware enforcement at each conduit** — a firewall that understands Modbus, EtherNet/IP, or OPC UA can flag an anomalous write command in a way a generic IT firewall cannot.
+6. **Re-verify.** Zones and conduits are a living model, not a one-time diagram — new equipment, new vendors, and new remote-access requirements all change the picture.
+
+## Worked Example: A Mid-Size Discrete Manufacturer
+
+Consider a plant with 30 PLCs across four production lines, a local MES server, an OPC UA connection feeding a cloud dashboard, and a third-party maintenance vendor with remote access to one CNC cell.
+
+Before segmentation, all of it sits on a single flat VLAN alongside office IT — the classic setup that let 2021's Colonial Pipeline-style lateral movement patterns work against far less prepared targets.
+
+Applying zones and conduits:
+
+- **Zone A — Safety and basic control** (PLCs, drives): SL target 3, no inbound connections from outside the zone permitted except from the supervisory zone via a defined conduit.
+- **Zone B — Supervisory control** (HMIs, local SCADA): SL target 2-3, conduit to Zone A restricted to control traffic only.
+- **Zone C — Site operations** (MES, historian, OPC UA gateway): SL target 2, single conduit to the cloud analytics platform outbound-only where possible.
+- **Zone D — Remote vendor access**: isolated into its own zone with a jump host and session recording, a conduit that only opens to the one CNC cell it services, and time-boxed access rather than a standing VPN tunnel.
+
+The result: a compromised laptop on the vendor's network can reach exactly one CNC cell, not the whole plant. That containment is the entire point — and it is the difference between an incident report describing one machine and one describing a shutdown of all four lines.
+
+This same segmentation work pairs naturally with the broader shift covered in our post on [IT/OT convergence](/blog/it-ot-convergence) — convergence and segmentation aren't opposites. Segmentation is what makes safe convergence possible, rather than a flat network with a single shared attack surface.
+
+## Common Pitfalls
+
+| Pitfall | Why it bites |
+|---|---|
+| Segmenting by convenience, not risk | Grouping "everything on line 3" together ignores that a safety PLC and a barcode scanner don't need the same protection |
+| Treating it as a one-time project | New remote-access requests and new vendor integrations quietly punch new conduits into the model |
+| No protocol-aware inspection | A standard IT firewall can pass a malformed Modbus write straight through because it isn't parsing the payload |
+| Standing remote-access VPNs | A conduit that's always open is a conduit an attacker can always use — prefer time-boxed, brokered access |
+| Ignoring legacy equipment in the inventory | Unpatchable 15-year-old PLCs are exactly the assets that need the strongest surrounding zone controls, since they can't defend themselves |
+
+## What This Means for Your Factory
+
+You don't need to segment the whole plant in one project. Start with the highest-consequence zone — usually safety and basic control — and the conduits into it. Get that boundary enforced and monitored, then work outward. If you're building your OT security roadmap, our earlier piece on [OT cybersecurity becoming a board-level priority](/blog/iiot-trend-2026-ot-cybersecurity) covers the wider threat landscape driving this urgency, and the [Industry 4.0 explainer](/blog/industry-4-0-explained) is a good primer if some of this terminology is still new to your team.
+
+The CRA deadline is a forcing function, not the goal. A properly segmented network with documented zones and conduits is what turns "we had an intrusion" into a contained, reportable, recoverable event — instead of a plant-wide shutdown.
+
+---
+
+**Sources:**
+- [MDPI — Security Aspects of Zones and Conduits in IEC 62443](https://www.mdpi.com/2624-800X/6/2/52)
+- [InstruNexus — IEC 62443 Zones and Conduits: A Practical Approach to Segmentation](https://instrunexus.com/iec-62443-zones-and-conduits-a-practical-approach-to-segmentation/)
+- [Crowell & Moring — EU Cyber Resilience Act: September 11, 2026 Reporting Deadline](https://www.crowell.com/en/insights/client-alerts/eu-cyber-resilience-act-countdown-11-september-2026-incidentvulnerability-reporting-deadline-is-less-than-100-days-away)
+- [European Commission — Cyber Resilience Act: Reporting Obligations](https://digital-strategy.ec.europa.eu/en/policies/cra-reporting)
+- [Bright Defense — EU Cyber Resilience Act 2026 Reporting Deadline](https://www.brightdefense.com/news/eu-cyber-resilience-act-2026-reporting-deadline/)
