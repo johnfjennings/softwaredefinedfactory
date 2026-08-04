@@ -5,6 +5,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { TurnstileWidget } from "@/components/turnstile-widget"
 import { createClient } from "@/lib/supabase/client"
 import { ArrowLeft } from "lucide-react"
 
@@ -13,6 +14,7 @@ export default function ResetPasswordPage() {
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [turnstileToken, setTurnstileToken] = useState("")
 
   const handleResetPassword = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -20,6 +22,17 @@ export default function ResetPasswordPage() {
     setLoading(true)
 
     try {
+      const verifyRes = await fetch("/api/turnstile/verify", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token: turnstileToken }),
+      })
+      if (!verifyRes.ok) {
+        setError("Verification failed. Please try again.")
+        setLoading(false)
+        return
+      }
+
       const supabase = createClient()
       const { error } = await supabase.auth.resetPasswordForEmail(email, {
         redirectTo: `${window.location.origin}/auth/callback?next=/reset-password/update`,
@@ -117,6 +130,8 @@ export default function ResetPasswordPage() {
                 disabled={loading}
               />
             </div>
+
+            <TurnstileWidget onVerify={setTurnstileToken} />
 
             <Button type="submit" className="w-full" disabled={loading}>
               {loading ? "Sending reset link..." : "Send reset link"}
