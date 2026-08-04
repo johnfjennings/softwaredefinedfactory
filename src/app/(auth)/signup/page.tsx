@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { TurnstileWidget } from "@/components/turnstile-widget"
 import { createClient } from "@/lib/supabase/client"
 import { trackEvent } from "@/lib/hooks/use-activity-tracking"
 import { ArrowLeft } from "lucide-react"
@@ -19,6 +20,7 @@ export default function SignupPage() {
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [turnstileToken, setTurnstileToken] = useState("")
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -39,6 +41,17 @@ export default function SignupPage() {
     }
 
     try {
+      const verifyRes = await fetch("/api/turnstile/verify", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token: turnstileToken }),
+      })
+      if (!verifyRes.ok) {
+        setError("Verification failed. Please try again.")
+        setLoading(false)
+        return
+      }
+
       const supabase = createClient()
       const { data, error } = await supabase.auth.signUp({
         email,
@@ -186,6 +199,8 @@ export default function SignupPage() {
                 disabled={loading}
               />
             </div>
+
+            <TurnstileWidget onVerify={setTurnstileToken} />
 
             <Button type="submit" className="w-full" disabled={loading}>
               {loading ? "Creating account..." : "Create account"}

@@ -1,16 +1,28 @@
 import { NextRequest, NextResponse } from "next/server"
 import { createClient } from "@/lib/supabase/server"
+import { verifyTurnstileToken } from "@/lib/turnstile"
 import { Resend } from "resend"
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { email, full_name, source = "unknown" } = body
+    const { email, full_name, source = "unknown", turnstileToken } = body
 
     // Validate input
     if (!email || !email.includes("@")) {
       return NextResponse.json(
         { error: "Valid email address is required" },
+        { status: 400 }
+      )
+    }
+
+    const isHuman = await verifyTurnstileToken(
+      turnstileToken,
+      request.headers.get("x-forwarded-for") ?? undefined
+    )
+    if (!isHuman) {
+      return NextResponse.json(
+        { error: "Verification failed. Please try again." },
         { status: 400 }
       )
     }

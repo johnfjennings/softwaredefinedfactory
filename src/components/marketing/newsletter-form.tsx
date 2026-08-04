@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { TurnstileWidget } from "@/components/turnstile-widget"
 import { Loader2, CheckCircle2 } from "lucide-react"
 
 interface NewsletterFormProps {
@@ -14,6 +15,7 @@ export function NewsletterForm({ source = "homepage" }: NewsletterFormProps) {
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState("")
+  const [turnstileToken, setTurnstileToken] = useState("")
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -24,7 +26,7 @@ export function NewsletterForm({ source = "homepage" }: NewsletterFormProps) {
       const response = await fetch("/api/newsletter/subscribe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, source }),
+        body: JSON.stringify({ email, source, turnstileToken }),
       })
 
       const data = await response.json()
@@ -71,6 +73,7 @@ export function NewsletterForm({ source = "homepage" }: NewsletterFormProps) {
           )}
         </Button>
       </form>
+      <TurnstileWidget onVerify={setTurnstileToken} className="mt-2" />
       {error && (
         <p className="text-xs text-red-600 dark:text-red-400 mt-2">{error}</p>
       )}

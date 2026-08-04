@@ -5,6 +5,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { TurnstileWidget } from "@/components/turnstile-widget"
 import { Download, Loader2, CheckCircle2 } from "lucide-react"
 
 interface EmailCaptureModalProps {
@@ -29,6 +30,7 @@ export function EmailCaptureModal({
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState("")
+  const [turnstileToken, setTurnstileToken] = useState("")
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -43,6 +45,7 @@ export function EmailCaptureModal({
           email,
           full_name: fullName,
           source,
+          turnstileToken,
         }),
       })
 
@@ -114,6 +117,8 @@ export function EmailCaptureModal({
                 required
               />
             </div>
+
+            <TurnstileWidget onVerify={setTurnstileToken} />
 
             {error && (
               <div className="p-3 text-sm bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-md border border-red-200 dark:border-red-800">
