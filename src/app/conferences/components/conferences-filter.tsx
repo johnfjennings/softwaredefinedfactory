@@ -90,7 +90,7 @@ export function ConferencesFilter({ events }: ConferencesFilterProps) {
                           <Calendar className="h-4 w-4 shrink-0" />
                           <span>{event.dates}</span>
                           {event.isPast && (
-                            <span className="text-xs bg-muted px-2 py-0.5 rounded">Past</span>
+                            <span className="text-xs text-foreground bg-muted px-2 py-0.5 rounded">Past</span>
                           )}
                         </div>
                         <div className="flex items-center gap-2 text-muted-foreground">
