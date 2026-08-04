@@ -734,7 +734,7 @@ export default function OEECalculatorPage() {
                       <div className="flex justify-between text-sm">
                         <span className="flex items-center gap-1">
                           {index === 0 && loss.value > 0 && (
-                            <AlertTriangle className="h-3 w-3 text-amber-500" />
+                            <AlertTriangle className="h-3 w-3 text-amber-600 dark:text-amber-500" />
                           )}
                           {loss.label}
                         </span>

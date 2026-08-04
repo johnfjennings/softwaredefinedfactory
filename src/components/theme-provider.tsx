@@ -28,7 +28,13 @@ export function ThemeProvider({
   storageKey = "sdf-theme",
   ...props
 }: ThemeProviderProps) {
-  const [theme, setTheme] = React.useState<Theme>(defaultTheme)
+  const [theme, setTheme] = React.useState<Theme>(() => {
+    if (typeof window === "undefined") return defaultTheme
+    const stored = window.localStorage.getItem(storageKey)
+    return stored === "dark" || stored === "light" || stored === "system"
+      ? stored
+      : defaultTheme
+  })
 
   React.useEffect(() => {
     const root = window.document.documentElement

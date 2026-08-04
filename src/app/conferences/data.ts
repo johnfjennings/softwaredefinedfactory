@@ -12,9 +12,9 @@ export interface ConferenceEvent {
 }
 
 export const REGION_COLORS: Record<string, string> = {
-  "North America": "bg-blue-500/10 text-blue-500",
-  Europe: "bg-emerald-500/10 text-emerald-500",
-  Asia: "bg-amber-500/10 text-amber-500",
+  "North America": "bg-blue-500/10 text-blue-700 dark:text-blue-400",
+  Europe: "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400",
+  Asia: "bg-amber-500/10 text-amber-700 dark:text-amber-400",
 }
 
 export const MONTHS = [

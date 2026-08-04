@@ -65,7 +65,7 @@ export default function ToolsPage() {
 
             {/* OEE Calculator */}
             <Card className="relative overflow-hidden">
-              <div className="absolute top-4 right-4 px-2 py-1 bg-green-600 text-white text-xs font-semibold rounded">
+              <div className="absolute top-4 right-4 px-2 py-1 bg-green-700 text-white text-xs font-semibold rounded">
                 NEW
               </div>
               <CardHeader>

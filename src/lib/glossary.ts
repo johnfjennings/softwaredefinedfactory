@@ -5,18 +5,18 @@ export interface GlossaryTerm {
 }
 
 export const categoryColors: Record<string, string> = {
-  "AI & Analytics": "bg-violet-500/10 text-violet-500",
-  Automation: "bg-blue-500/10 text-blue-500",
-  "Industry 4.0": "bg-cyan-500/10 text-cyan-500",
-  Infrastructure: "bg-slate-500/10 text-slate-500",
-  "Lean Manufacturing": "bg-green-500/10 text-green-500",
-  Maintenance: "bg-orange-500/10 text-orange-500",
-  "Manufacturing Processes": "bg-indigo-500/10 text-indigo-500",
-  Performance: "bg-amber-500/10 text-amber-500",
-  Quality: "bg-rose-500/10 text-rose-500",
-  "Software & Integration": "bg-purple-500/10 text-purple-500",
-  Standards: "bg-teal-500/10 text-teal-500",
-  Strategy: "bg-emerald-500/10 text-emerald-500",
+  "AI & Analytics": "bg-violet-500/10 text-violet-700 dark:text-violet-400",
+  Automation: "bg-blue-500/10 text-blue-700 dark:text-blue-400",
+  "Industry 4.0": "bg-cyan-500/10 text-cyan-700 dark:text-cyan-400",
+  Infrastructure: "bg-slate-500/10 text-slate-700 dark:text-slate-400",
+  "Lean Manufacturing": "bg-green-500/10 text-green-700 dark:text-green-400",
+  Maintenance: "bg-orange-500/10 text-orange-700 dark:text-orange-400",
+  "Manufacturing Processes": "bg-indigo-500/10 text-indigo-700 dark:text-indigo-400",
+  Performance: "bg-amber-500/10 text-amber-700 dark:text-amber-400",
+  Quality: "bg-rose-500/10 text-rose-700 dark:text-rose-400",
+  "Software & Integration": "bg-purple-500/10 text-purple-700 dark:text-purple-400",
+  Standards: "bg-teal-500/10 text-teal-700 dark:text-teal-400",
+  Strategy: "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400",
 }
 
 export const glossaryTerms: GlossaryTerm[] = [

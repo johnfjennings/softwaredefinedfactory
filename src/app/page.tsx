@@ -65,9 +65,9 @@ async function getFeaturedProfile(): Promise<ProfileEntry | null> {
 }
 
 const PROFILE_CONFIG = {
-  company: { label: "Featured Company", icon: Building2, basePath: "companies", color: "text-blue-600 dark:text-blue-400", bg: "bg-blue-500/10" },
-  person: { label: "Academic Provider", icon: User, basePath: "academic-providers", color: "text-emerald-600 dark:text-emerald-400", bg: "bg-emerald-500/10" },
-  product: { label: "Product Spotlight", icon: Package, basePath: "products", color: "text-amber-600 dark:text-amber-400", bg: "bg-amber-500/10" },
+  company: { label: "Featured Company", icon: Building2, basePath: "companies", color: "text-blue-700 dark:text-blue-400", bg: "bg-blue-500/10" },
+  person: { label: "Academic Provider", icon: User, basePath: "academic-providers", color: "text-emerald-700 dark:text-emerald-400", bg: "bg-emerald-500/10" },
+  product: { label: "Product Spotlight", icon: Package, basePath: "products", color: "text-amber-700 dark:text-amber-400", bg: "bg-amber-500/10" },
 }
 
 export default async function Home() {

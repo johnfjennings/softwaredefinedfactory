@@ -23,7 +23,7 @@ export function PostCard({ post, onTagClick }: PostCardProps) {
             {post.category}
           </span>
           {post.postType && POST_TYPE_LABELS[post.postType] && (
-            <span className="px-2 py-1 rounded-md bg-amber-500/10 text-amber-600 text-xs font-medium">
+            <span className="px-2 py-1 rounded-md bg-amber-500/10 text-amber-700 dark:text-amber-400 text-xs font-medium">
               {POST_TYPE_LABELS[post.postType]}
             </span>
           )}
