@@ -1,0 +1,62 @@
+---
+title: "Agentic AI in Manufacturing: What It Actually Is, and How to Pilot It Safely"
+date: "2026-08-04"
+excerpt: "Agentic AI is not just another chatbot on the shop floor. Here's what separates it from RPA and predictive analytics, what manufacturers are actually deploying in 2026, and how to pilot it without losing control of your operations."
+author: "Software Defined Factory"
+category: "Industrial AI"
+tags: ["Agentic AI", "Industrial AI", "Automation", "Smart Manufacturing", "AI Agents"]
+---
+
+{/* hero-image-prompt: photorealistic industrial control room, factory operator reviewing an AI agent's proposed work order on a large monitor showing a multi-step decision workflow, robotic arms and conveyor visible through window in background, cool blue and amber accent lighting, editorial technology photography, dark moody atmosphere */}
+
+# Agentic AI in Manufacturing: What It Actually Is, and How to Pilot It Safely
+
+"Agentic AI" has become one of the most overused phrases in industrial technology marketing this year, which makes it easy to dismiss as another buzzword. That would be a mistake. Underneath the hype is a real architectural shift in how software interacts with manufacturing operations - one with genuine implications for how you structure access, approvals, and OT security. This post explains what separates agentic AI from the automation and analytics you already run, what's actually being deployed today, and how to pilot it without handing a script write access to your production schedule.
+
+## What Makes AI "Agentic"
+
+Most manufacturing software you already use is either **deterministic automation** (a PLC ladder logic routine, an RPA bot clicking through an ERP screen) or **predictive analytics** (a model that scores a bearing's remaining useful life). Both wait for a human, or a fixed rule, to decide what happens next.
+
+Agentic AI is different in one specific way: it is given a goal, not a script, and it plans and executes a sequence of steps toward that goal using a set of tools - APIs, databases, other software systems - deciding at each step what to do next based on what it observes. A predictive maintenance model might tell you a motor bearing is degrading. An agentic system takes that signal, checks the maintenance history, checks spare parts inventory, checks the production schedule for a viable downtime window, and drafts a work order - chaining several systems together toward the goal of "get this fixed with minimum disruption," without a human scripting each step in advance.
+
+That's the distinction worth holding onto: not "AI that talks," but AI that **plans and acts across systems**, with a human approving or supervising rather than operating each step.
+
+## Why Manufacturers Are Moving on This Now
+
+According to a Manufacturing Leadership Council survey from early 2025, cited in Deloitte's *"From vision to value"* roadmap for agentic AI in manufacturing, only 6% of manufacturers were using agentic AI at the time of the survey - but 24% expected to be using it within two years, a fourfold jump. Deloitte's broader 2026 State of AI in the Enterprise survey found a related governance gap: 74% of companies surveyed planned to deploy agentic AI within two years, but only 21% reported having a mature model for governing what those agents are allowed to do. That gap between adoption speed and governance readiness is the part manufacturers should pay closest attention to, because on a factory floor, a mistaken agent action isn't a bad chatbot reply - it's a wrong purchase order, a mis-scheduled changeover, or a work instruction pushed to the floor without review.
+
+On the deployment side, this isn't purely speculative. In April 2026, Accenture and Avanade announced an "agentic factory" system built with Microsoft, aimed at helping factory operators run initial status checks, diagnostics, and guided troubleshooting when a line underperforms, with early manufacturing adopters validating the system ahead of a planned general-availability release later in 2026. It's a useful signal of where the vendor ecosystem is actually shipping product, as distinct from where it's just running demos.
+
+## A Worked Example: From Defect to Work Order
+
+Here's a concrete version of the "chained agent" pattern that's realistic for a mid-size discrete manufacturer already running some of the pieces described on this site:
+
+1. A [computer vision quality station](/blog/getting-started-with-iiot) flags an out-of-spec part on a stamping line.
+2. An agent correlates the defect timestamp against machine telemetry and finds a matching vibration anomaly on the press's drive motor - the kind of signal a [predictive maintenance](/blog/predictive-maintenance-guide) program is built to catch, but usually surfaces as a dashboard alert someone has to notice.
+3. The agent queries the CMMS for maintenance history on that motor, checks the parts system for bearing stock, and checks the production schedule for the next changeover window that would absorb downtime with the least impact on planned output.
+4. It drafts a work order with a recommended time window and attaches the supporting data, then routes it to a maintenance planner for approval rather than opening it automatically.
+5. Once approved, it schedules the technician and reserves the part.
+
+Nothing in that chain requires a human to manually pull data from four different systems and reconcile it - which is exactly the kind of cross-system correlation work that used to fall on a planner's judgment and spare time. But note where the human sits: approving the action, not just receiving a notification after the fact. That's the design choice that matters.
+
+## The Governance Question Is an OT Security Question
+
+Because agentic systems act - not just recommend - the access they're granted becomes a real attack surface and a real failure mode, not just a data governance concern. This is where agentic AI overlaps directly with the [zones-and-conduits segmentation model](/blog/ot-network-segmentation-iec-62443) already used for OT network security. The same discipline applies: an agent that can read production schedules doesn't need write access to a PLC, and an agent that can draft a work order doesn't need standing credentials to execute a purchase order autonomously. Scope agent permissions the way you'd scope a new employee's system access - by least privilege, with a paper trail of every action it took and every approval it received. If your CRA or NIS2 compliance work already inventories what has write access to production systems, an AI agent belongs on that inventory the same way a new integration would.
+
+## How to Pilot It Without Losing Control
+
+A few practical starting points for manufacturers evaluating this rather than following press releases:
+
+- **Start with a read-and-recommend agent, not a read-and-act agent.** Let it draft the work order or the purchase requisition; keep a human approving the action for at least the first two or three months of a pilot.
+- **Pick a workflow with a clear, measurable outcome** - unplanned downtime response, spare parts reordering, or defect-to-corrective-action are all good starting points because you can measure cycle time before and after against your existing [OEE tracking](/tools/oee-calculator).
+- **Scope data and system access narrowly**, and log every action the agent proposes and every decision a human makes on it. That log is your audit trail if something goes wrong, and your evidence for scaling if it goes right.
+- **Run the numbers before scaling.** Treat an agentic pilot like any other capital or software decision - the [ROI calculator](/tools/roi-calculator) framework of quantifying downtime cost, labor time saved, and implementation cost applies just as well to an AI agent pilot as it does to a new sensor rollout.
+
+Agentic AI on the factory floor is still early - Deloitte's own numbers put current usage in the single digits. But the trajectory and the vendor investment are real, and the systems being piloted now are chaining together the same MES, CMMS, and historian data most manufacturers already have. The technology risk is manageable. The governance discipline is the part worth getting right before you scale it.
+
+For background on the systems an agent typically needs to plan across, see our [glossary](/glossary) for definitions of MES, CMMS, and related terms, and our [courses](/courses) for foundational IIoT and smart manufacturing content.
+
+**Sources:**
+- [Deloitte: From vision to value - agentic AI manufacturing digital transformation](https://www.deloitte.com/us/en/insights/industry/manufacturing-industrial-products/agentic-ai-manufacturing-digital-transformation.html)
+- [Deloitte: The State of AI in the Enterprise, 2026](https://www.deloitte.com/us/en/what-we-do/capabilities/applied-artificial-intelligence/content/state-of-ai-in-the-enterprise.html)
+- [Accenture Newsroom: Accenture and Avanade Collaborate with Microsoft to Develop Agentic Factory](https://newsroom.accenture.com/news/2026/accenture-and-avanade-collaborate-with-microsoft-to-develop-agentic-factory-to-help-reduce-manufacturing-downtime)
