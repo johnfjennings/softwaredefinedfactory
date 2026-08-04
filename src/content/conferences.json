@@ -10,16 +10,6 @@
     "isPast": true
   },
   {
-    "name": "IoT Tech Expo Global",
-    "dates": "February 4-5, 2026",
-    "location": "Olympia, London, UK",
-    "region": "Europe",
-    "description": "Leading IoT conference covering Industrial IoT, smart cities, connected industry, and edge computing. Strong focus on real-world IIoT deployment case studies.",
-    "url": "https://www.iottechexpo.com/global/",
-    "tags": ["IIoT", "Edge Computing", "Connected Industry"],
-    "isPast": true
-  },
-  {
     "name": "ARC Industry Leadership Forum",
     "dates": "February 3-5, 2026",
     "location": "Orlando, FL, USA",
@@ -27,6 +17,16 @@
     "description": "Premier forum for industrial technology leaders focused on IIoT-enabled sustainability, smart factories, secure industrial connectivity, and digital transformation strategies.",
     "url": "https://www.arcweb.com/events/arc-industry-leadership-forum",
     "tags": ["IIoT", "Smart Factories", "Sustainability"],
+    "isPast": true
+  },
+  {
+    "name": "IoT Tech Expo Global",
+    "dates": "February 4-5, 2026",
+    "location": "Olympia, London, UK",
+    "region": "Europe",
+    "description": "Leading IoT conference covering Industrial IoT, smart cities, connected industry, and edge computing. Strong focus on real-world IIoT deployment case studies.",
+    "url": "https://www.iottechexpo.com/global/",
+    "tags": ["IIoT", "Edge Computing", "Connected Industry"],
     "isPast": true
   },
   {
@@ -120,6 +120,15 @@
     "isPast": true
   },
   {
+    "name": "TAIROS — Taiwan Automation Intelligence and Robot Show",
+    "dates": "August 19-22, 2026",
+    "location": "Taipei, Taiwan",
+    "region": "Asia",
+    "description": "Taiwan's leading international exhibition for industrial robotics and automation systems, spotlighting machine vision, AI-driven production lines, and manufacturing innovation for the Asia-Pacific market.",
+    "url": "https://www.tairos.tw/en/",
+    "tags": ["Robotics", "Automation", "Machine Vision"]
+  },
+  {
     "name": "IMTS 2026 — International Manufacturing Technology Show",
     "dates": "September 14-19, 2026",
     "location": "Chicago, IL, USA",
@@ -127,6 +136,15 @@
     "description": "The largest manufacturing technology show in the Western Hemisphere. Nearly 90,000 attendees and thousands of exhibitors showcasing machine tools, automation, additive manufacturing, and digital solutions.",
     "url": "https://www.imts.com/",
     "tags": ["Machine Tools", "Automation", "Additive Manufacturing", "Digital"]
+  },
+  {
+    "name": "PACK EXPO International",
+    "dates": "October 18-21, 2026",
+    "location": "Chicago, IL, USA",
+    "region": "North America",
+    "description": "Packaging innovations and manufacturing automation for CPG and industrial manufacturers. Covers smart packaging, robotics, and Industry 4.0 solutions for packaging lines.",
+    "url": "https://www.packexpointernational.com/",
+    "tags": ["Packaging", "Automation", "Robotics"]
   },
   {
     "name": "IoT Tech Expo Europe",
@@ -147,13 +165,13 @@
     "tags": ["Fabrication", "Welding", "Metal Forming", "Automation"]
   },
   {
-    "name": "PACK EXPO International",
-    "dates": "October 2026 (Dates TBD)",
-    "location": "Chicago, IL, USA",
-    "region": "North America",
-    "description": "Packaging innovations and manufacturing automation for CPG and industrial manufacturers. Covers smart packaging, robotics, and Industry 4.0 solutions for packaging lines.",
-    "url": "https://www.packexpointernational.com/",
-    "tags": ["Packaging", "Automation", "Robotics"]
+    "name": "ISM 2026 — Industry of the Future & Smart Manufacturing",
+    "dates": "November 10-14, 2026",
+    "location": "Padua & Venice, Italy",
+    "region": "Europe",
+    "description": "Academic and industry conference covering IIoT-based smart factories, digital twins, cybersecurity, edge-cloud computing, cognitive factories, and Industry 4.0/5.0 research.",
+    "url": "https://www.msc-les.org/ism2026/",
+    "tags": ["Research", "Digital Twins", "Cybersecurity", "Industry 5.0"]
   },
   {
     "name": "Rockwell Automation Fair",
@@ -165,21 +183,39 @@
     "tags": ["Automation", "Smart Manufacturing", "Connected Enterprise"]
   },
   {
-    "name": "ISM 2026 — Industry of the Future & Smart Manufacturing",
-    "dates": "November 2026 (Dates TBD)",
-    "location": "TBD",
-    "region": "Europe",
-    "description": "Academic and industry conference covering IIoT-based smart factories, digital twins, cybersecurity, edge-cloud computing, cognitive factories, and Industry 4.0/5.0 research.",
-    "url": "https://www.msc-les.org/ism2026/",
-    "tags": ["Research", "Digital Twins", "Cybersecurity", "Industry 5.0"]
-  },
-  {
     "name": "SPS — Smart Production Solutions Nuremberg",
-    "dates": "November 23-25, 2026",
+    "dates": "November 24-26, 2026",
     "location": "Nuremberg, Germany",
     "region": "Europe",
     "description": "Europe's leading trade fair for smart and digital automation. Over 56,000 visitors exploring electric control, sensor technology, drive systems, engineering services, and plant automation.",
     "url": "https://www.sps-exhibition.com/",
     "tags": ["Automation", "Sensors", "Drives", "Industry 4.0"]
+  },
+  {
+    "name": "CES 2027",
+    "dates": "January 6-9, 2027",
+    "location": "Las Vegas, NV, USA",
+    "region": "North America",
+    "description": "The world's most powerful tech event. Increasingly relevant for manufacturing with AI, robotics, digital twins, and industrial IoT showcases alongside consumer tech.",
+    "url": "https://www.ces.tech/",
+    "tags": ["AI", "Robotics", "IoT", "Digital Twins"]
+  },
+  {
+    "name": "Hannover Messe 2027",
+    "dates": "April 5-8, 2027",
+    "location": "Hanover, Germany",
+    "region": "Europe",
+    "description": "The world's leading trade fair for industrial technology, bringing together thousands of exhibitors across automation, digitalisation, energy, and industrial infrastructure.",
+    "url": "https://www.hannovermesse.de/en/",
+    "tags": ["Automation", "Industry 4.0", "Energy", "Robotics"]
+  },
+  {
+    "name": "Smart Manufacturing Week U.S. 2027",
+    "dates": "April 19-22, 2027",
+    "location": "Detroit, MI, USA",
+    "region": "North America",
+    "description": "Inaugural North American edition of the UK-founded Smart Manufacturing Week series, combining the Manufacturing Digitalization Summit and The Reliability Conference for advanced manufacturing and industrial technology leaders.",
+    "url": "https://www.smartmanufacturingweek.com/US",
+    "tags": ["Smart Manufacturing", "Digitalization", "Reliability"]
   }
 ]
