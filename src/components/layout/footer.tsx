@@ -44,7 +44,7 @@ export function Footer() {
                   href="/blog"
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  Blog
+                  News
                 </Link>
               </li>
               <li>

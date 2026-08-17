@@ -5,7 +5,7 @@ import { getAllPostsCombined } from "@/lib/blog"
 import { BookOpen } from "lucide-react"
 
 export const metadata = {
-  title: "Blog",
+  title: "News",
   description: "Learn about smart manufacturing, Industry 4.0, IIoT, and digital transformation with expert guides and tutorials.",
 }
 
@@ -21,7 +21,7 @@ export default async function BlogPage() {
         <div className="container mx-auto max-w-7xl px-4 py-24">
           {/* Header */}
           <div className="text-center mb-16">
-            <h1 className="text-4xl font-bold tracking-tight sm:text-5xl mb-4">Blog</h1>
+            <h1 className="text-4xl font-bold tracking-tight sm:text-5xl mb-4">News</h1>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Learn about smart manufacturing, Industry 4.0, and digital transformation
             </p>

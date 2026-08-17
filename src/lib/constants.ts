@@ -15,7 +15,7 @@ export const NAV_LINKS: Array<{
   href: string
   children?: Array<{ title: string; href: string }>
 }> = [
-  { title: "Blog", href: "/blog" },
+  { title: "News", href: "/blog" },
   { title: "Courses", href: "/courses" },
   { title: "Tools", href: "/tools" },
   { title: "Conferences", href: "/conferences" },

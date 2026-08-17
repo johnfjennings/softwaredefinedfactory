@@ -4,8 +4,9 @@ import { Button } from "@/components/ui/button"
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
 import { NewsletterForm } from "@/components/marketing/newsletter-form"
-import { ArrowRight, Factory, Cpu, TrendingUp, Zap, BookOpen, Wrench, Building2, User, Package } from "lucide-react"
+import { ArrowRight, Factory, Cpu, TrendingUp, Zap, BookOpen, Wrench, Building2, User, Package, Newspaper } from "lucide-react"
 import { createClient } from "@/lib/supabase/server"
+import { getAllPostsCombined } from "@/lib/blog"
 
 export const revalidate = 3600
 
@@ -70,8 +71,17 @@ const PROFILE_CONFIG = {
   product: { label: "Product Spotlight", icon: Package, basePath: "products", color: "text-amber-700 dark:text-amber-400", bg: "bg-amber-500/10" },
 }
 
+async function getLatestPosts() {
+  try {
+    const posts = await getAllPostsCombined()
+    return posts.slice(0, 3)
+  } catch {
+    return []
+  }
+}
+
 export default async function Home() {
-  const featured = await getFeaturedProfile()
+  const [featured, latestPosts] = await Promise.all([getFeaturedProfile(), getLatestPosts()])
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -79,43 +89,102 @@ export default async function Home() {
 
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="container mx-auto max-w-7xl px-4 py-24 md:py-32">
-          <div className="flex flex-col items-center text-center space-y-8">
-            <Image
-              src="/images/logo.png"
-              alt="Software Defined Factory"
-              width={160}
-              height={160}
-              className="dark:invert"
-              priority
-            />
-            <div className="space-y-4 max-w-3xl">
-              <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl">
-                Transform Your Factory with{" "}
-                <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-                  Smart Manufacturing
-                </span>
-              </h1>
-              <p className="mx-auto max-w-2xl text-lg text-muted-foreground md:text-xl">
-                Learn Industry 4.0, IIoT, and digital transformation. Get hands-on courses, practical tools, and expert guidance to modernize your manufacturing operations.
-              </p>
+        <section className="container mx-auto max-w-7xl px-4 py-12 md:py-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+            {/* Left: headline + CTAs */}
+            <div className="flex flex-col items-center lg:items-start text-center lg:text-left space-y-6">
+              <Image
+                src="/images/logo.png"
+                alt="Software Defined Factory"
+                width={96}
+                height={96}
+                className="dark:invert"
+                priority
+              />
+              <div className="space-y-4">
+                <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+                  Transform Your Factory with{" "}
+                  <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+                    Smart Manufacturing
+                  </span>
+                </h1>
+                <p className="text-base text-muted-foreground md:text-lg max-w-xl mx-auto lg:mx-0">
+                  Learn Industry 4.0, IIoT, and digital transformation. Get hands-on courses, practical tools, and expert guidance to modernize your manufacturing operations.
+                </p>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Button size="lg" asChild>
+                  <Link href="/courses">
+                    Browse Courses <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+                <Button size="lg" variant="outline" asChild>
+                  <Link href="/tools">Try Free Tools</Link>
+                </Button>
+              </div>
+
+              {/* Email Signup */}
+              <div className="w-full max-w-md pt-2">
+                <NewsletterForm source="homepage" />
+              </div>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" asChild>
-                <Link href="/courses">
-                  Browse Courses <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-              <Button size="lg" variant="outline" asChild>
-                <Link href="/tools">Try Free Tools</Link>
-              </Button>
-            </div>
+            {/* Right: Latest News card */}
+            {latestPosts.length > 0 && (
+              <div className="rounded-xl border bg-card p-6 shadow-sm">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-2">
+                    <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center">
+                      <Newspaper className="h-4 w-4 text-primary" />
+                    </div>
+                    <h2 className="text-lg font-semibold">Latest News</h2>
+                  </div>
+                  <Link
+                    href="/blog"
+                    className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
+                  >
+                    All news <ArrowRight className="h-3.5 w-3.5" />
+                  </Link>
+                </div>
 
-            {/* Email Signup */}
-            <div className="w-full max-w-md pt-8">
-              <NewsletterForm source="homepage" />
-            </div>
+                <div className="divide-y divide-border/60">
+                  {latestPosts.map((post) => (
+                    <Link
+                      key={post.slug}
+                      href={`/blog/${post.slug}`}
+                      className="group flex gap-4 py-4 first:pt-0 last:pb-0"
+                    >
+                      {post.coverImage && (
+                        <div className="hidden sm:block h-16 w-24 rounded-md overflow-hidden flex-shrink-0 border bg-muted">
+                          <Image
+                            src={post.coverImage}
+                            alt=""
+                            width={96}
+                            height={64}
+                            className="object-cover w-full h-full"
+                          />
+                        </div>
+                      )}
+                      <div className="min-w-0">
+                        <p className="text-xs text-muted-foreground mb-1">
+                          {new Date(post.date).toLocaleDateString("en-US", {
+                            month: "short",
+                            day: "numeric",
+                            year: "numeric",
+                          })}
+                          {" · "}
+                          {post.category}
+                        </p>
+                        <h3 className="text-sm font-medium leading-snug line-clamp-2 group-hover:text-primary transition-colors">
+                          {post.title}
+                        </h3>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </section>
 
@@ -273,7 +342,7 @@ export default async function Home() {
                 </Link>
               </Button>
               <Button size="lg" variant="outline" asChild>
-                <Link href="/blog">Read the Blog</Link>
+                <Link href="/blog">Read the News</Link>
               </Button>
             </div>
           </div>
